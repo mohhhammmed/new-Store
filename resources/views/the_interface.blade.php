@@ -104,11 +104,13 @@
       	<li class="nav-item">
           <a class="nav-link" target="_blank" href="{{route('login')}}">Login</a>
         </li>
+
 		<li class="nav-item">
 {{--			<a class="nav-link" target="_blank" href="{{route('login.redirect.facebook','facebook')}}">Login Redirect With Facebook </a>--}}
 {{--			<a class="nav-link" target="_blank" href="{{route('login.redirect.facebook','google')}}">Login Redirect With google </a>--}}
-			<a class="nav-link" target="_blank" href="{{route('login.redirect','github')}}">Login with github </a>
+			<a class="nav-link" target="_blank" href="{{route('login_redirect','github')}}">Login with github </a>
 		  </li>
+
         <li class="nav-item">
           <a class="nav-link" target="_blank" href="{{url('register')}}">Register</a>
         </li>

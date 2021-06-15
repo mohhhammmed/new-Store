@@ -17,12 +17,13 @@ class Redirect
     public function handle(Request $request, Closure $next)
     {
 
-       // Auth::guard('store')->check()
-          $admin=Auth::guard('admin')->user();
+
         if(Auth::guard('admin')->check()){
 
-            return redirect(route('store.dashboard'));
+            return redirect(route('dashboard'));
 
+        }elseif(Auth::check()){
+            return redirect(route('home'));
         }
         return $next($request);
     }

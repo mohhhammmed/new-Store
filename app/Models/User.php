@@ -40,4 +40,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function login_redirect($user){
+        $us=$this->where('email',$user->getEmail())->first();
+        if(isset($us) && $us != null){
+            return $us;
+        }
+        $this->create([
+            'email'=>$user->getEmail(),
+             'name'=>$user->getName(),
+
+        ]);
+    }
 }

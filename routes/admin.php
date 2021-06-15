@@ -25,8 +25,8 @@ $paginate_count=define('paginate_count',10);
          ////////////////////////////////////Website Langs////////////////////////////////////////
          Route::get('available_langs',[LangControll::class,'available_langs'])->name('available_langs');
 
-         ////////////////                 /////////////////
-/////////////////////////////////////////////// Login Of admin/////////////////////////////////////
+                              ////////////////                 /////////////////
+/////////////////////////////////////////////// Login /////////////////////////////////////
 
          Route::get('login',function(){
              return view('auth.login');
@@ -36,22 +36,17 @@ $paginate_count=define('paginate_count',10);
 
      });
  });
+                    /////////////////////////////////////////
+////////////////////////////////////////Inter Favce///////////////////////////
+            Route::get('/',function(){
+                return view('the_interface');
+            });
 
-// Route::group('prefix' => LaravelLocalization::setLocale(),'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ],function(){
-
-// });
 
 
-Route::get('/',function(){
-  return view('store.the_interface');
- });
 
-                               ////////////////                 /////////////////
-/////////////////////////////////////////////// Social Of admin/////////////////////////////////////
-
-Route::get('login/{provider}',[RedirectControler::class,'rdeirectLogin'])->name('login.redirect');
-Route::get('login/{provider}/callback',[RedirectControler::class,'rdeirectLoginCallback']);
-
+Route::group(['prefix' => LaravelLocalization::setLocale(),
+'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]],function(){
 
 
 Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
@@ -67,7 +62,6 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
 
 
     Route::get('profile',[ProfileController::class,'profile'])->name('profile');
-
     Route::POST('edit_prof/{prof_id}',[ProfileController::class,'edit'])->name('edit_profile');
 
                                ////////////////                 /////////////////
@@ -134,7 +128,7 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
           Route::POST('edit_vendor/{vendor_id}',[VendorControll::class,'update'])->name('edit_vendor');
           Route::get('change_statue/{vendorId}',[VendorControll::class,'change_statue'])->name('change_statue_vendor');
 
-
+});
 });
 
 Route::prefix('store')->group(function(){

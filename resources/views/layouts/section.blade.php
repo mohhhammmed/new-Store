@@ -60,7 +60,7 @@
                             @endif
                             @if(Auth::guard('web')->user())
                             <li class="nav-item active">
-                                <a class="nav-link" href="{{route('all_stores')}}">All Categories</a>
+                                <a class="nav-link" href="{{route('all_stores')}}">All Stores</a>
                             </li>
                             @endif
 							<li class="nav-item dropdown dropdown-slide">
