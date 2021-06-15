@@ -52,10 +52,10 @@
         <!-- Recently Favorited -->
         <div class="widget dashboard-container my-adslist">
 
-          <h3  class="widget-header">My Ads {{' '}} <a style="margin-left: 10px" href='{{route('admin_create_maincategories')}}'class="btn-sm btn btn-outline-info btn-small"><strong>Add Main Category</strong> </a> </h3>
+          <h3  class="widget-header">My Ads {{' '}} <a style="margin-left: 10px" href='{{route('create_maincategory')}}'class="btn-sm btn btn-outline-info btn-small"><strong>Add Main Category</strong> </a> </h3>
 
 
-          @include('messages.err_or_succ')
+          @include('alarms.alarm')
           <table class="table table-responsive product-dashboard-table">
             <thead>
               <tr>
@@ -83,7 +83,7 @@
                   <div class="">
                     <ul class="list-inline justify-content-center">
                       <li class="list-inline-item">
-                        <a data-toggle="tooltip" data-placement="top" title="{{$maincategory->action==1? 'Disactivate':'Activate'}}" class="view" href="{{route('maincategory_activate',$maincategory->id)}}">
+                        <a data-toggle="tooltip" data-placement="top" title="{{$maincategory->action==1? 'Disactivate':'Activate'}}" class="view" href="{{route('change_statue_maincategory',$maincategory->id)}}">
                           <i class="fa fa-edit"></i>
                         </a>
                       </li>
@@ -93,7 +93,7 @@
                         </a>
                       </li>
                       <li class="list-inline-item">
-                        <a class="delete delData" data-toggle="tooltip"get_id="{{$maincategory->id}}" data-placement="top" title="Delete" href="{{route('maincategory_delete',$maincategory->id)}}">
+                        <a class="delete delData" data-toggle="tooltip"get_id="{{$maincategory->id}}" data-placement="top" title="Delete" href="{{route('delete_maincategory',$maincategory->id)}}">
                           <i class="fa fa-trash"></i>
                         </a>
                       </li>
@@ -157,7 +157,7 @@
             var id=$(this).attr('get_id');
             $.ajax({
                 type:'POST',
-              url:"{{route('maincategory_delete')}}",
+              url:"{{route('delete_maincategory')}}",
               data:{
                 'id':id,
                   '_token':"{{csrf_token()}}",

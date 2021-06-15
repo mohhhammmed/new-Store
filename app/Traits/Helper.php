@@ -2,6 +2,7 @@
 namespace App\Traits;
 use App\Models\Lang;
 use App\Models\Maincategory;
+use Illuminate\Support\Facades\Auth;
 use Str;
 Trait Helper{
 
@@ -11,10 +12,12 @@ Trait Helper{
            $image->move($path,$name);
            return $name;
        }
-       public function editCategory($category_id){
-             $data_category=Maincategory::with('transes')->find($category_id);
+       public function editCategory($maincategory_id){
+             $data_category=Maincategory::with('transes')->find($maincategory_id);
              $langs=Lang::get();
-             return view('admin.main_categories.edit',compact('data_category','langs'));
+             $admin=Auth::guard('admin')->user();
+
+             return view('admin.maincategories.edit',compact('admin','data_category','langs'));
 
        }
 

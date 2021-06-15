@@ -33,7 +33,7 @@ class AuthController extends Controller
         // return $data_admin['password'];
         if(!empty($data_admin)){
             if(Auth::guard('admin')->attempt(['email'=>$data_admin['email'],'password'=>$data_admin['password']])){
-                return redirect(route('admin_dashboard'));
+                return redirect(route('dashboard'));
             }elseif(Auth::attempt(['email'=>$data_admin['email'],'password'=>$data_admin['password']])){
                 return redirect(route('home'));
             }

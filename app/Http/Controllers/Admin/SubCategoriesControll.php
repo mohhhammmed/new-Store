@@ -30,7 +30,10 @@ class SubCategoriesControll extends Controller
              }
 
        $lang_maincategory=Maincategory::where('translation_lang',app()->getLocale())->first();
-        return view('admin.subcategories.create',compact('parentSubCat','branches','maincats','lang_maincategory','admin'));
+             if(isset($maincats) && count($maincats) > 0) {
+                 return view('admin.subcategories.create', compact('parentSubCat', 'branches', 'maincats', 'lang_maincategory', 'admin'));
+             }
+             return redirect(route('create_parent'));
     }
     public function store(ValidSubcategory $request){
        // return $request;

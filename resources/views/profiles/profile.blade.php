@@ -8,7 +8,7 @@
     <!-- User Name -->
     <h5 class="text-center">{{$admin->name}}</h5>
     <p>Joined February 06, 2017</p>
-    <a href="{{route('admin_edit_profile',Auth::guard('admin')->id())}}" class="btn btn-main-sm">Edit</a>
+    <a href="{{route('profile',Auth::guard('admin')->id())}}" class="btn btn-main-sm">Edit</a>
 </div>
 <!-- Dashboard Links -->
 <div class="widget user-dashboard-menu">

@@ -49,9 +49,22 @@ class LangControll extends Controller
     }
 
        public function delete($lang_id){
-        $lang=Lang::find($lang_id);
-        $lang_id->delete();
-        return redirect(route('available_langs'))->with('success','Deleted Done');
+           $data=Lang::where('id',$request->id)->first();
+           if(isset($data) && $data!=null){
+               $data->delete();
+               return response()->json([
+                   'statue'=>true,
+                   'msg'=>'Deleted Done'
+               ]);
+           }
+           return response()->json([
+               'statue'=>false,
+               'msg'=>'Deleted fails'
+           ]);
+
+//        $lang=Lang::find($lang_id);
+//        $lang_id->delete();
+//        return redirect(route('available_langs'))->with('success','Deleted Done');
 
     }
 
@@ -79,19 +92,19 @@ class LangControll extends Controller
 
     }
 
-    public function del_lang_ajax(Request $request){
-        $data=Lang::where('id',$request->id)->first();
-        if(isset($data) && $data!=null){
-            $data->delete();
-            return response()->json([
-                'statue'=>true,
-                'msg'=>'Deleted Done'
-            ]);
-        }
-        return response()->json([
-         'statue'=>false,
-         'msg'=>'Deleted fails'
-     ]);
-     }
+//    public function delete_ajax(Request $request){
+//        $data=Lang::where('id',$request->id)->first();
+//        if(isset($data) && $data!=null){
+//            $data->delete();
+//            return response()->json([
+//                'statue'=>true,
+//                'msg'=>'Deleted Done'
+//            ]);
+//        }
+//        return response()->json([
+//         'statue'=>false,
+//         'msg'=>'Deleted fails'
+//     ]);
+//     }
 }
 

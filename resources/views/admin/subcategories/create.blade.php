@@ -98,9 +98,9 @@
 							<div class="col-md-10 offset-md-1 col-lg-10 offset-lg-0">
 								<!-- Recently Favorited -->
 								<div class="widget dashboard-container my-adslist">
-								  @include('messages.err_or_succ')
+								  @include('alarms.alarm')
 
-							  <form id='allData'  action="{{route('admin_store_subcategories')}}"method='POST'enctype='multipart/form-data'>
+							  <form id='allData'  action="{{route('store_subcategory')}}"method='POST'enctype='multipart/form-data'>
 								@csrf
 
 								<select name='maincategory_id'>
@@ -190,7 +190,7 @@
         $('#description_er').text('');
 	 $.ajax({
          type:'POST',
-		 url:"{{route('admin_store_subcategories')}}",
+		 url:"{{route('store_subcategory')}}",
 		 data:data,
 		           //'_token':'{{csrf_token()}}',
 		   processData: false,

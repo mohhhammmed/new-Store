@@ -28,8 +28,8 @@
                                     <!-- Dropdown list -->
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{route('create_parent')}}">Add parent of sub Categories</a>
-                                        <a class="dropdown-item" href="{{route('admin_maincategories')}}">Main Categories</a>
-                                        <a class="dropdown-item" href="{{route('admin_create_maincategories')}}">Add Main Categories</a>
+                                        <a class="dropdown-item" href="{{route('all_maincategories')}}">Main Categories</a>
+                                        <a class="dropdown-item" href="{{route('create_maincategory')}}">Add Main Categories</a>
                                    </div>
                             </li>
                                 <li class="nav-item dropdown dropdown-slide">
@@ -39,8 +39,8 @@
                                     <div class="dropdown-menu">
 
 
-                                        <a class="dropdowen-item" href="{{route('admin_subcategories')}}">Sub Categories</a>
-                                        <a class="dropdown-item" href="{{route('admin_create_subcategories')}}">Add Sub Categories</a>
+                                        <a class="dropdowen-item" href="{{route('all_subcategories')}}">Sub Categories</a>
+                                        <a class="dropdown-item" href="{{route('create_subcategory')}}">Add Sub Categories</a>
 
                                     </div>
                                 </li>
@@ -51,8 +51,8 @@
                                     <!-- Dropdown list -->
                                     <div class="dropdown-menu">
 
-                                        <a class="dropdown-item" href="{{route('admin_vendors')}}">All Vendors</a>
-                                        <a class="dropdown-item" href="{{route('admin_create_vendor')}}">Add Vendor</a>
+                                        <a class="dropdown-item" href="{{route('all_vendors')}}">All Vendors</a>
+                                        <a class="dropdown-item" href="{{route('create_vendor')}}">Add Vendor</a>
 
                                     </div>
                                 </li>
@@ -60,7 +60,7 @@
                             @endif
                             @if(Auth::guard('web')->user())
                             <li class="nav-item active">
-                                <a class="nav-link" href="{{route('different_all_categories')}}">All Categories</a>
+                                <a class="nav-link" href="{{route('all_stores')}}">All Categories</a>
                             </li>
                             @endif
 							<li class="nav-item dropdown dropdown-slide">
@@ -73,7 +73,7 @@
 									<a class="dropdown-item" href="{{route('available_langs')}}">Langs</a>
 
 									@if(Auth::guard('admin')->user())
-									<a class="dropdown-item" href="{{route('addLang')}}">Add Lang</a>
+									<a class="dropdown-item" href="{{route('create_Lang')}}">Add Lang</a>
 
 									@endif
 

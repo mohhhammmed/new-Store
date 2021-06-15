@@ -49,7 +49,7 @@
                 <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
                     <!-- Recently Favorited -->
                     <div class="widget dashboard-container my-adslist">
-                        @include('messages.err_or_succ')
+                        @include('alarms.alarm')
                         <h3 class="widget-header">Create Parent</h3>
                         <form id="allData" action="{{route('store_parent')}}"method='POST'enctype='multipart/form-data'>
                             @csrf

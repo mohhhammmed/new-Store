@@ -1,6 +1,6 @@
-@extends('admin.layouts.html')
+@extends('layouts.html')
 @section('content')
-    @include('admin.layouts.section')
+    @include('layouts.section')
     <section class="dashboard section">
         <!-- Container Start -->
         <div class="container">
@@ -9,28 +9,7 @@
             <div class="col-md-10 offset-md-1 col-lg-4 offset-lg-0">
               <div class="sidebar">
                 <!-- User Widget -->
-                <div class="widget user-dashboard-profile">
-                  <!-- User Image -->
-                  <div class="profile-thumb">
-                    <img src="store/images/user/user-thumb.jpg" alt="" class="rounded-circle">
-                  </div>
-                  <!-- User Name -->
-                  <h5 class="text-center">Samanta Doe</h5>
-                  <p>Joined February 06, 2017</p>
-                  <a href="user-profile.html" class="btn btn-main-sm">Edit Profile</a>
-                </div>
-                <!-- Dashboard Links -->
-                <div class="widget user-dashboard-menu">
-                  <ul>
-                    <li class="active"><a href="dashboard-my-ads.html"><i class="fa fa-user"></i> My Ads</a></li>
-                    <li><a href="dashboard-favourite-ads.html"><i class="fa fa-bookmark-o"></i> Favourite Ads <span>5</span></a></li>
-                    <li><a href="dashboard-archived-ads.html"><i class="fa fa-file-archive-o"></i>Archived Ads <span>12</span></a></li>
-                    <li><a href="dashboard-pending-ads.html"><i class="fa fa-bolt"></i> Pending Approval<span>23</span></a></li>
-                    <li><a href="#"><i class="fa fa-cog"></i> Logout</a></li>
-                    <li><a href="" data-toggle="modal" data-target="#deleteaccount"><i class="fa fa-power-off"></i>Delete
-                        Account</a></li>
-                  </ul>
-                </div>
+                @include('profiles.profile')
 
                 <!-- delete-account modal -->
                                           <!-- delete account popup modal start-->
@@ -68,7 +47,7 @@
           <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
             <!-- Recently Favorited -->
             <div class="widget dashboard-container my-adslist">
-              @include('admin.messages.err_or_succ')
+              @include('alarms.alarm')
                 <h3 class="widget-header">{{isset($data_lang) ?'Update Lang':'Add Lang'}}</h3>
           <form action="{{isset($data_lang)?route('edit_lang',$data_lang->id):route('store_lang')}}"method='POST'>
             @csrf
@@ -126,5 +105,5 @@
       <!-- Container End -->
     </section>
     <!--================
-    @include('admin.layouts.footer')
+    @include('layouts.footer')
 @endsection

@@ -11,10 +11,10 @@ class Vendor extends Model
     use HasFactory, Notifiable;
 
     protected $table='vendors';
-    protected $fillable=['name','address','email','logo','category_id','action','mobile'];
+    protected $fillable=['name','address','email','logo','maincategory_id','action','mobile'];
 
     public function scopeSelection($q){
-        return $q->select('id','name','email','address','action','logo','category_id','mobile')->paginate(paginate_count);
+        return $q->select('id','name','email','address','action','logo','maincategory_id','mobile');
     }
     public function mainCategory(){
         return $this->belongsTo(Maincategory::class,'category_id');

@@ -52,10 +52,10 @@
         <!-- Recently Favorited -->
         <div class="widget dashboard-container my-adslist">
 
-          <h3  class="widget-header">My Ads {{' '}} <a style="margin-left: 10px" href='{{route('admin_create_subcategories')}}'class="btn-sm btn btn-outline-info btn-small"><strong>Add Sub Category</strong> </a> </h3>
+          <h3  class="widget-header">My Ads {{' '}} <a style="margin-left: 10px" href='{{route('create_subcategory')}}'class="btn-sm btn btn-outline-info btn-small"><strong>Add Sub Category</strong> </a> </h3>
 
 
-          @include('messages.err_or_succ')
+          @include('alarms.alarm')
           <table class="table table-responsive product-dashboard-table">
             <thead>
               <tr>
@@ -84,7 +84,7 @@
                     <ul class="list-inline justify-content-center">
                       <li class="list-inline-item">
                         <a data-toggle="tooltip" data-placement="top" title="{{$subcategory->statue==1?'Disactivate':'Activate'}}" class="view"
-                             href="{{route('subcategories_change_statue',$subcategory->id)}}">
+                             href="{{route('change_statue_subcategory',$subcategory->id)}}">
                           <i class="fa fa-edit"></i>
                         </a>
                       </li>
@@ -94,7 +94,7 @@
                         </a>
                       </li>
                       <li class="list-inline-item">
-                        <a class="delete delData" attr="{{$subcategory->id}}"data-toggle="tooltip" data-placement="top" title="Delete" href="{{route('subcategory_delete',$subcategory->id)}}">
+                        <a class="delete delData" attr="{{$subcategory->id}}"data-toggle="tooltip" data-placement="top" title="Delete" href="{{route('delete_subcategory',$subcategory->id)}}">
                           <i class="fa fa-trash"></i>
                         </a>
                       </li>
@@ -168,9 +168,10 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
             $.ajax({
                 type:'POST',
-                url:"{{route('subcategory_delete')}}",
+                url:"{{route('delete_subcategory')}}",
                 data:{
                     'id':id,
 

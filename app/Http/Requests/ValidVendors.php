@@ -28,9 +28,9 @@ class ValidVendors extends FormRequest
             'name'=>'required|string',
             'email'=>'sometimes|nullable|unique:vendors,email,'.$this->id,
             'mobile'=>'required|numeric|min:11|unique:vendors,mobile,'.$this->id,
-            'category_id'=>'required|numeric|min:1|exists:maincategories,id',
+            'maincategory_id'=>'required|numeric|min:1|exists:maincategories,id',
            'address'=>'required|string|max:50',
-           
+
         ];
     }
 }

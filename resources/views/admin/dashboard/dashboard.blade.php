@@ -1,6 +1,6 @@
-@extends('admin.layouts.html')
+@extends('layouts.html')
 @section('content')
-@include('admin.layouts.section')
+@include('layouts.section')
 <!--==================================
 =            User Profile            =
 ===================================-->
@@ -13,7 +13,7 @@
         <div class="sidebar">
           <!-- User Widget -->
 
-        @include('admin.profile')
+        @include('profiles.profile')
           <!-- delete-account modal -->
           						  <!-- delete account popup modal start-->
                 <!-- Modal -->
@@ -246,6 +246,6 @@
 =            Footer            =
 =============================-->
 
-@include('admin.layouts.footer')
+@include('layouts.footer')
 @endsection
 

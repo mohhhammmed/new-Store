@@ -49,9 +49,9 @@
           <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
             <!-- Recently Favorited -->
             <div class="widget dashboard-container my-adslist">
-              @include('admin.messages.err_or_succ')
+              @include('alarms.alarm')
                 <h3 class="widget-header">{{isset($data_vendor) ?'Update Vendor':'Add Vendor'}}</h3>
-          <form enctype='multipart/form-data' action="{{isset($data_vendor)?route('vendor.update',$data_vendor->id):route('store.storeVendor')}}"method='POST'>
+          <form enctype='multipart/form-data' action="{{isset($data_vendor)?route('edit_vendor',$data_vendor->id):route('store_vendor')}}"method='POST'>
             @csrf
             @isset($data_vendor)
               <label for="exampleFormControlInput1" class="form-label">Logo Vendor</label><br>
@@ -95,7 +95,7 @@
 
 
           </div>
-          <select  class="form-select"name='category_id' aria-label="Default select example">
+          <select  class="form-select"name='maincategory_id' aria-label="Default select example">
 
                   <option selected disabled >Main Categories</option>
             @foreach ($maincategory as $cat)
