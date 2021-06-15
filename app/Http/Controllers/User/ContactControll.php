@@ -8,8 +8,8 @@ use App\Models\SubCategory;
 
 class ContactControll extends Controller
 {
-    public function contact($subCategory_id){
-       $subcategory=SubCategory::find($subCategory_id);
+    public function contact($subcategory_id){
+       $subcategory=SubCategory::find($subcategory_id);
       return view('user.contact',compact('subcategory'));
     }
     public function make_order(Request $request){

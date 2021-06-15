@@ -1,6 +1,7 @@
 <?php
 
 //use App\Http\Controllers\store\admin\HomeController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\store\Admin\Dashboard;
 use App\Http\Controllers\store\Admin\Vendors\VendorControll;
 use App\Http\Controllers\store\Admin\LogoutControll;
@@ -33,9 +34,9 @@ Route::get('/',function(){
 /////////////////////////////////////////////// Login Of admin/////////////////////////////////////
 
                Route::get('login',function(){
-                  return view('admin.dashboard.login');
+                  return view('auth.login');
                })->name('login')->middleware('Redir');
-                Route::POST('AdminStore',[LoginControl::class,'adminStore'])->name('AdminIndex');
+                Route::POST('authenticate',[AuthController::class,'authenticate'])->name('authenticate');
                                ////////////////                 /////////////////
 /////////////////////////////////////////////// Social Of admin/////////////////////////////////////
 
@@ -44,7 +45,7 @@ Route::get('login/{provider}/callback',[RedirectControler::class,'rdeirectLoginC
 
 
 
-Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){   
+Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
 
                                ////////////////                 /////////////////
 /////////////////////////////////////////////// Dashboard Of admin/////////////////////////////////////
@@ -52,8 +53,7 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
 
     Route::get('dashboard_admin',[Dashboard::class,'Dashboard'])->name('store.dashboard');
 
-     //page Home
-    Route::get('home',[HomeController::class,'home'])->name('home');
+
 
                                ////////////////                 /////////////////
 /////////////////////////////////////////////// Lang Of admin/////////////////////////////////////
@@ -115,7 +115,7 @@ Route::prefix('store')->group(function(){
   route::get('jj',function(){
     return getpath();
   });
-  
+
 
 
 

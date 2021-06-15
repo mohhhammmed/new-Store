@@ -15,7 +15,7 @@ class AuthController extends Controller
       return view('auth.register');
   }
     public function store(ValidRegister $request){
-    //  return $request;
+
       try{
        $image=$this->setPhoto($request->image,$request->name,'user/images');
        $data=$request->except('image');

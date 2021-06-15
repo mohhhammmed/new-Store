@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class CategoriesControll extends Controller
 {
-    public function fav_categories(Request $request){
+    public function categories_by_price(Request $request){
        // return $request;
          $the_price= round($request->the_price);
        $maincategory=Maincategory::find($request->id);
@@ -36,7 +36,7 @@ class CategoriesControll extends Controller
         return redirect()->route('all_categories',$request->id)->with('error','there is not categories');
 
     }
-    public function your_category(categoriesValid $request){
+    public function categories_search(categoriesValid $request){
 
         try{
 

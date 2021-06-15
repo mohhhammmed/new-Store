@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class SubCategory extends Model
 {
     use HasFactory;
-    protected $table='subcategories';
-    protected $fillable=['translation_of','statue','translation_lang','image','parient_id','name'];
+    protected $table='sub_categories';
+    protected $fillable=['translation_of','statue','translation_lang','image','parient_id','name','maincategory_id'];
+
+    public function maincategory(){
+        return $this->belongsTo(Maincategory::class,'maincategory_id');
+    }
 }

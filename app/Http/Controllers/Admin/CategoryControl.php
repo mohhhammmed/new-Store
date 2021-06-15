@@ -19,15 +19,7 @@ class CategoryControl extends Controller
 
   use Helper;
 
-    public function all_categories($maincategory_id){
-          $mainncategory=Maincategory::find($maincategory_id);
-     $type= $mainncategory->type->type;
-        $typeMaintCegories=TypeAllCat::where('type',$type)->first();
-         $maincategories=$typeMaintCegories->maincategories->where('translation_lang',app()->getLocale());
-        $subcategories= $mainncategory->subcategories()->paginate(paginate_count);
-        $branches=Branch::all();
-        return view('admin.allCategories.all_categories',compact('mainncategory','branches','subcategories','maincategories'));
-    }
+
 
     public function store_categories(Request $req){
         //return $req;

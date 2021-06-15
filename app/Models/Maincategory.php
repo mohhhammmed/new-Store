@@ -19,10 +19,9 @@ class Maincategory extends Model
         Maincategory::observe(MainCategoryObserv::class);
     }
 
-    public function getCategories(){
-         return $this->select('id','image','action','translation_lang','translation_of','category')->get();
-    }
-    public function scopeActive($val){
+    public function scopeSelection(){
+         return $this->select('id','image','type_id','action','translation_lang','translation_of','category');
+    }    public function scopeActive($val){
       return $val->where('action',1)->get();
     }
 
@@ -34,6 +33,16 @@ class Maincategory extends Model
     }
     public function vendors(){
       return $this->hasMany(Vendor::class,'category_id');
+    }
+    public function subcategories(){
+        return $this->hasMany(SubCategory::class,'maincategory_id');
+    }
+
+    public function parents(){
+        return $this->hasMany(Parentt::class,'maincategory_id');
+    }
+    public function type(){
+        return $this->belongsTo(TypeAllCat::class,'type_id');
     }
     public function scopeImage($q){
       return 'store/images/categories/';

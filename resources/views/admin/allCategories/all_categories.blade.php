@@ -71,7 +71,7 @@
 		<div class="row">
 			<div class="col-md-6">
 
-                @include('messages.err_or_succ')
+                @include('alarms.alarm')
 				<strong>Short</strong>
 				<select>
 					<option>Most Recent</option>

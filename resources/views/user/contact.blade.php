@@ -87,7 +87,7 @@
                    //  });
                     $.ajax({
                         type:'post',
-                        url:"{{route('makeOrder')}}",
+                        url:"{{route('make_order')}}",
                         data:data,
                         processData: false,
                         contentType: false,

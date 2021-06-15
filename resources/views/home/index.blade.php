@@ -33,7 +33,7 @@
                         <div class="container">
                             <div class="row justify-content-center">
                                 <div class="col-lg-12 col-md-12 align-content-center">
-                                    @include('messages.err_or_succ')
+                                    @include('alarms.alarm')
                                     <form action="{{route('search_categories')}}" method="POST">
                                         @csrf
                                         <div class="form-row">
@@ -103,7 +103,7 @@
                                                 <h4 class="card-title"><a href="{{route('description_category',$subcategory->id)}}">{{$subcategory->name}}</a></h4>
                                                 <ul class="list-inline product-meta">
                                                     <li class="list-inline-item">
-                                                        <a href="{{'#'.$subcategory->maincategory->type->type}}"><i class="fa fa-folder-open-o"></i>{{isset($subcategory->maincategory->type->type)?__('trans.'.$subcategory->maincategory->type->type) : '' }}</a>
+                                                        <a href="{{isset($subcategory->maincategory->type->type)?'#'.$subcategory->maincategory->type->type:''}}"><i class="fa fa-folder-open-o"></i>{{isset($subcategory->maincategory->type->type)?__('trans.'.$subcategory->maincategory->type->type) : '' }}</a>
 
                                                     </li>
                                                     <li class="list-inline-item">
