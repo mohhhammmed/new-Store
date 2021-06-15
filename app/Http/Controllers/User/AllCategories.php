@@ -17,6 +17,6 @@ class AllCategories extends Controller
         $maincategories=$typeMaintCegories->maincategories->where('translation_lang',app()->getLocale());
         $subcategories= $mainncategory->subcategories()->paginate(paginate_count);
         $branches=Branch::all();
-        return view('admin.allCategories.all_categories',compact('mainncategory','branches','subcategories','maincategories'));
+        return view('user.allCategories.all_categories',compact('mainncategory','branches','subcategories','maincategories'));
     }
 }

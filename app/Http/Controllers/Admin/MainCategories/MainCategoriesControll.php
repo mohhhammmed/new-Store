@@ -34,7 +34,7 @@ class MainCategoriesControll extends Controller
         $admin=Auth::guard('admin')->user();
         $types_categories=TypeAllCat::select('type','id')->get();
         $langs=Lang::data();
-        return view('admin.maincategories.addCategory',compact('langs','types_categories','admin'));
+        return view('admin.maincategories.create_maincategory',compact('langs','types_categories','admin'));
     }
     public function form_edit($category_id){
 

@@ -16,7 +16,7 @@ class ParentSubCategory extends Controller
         $maincategories=Maincategory::select('id','category')->where('translation_lang',app()->getLocale())->get();
         $subcategories=SubCategory::select('id','name')->get();
         $admin=Auth::guard('admin')->user();
-        return view('admin.maincategories.type_maincategories',compact('admin','maincategories','subcategories'));
+        return view('admin.subcategories.parent_subcategories',compact('admin','maincategories','subcategories'));
     }
 
 
