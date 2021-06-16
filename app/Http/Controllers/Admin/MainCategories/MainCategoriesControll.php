@@ -33,7 +33,7 @@ class MainCategoriesControll extends Controller
     public function create(){
         $admin=Auth::guard('admin')->user();
         $types_categories=TypeAllCat::select('type','id')->get();
-        $langs=Lang::data();
+        $langs=Lang::data()->where('statue',1)->get();
         return view('admin.maincategories.create_maincategory',compact('langs','types_categories','admin'));
     }
     public function form_edit($category_id){
@@ -41,12 +41,12 @@ class MainCategoriesControll extends Controller
         return $this->editCategory($category_id);
     }
 
-    public function edit(CategoryValid $req,$category_id){
-       // return $req;
-        try {
-            $maincategory = Maincategory::find($category_id);
-            if (isset($req) && !empty($req) && isset($maincategory) && $maincategory != null) {
+    public function edit(CategoryValid $req,$maincategory_id){
 
+        try {
+            $maincategory = Maincategory::find($maincategory_id);
+
+            if (isset($req) && !empty($req) && isset($maincategory) && $maincategory != null) {
 
             $some_data = $req->category[0];
             $data = Maincategory::get();
@@ -54,8 +54,8 @@ class MainCategoriesControll extends Controller
             if ($req->has('image')) {
                 $st['image'] = $this->setPhoto($req->image, $st['category'], 'admin/images/maincategories');
 
-            } else {
-                $st['image'] = $category_id->image;
+            }else {
+                $st['image'] = $maincategory->image;
             }
 
             if (!isset($st['action'])) {
@@ -71,7 +71,7 @@ class MainCategoriesControll extends Controller
         }
             return redirect(route('form_edit_maincategory',$maincategory->id))->with('error','There is proplem');
         }catch(\Exception $ex){
-            return $ex;
+            //return $ex;
             return redirect(route('form_edit_maincategory',$maincategory->id))->with('error','There is proplem');
         }
     }
@@ -81,21 +81,10 @@ class MainCategoriesControll extends Controller
     public function store(CategoryValid $r){
 
         try{
-//            $categories=Maincategory::pluck('category')->toArray();
-//            if(in_array($r->category[0]['category'],$categories)){
-//                return response()->json([
-//                    'statue'=>false,
-//                    'msg'=>'the category is arready exists'
-//                ]);
-//            }
+
             if(isset($r) && !empty($r)) {
                 DB::beginTransaction();
-//                if ($r->image == null) {
-//                    return response()->json([
-//                        'statue' => false,
-//                        'msg' => 'fill inputs',
-//                    ]);
-//                }
+
                 $image = $this->setPhoto($r->image, $r->category[0]['category'], 'admin/images/maincategories');
                 $data = collect($r->category);
                 $data_ar = $data->filter(function ($val, $key) {
@@ -147,7 +136,7 @@ class MainCategoriesControll extends Controller
             ]);
         }catch(\Exception $ex){
             DB::rollBack();
-            return $ex;
+           // return $ex;
             return response()->json([
                 'statue'=>false,
                 'msg'  =>'error',
@@ -157,7 +146,7 @@ class MainCategoriesControll extends Controller
 
      }
      public function delete(Request $request){
-        // return $request;
+
          return $this->del_ajax($request);
      }
     public function activate_statue(Maincategory $category_id){

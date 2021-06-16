@@ -9,11 +9,11 @@ class Lang extends Model
 {
     use HasFactory;
     protected $table='langs';
-    protected $fillable=['name','action','abbr','direction','locale'];
+    protected $fillable=['name','statue','abbr','direction','locale'];
     public function scopedata($d){
-        return $d->select('name','action','abbr','direction','id')->get();
+        return $d->select('name','statue','abbr','direction','id');
     }
-    public function getactionAttribute($val){
-             return $val==1 ? 'active' : 'not active';
-    } 
+    public function getStatue(){
+       return $this->statue==1 ? 'active' : 'not active';
+    }
 }

@@ -16,12 +16,8 @@ class Redirect
      */
     public function handle(Request $request, Closure $next)
     {
-
-
         if(Auth::guard('admin')->check()){
-
             return redirect(route('dashboard'));
-
         }elseif(Auth::check()){
             return redirect(route('home'));
         }

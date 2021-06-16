@@ -70,9 +70,12 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
 
     Route::get('add_lang',[LangControll::class,'create'])->name('create_Lang');
     Route::POST('store_lang',[LangControll::class,'store'])->name('store_lang');
-    Route::get('del_lang/{lang_id}',[LangControll::class,'delete'])->name('delete_lang');
+    Route::POST('del_lang',[LangControll::class,'delete'])->name('delete_lang');
     Route::get('form_edit_lang/{lang_id}',[LangControll::class,'form_edit'])->name('form_edit_lang');
     Route::POST('edit_lang/{lang_id}',[LangControll::class,'edit'])->name('edit_lang');
+    Route::get('change_statue/{lang_id}',[LangControll::class,'change_statue'])->name('change_statue_lang');
+
+
                                ////////////////                 /////////////////
 /////////////////////////////////////////////// logout Of admin/////////////////////////////////////
 
@@ -88,7 +91,7 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
         //  Route::POST('/store_categories',[MainCategoriesControll::class,'store_categories'])->name('store_categories');
           Route::get('form_edit_maincat/{maincategory_id}',[MainCategoriesControll::class,'form_edit'])->name('form_edit_maincategory');
           Route::POST('edit_maincat/{maincategory_id}',[MainCategoriesControll::class,'edit'])->name('edit_maincategory');
-          Route::get('delete_maincat',[MainCategoriesControll::class,'delete'])->name('delete_maincategory');
+          Route::POST('delete_maincat',[MainCategoriesControll::class,'delete'])->name('delete_maincategory');
           Route::get('change_statue_maincat/{maincategory_id}',[MainCategoriesControll::class,'change_statue'])->name('change_statue_maincategory');
 
 

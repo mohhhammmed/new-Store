@@ -28,5 +28,9 @@ class SubCategory extends Model
         return $this->belongsTo(Parentt::class,'parent_id');
        }
 
+    public function description(){
+        return $this->hasOne(Description::class,'subcategory_id');
+    }
+
 
 }

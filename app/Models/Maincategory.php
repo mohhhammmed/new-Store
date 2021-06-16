@@ -28,8 +28,11 @@ class Maincategory extends Model
     public function getAction(){
       return $this->action==1 ? 'active':'not active';
     }
-    public function transes(){
+    public function translations(){
       return $this->hasMany(self::class,'translation_of');
+    }
+    public function average(){
+        return $this->hasMany(AverageCategory::class,'maincategory_id');
     }
     public function vendors(){
       return $this->hasMany(Vendor::class,'category_id');
@@ -45,6 +48,6 @@ class Maincategory extends Model
         return $this->belongsTo(TypeAllCat::class,'type_id');
     }
     public function scopeImage($q){
-      return 'store/images/categories/';
+      return 'admin/images/categories/';
   }
 }

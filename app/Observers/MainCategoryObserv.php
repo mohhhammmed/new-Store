@@ -41,9 +41,32 @@ class MainCategoryObserv
      */
     public function deleted(Maincategory $maincategory)
     {
+           $subcategories=$maincategory->subcategories();
+           if(isset($subcategories)&& $subcategories->count() > 0){
+               foreach($maincategory->subcategories as $subcategory){
+                   $subcategory->description()->delete();
+                   $subcategory->parent()->delete();
+               }
+               $subcategories->delete();
+           }
 
-            $maincategory->transes()->delete();
-           // $maincategory->vendors()->delete();
+           if(isset($maincategory->average) && $maincategory->average!=null){
+               $maincategory->average()->delete();
+           }
+        $translations=$maincategory->translations();
+        if(isset($translations) && $translations->count()!=null){
+            if(isset($translations->subcategories) && $translations->subcategories->count() > 0){
+                foreach($maincategory->translations->subcategories as $trans) {
+                    foreach($trans->subcategories as $subcategory) {
+                        $subcategory->delete();
+                }
+                }
+            }
+            $translations->delete();
+
+        }
+
+
 
     }
 

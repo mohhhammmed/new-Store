@@ -12,30 +12,7 @@
       <div class="col-md-10 offset-md-1 col-lg-4 offset-lg-0">
         <div class="sidebar">
           <!-- User Widget -->
-          <div class="widget user-dashboard-profile">
-            <!-- User Image -->
-            <div class="profile-thumb">
-              <img src="store/images/user/user-thumb.jpg" alt="" class="rounded-circle">
-            </div>
-            <!-- User Name -->
-            <h5 class="text-center">Samanta Doe</h5>
-            <p>Joined February 06, 2017</p>
-            <a href="user-profile.html" class="btn btn-main-sm">Edit Profile</a>
-          </div>
-          <!-- Dashboard Links -->
-          <div class="widget user-dashboard-menu">
-            <ul>
-              <li class="active"><a href="dashboard-my-ads.html"><i class="fa fa-user"></i> My Ads</a></li>
-              <li><a href="dashboard-favourite-ads.html"><i class="fa fa-bookmark-o"></i> Favourite Ads <span>5</span></a></li>
-              <li><a href="dashboard-archived-ads.html"><i class="fa fa-file-archive-o"></i>Archived Ads <span>12</span></a></li>
-              <li><a href="dashboard-pending-ads.html"><i class="fa fa-bolt"></i> Pending Approval<span>23</span></a></li>
-              <li><a href="#"><i class="fa fa-cog"></i> Logout</a></li>
-              <li><a href="" data-toggle="modal" data-target="#deleteaccount"><i class="fa fa-power-off"></i>Delete
-                  Account</a></li>
-            </ul>
-          </div>
-
-          <!-- delete-account modal -->
+         @include('profiles.profile')
           						  <!-- delete account popup modal start-->
                 <!-- Modal -->
                 <div class="modal fade" id="deleteaccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -94,15 +71,31 @@
                       <span class="location">{{$lang->name}}</span>
                     </td>
                     <td class="product-category"><span class="categories">{{$lang->abbr}}</span></td>
-                    <td class="product-category"><span class="categories">{{$lang->action}}</span></td>
+                    <td class="product-category"><span class="categories">{{$lang->getStatue()}}</span></td>
                     <td class="action" data-title="Action">
                       <div class="">
                         <ul class="list-inline justify-content-center">
+                            @if($lang->getStatue() == 'active')
                             <li class="list-inline-item">
                                 <a data-toggle="tooltip" data-placement="top" title="{{$lang->abbr==app()->getLocale()?'the Used':'choose'}}" class="view" href="{{ LaravelLocalization::getLocalizedURL($lang->abbr) }}">
                                     <i class="fa fa-language"></i>
                                 </a>
                             </li>
+                            @endif
+
+                            @if($lang->getStatue()=='not active')
+                                    <li class="list-inline-item">
+                                        <a data-toggle="tooltip" data-placement="top" title="{{'Activate'}}" class="view" href="{{route('change_statue_lang',$lang->id)}}">
+                                            <i class="fa fa-star"></i>
+                                        </a>
+                                    </li>
+                                @else
+                                    <li class="list-inline-item">
+                                        <a data-toggle="tooltip" data-placement="top" title="{{'Disactivate'}}" class="view" href="{{route('change_statue_lang',$lang->id)}}">
+                                            <i class="fa fa-star"></i>
+                                        </a>
+                                    </li>
+                                @endif
 
                           <li class="list-inline-item">
                             <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit" href="{{route('form_edit_lang',$lang->id)}}">
@@ -131,25 +124,9 @@
 
         <!-- pagination -->
         <div class="pagination justify-content-center">
-					<nav aria-label="Page navigation example">
-						<ul class="pagination">
-							<li class="page-item">
-								<a class="page-link" href="#" aria-label="Previous">
-									<span aria-hidden="true">&laquo;</span>
-									<span class="sr-only">Previous</span>
-								</a>
-							</li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item active"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item">
-								<a class="page-link" href="#" aria-label="Next">
-									<span aria-hidden="true">&raquo;</span>
-									<span class="sr-only">Next</span>
-								</a>
-							</li>
-						</ul>
-					</nav>
+
+							{{isset($langs)?$langs->links():''}}
+
 				</div>
         <!-- pagination -->
 
@@ -168,3 +145,8 @@
 @include('layouts.footer')
 @endsection
 
+<style>
+    .w-5{
+        display: none;
+    }
+</style>

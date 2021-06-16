@@ -49,7 +49,7 @@
             <div class="widget dashboard-container my-adslist">
               @include('alarms.alarm')
                 <h3 class="widget-header">{{isset($data_lang) ?'Update Lang':'Add Lang'}}</h3>
-          <form action="{{isset($data_lang)?route('edit_lang',$data_lang->id):route('store_lang')}}"method='POST'>
+          <form id="allData" action="{{isset($data_lang)?route('edit_lang',$data_lang->id):route('store_lang')}}"method='POST'>
             @csrf
           <input class="form-control form-control-lg"name='name'value='{{isset($data_lang) ?$data_lang->name:''}}' type="text" placeholder="Name" aria-label=".form-control-lg example"> <br>
           @error('name')
@@ -95,7 +95,7 @@
             @endisset
 
           </div>
-          <button type="submit" class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">Add</button>
+          <button type="submit" id='submitData' class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">Add</button>
           </form>
             </div>
           </div>
@@ -104,6 +104,35 @@
       </div>
       <!-- Container End -->
     </section>
-    <!--================
+    <!--======== Footer ========-->
     @include('layouts.footer')
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).on('click','#submitData',function(e){
+            e.preventDefault();
+            var data = new FormData($('#allData')[0]);
+            $.ajax({
+                type:'POST',
+                url:"{{route('store_lang')}}",
+                data:data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                {{--//'_token':'{{csrf_token()}}',--}}
+        success:function(data){
+            if(data.statue==true){
+                alert(data.msg);
+            }
+            alert(data.msg);
+        },
+        error:function(reject){
+
+
+        }
+
+    });
+});
+</script>
 @endsection
