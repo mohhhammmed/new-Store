@@ -21,11 +21,12 @@ class Maincategory extends Model
 
     public function scopeSelection(){
          return $this->select('id','image','type_id','action','translation_lang','translation_of','category');
-    }    public function scopeActive($val){
+    }
+    public function scopeActive($val){
       return $val->where('action',1)->get();
     }
 
-    public function getAction(){
+    public function getStatue(){
       return $this->action==1 ? 'active':'not active';
     }
     public function translations(){

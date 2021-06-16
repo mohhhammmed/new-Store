@@ -70,14 +70,13 @@
               @if (isset($vendors))
                   @foreach ($vendors as $vendor)
                   <tr>
-
-
                     <td class="product">
                       <span class="location">{{$vendor->name}}</span>
                     </td>
-                    @if (isset($vendor->mainCategory->category))
+                    @if (isset($vendor->maincategory->category))
+
                     <td class="product">
-                      <span class="location">{{$vendor->mainCategory->category}}</span>
+                      <span class="location">{{$vendor->maincategory->category}}</span>
                     </td>
                     @else
                     <td class="product">
@@ -86,7 +85,7 @@
                     @endif
 
                     <td class="product-category"><span class="categories">{{$vendor->email}}</span></td>
-                    <td class="product-category"><span class="categories">{{$vendor->getAction()}}</span></td>
+                    <td class="product-category"><span class="categories">{{$vendor->getStatue()}}</span></td>
                     <td class="product-category"><span class="categories">{{$vendor->mobile}}</span></td>
   <td class="product-category"><span class="categories"><img height="30px" width='50px'src="{{asset('admin/images/vendors/'.$vendor->logo)}}"></span></td>
                     <td class="product-category"><span class="categories">{{$vendor->address}}</span></td>
@@ -95,7 +94,7 @@
                       <div class="">
                         <ul class="list-inline justify-content-center">
                           <li class="list-inline-item">
-                            <a data-toggle="tooltip" data-placement="top" title="{{$vendor->action==1? 'Disactivate':'Activate'}}" class="view" href="{{route('change_statue_vendor',$vendor->id)}}">
+                            <a data-toggle="tooltip" get_id="{{$vendor->id}}" data-placement="top" title="{{$vendor->getActive()? 'Disactivate':'Activate'}}" class="view change_statue" href="{{route('change_statue_vendor',$vendor->id)}}">
                               <i class="fa fa-edit"></i>
                             </a>
                           </li>
@@ -105,7 +104,7 @@
                                 </a>
                             </li>
                           <li class="list-inline-item">
-                            <a class="delete" data-toggle="tooltip" data-placement="top" title="Delete" href="{{route('delete_vendor',$vendor->id)}}">
+                            <a class="delete delData" get_id="{{$vendor->id}}" data-toggle="tooltip" data-placement="top" title="Delete" href="{{route('delete_vendor',$vendor->id)}}">
                               <i class="fa fa-trash"></i>
                             </a>
                           </li>
@@ -134,7 +133,7 @@
 									<span class="sr-only">Previous</span>
 								</a>
 							</li>
-							{{$vendors->links()}}
+							{{isset($vendors)?$vendors->links():''}}
 								<a class="page-link" href="#" aria-label="Next">
 									<span aria-hidden="true">&raquo;</span>
 									<span class="sr-only">Next</span>
@@ -158,5 +157,55 @@
 =============================-->
 
 @include('layouts.footer')
-@endsection
 
+@endsection
+@section('scripts')
+<script>
+    $(document).on('click','.delData',function(e){
+        e.preventDefault();
+        var id=$(this).attr('get_id');
+        $.ajax({
+            type:'POST',
+            url:"{{route('delete_vendor')}}",
+            data:{
+                'id':id,
+                '_token':"{{csrf_token()}}",
+            },
+
+            success:function(data){
+                if(data.statue==true) {
+                    alert(data.msg);
+                }
+                alert(data.msg);
+            },
+            error:function(reject){
+
+            }
+
+        });
+    });
+    $(document).on('click','.change_statue',function(e){
+        e.preventDefault();
+        var id=$(this).attr('get_id');
+        $.ajax({
+            type:'POST',
+            url:"{{route('change_statue_vendor')}}",
+            data:{
+                'id':id,
+                '_token':"{{csrf_token()}}",
+            },
+
+            success:function(data){
+                if(data.statue==true) {
+                    alert(data.msg);
+                }
+                alert(data.msg);
+            },
+            error:function(reject){
+
+            }
+
+        });
+    });
+</script>
+@endsection

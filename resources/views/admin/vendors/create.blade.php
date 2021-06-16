@@ -59,71 +59,46 @@
               @endisset
               <label for="exampleFormControlInput1" class="form-label">Choose Logo</label>
 
-            <input type="file" name='logo' class="form-control"><br>
-            @error('logo')
-              <div class="alert alert-danger" role="alert">
-                {{$message}}
-              </div>
-            @enderror
+            <input type="file" name='logo' class="form-control">
+              <small type="hidden" id="logo"></small><br>
 
-          <input class="form-control form-control-lg"name='name'value='{{isset($data_vendor) ?$data_vendor->name:''}}' type="text" placeholder="Name of Vendor" aria-label=".form-control-lg example"> <br>
-          @error('name')
-          <div class="alert alert-danger" role="alert">
-            {{$message}}
-          </div>
-          @enderror
-          <input class="form-control form-control-sm" type="text"name='email'value="{{isset($data_vendor) ?$data_vendor->email:''}}" placeholder="Email" aria-label=".form-control-sm example"><br>
-          @error('email')
-          <div class="alert alert-danger" role="alert">
-            {{$message}}
-          </div>
-          @enderror
-            <input  class="form-control form-control-sm" type="text"name='address'value="{{isset($data_vendor) ?$data_vendor->address:''}}" placeholder="Address" aria-label=".form-control-sm example"><br>
-             @error('address')
-            <div class="alert alert-danger" role="alert">
-              {{$message}}
-             </div>
-           @enderror
+          <input class="form-control form-control-lg"name='name'value='{{isset($data_vendor) ?$data_vendor->name:''}}' type="text" placeholder="Name of Vendor" aria-label=".form-control-lg example">
+              <small type="hidden" id="name"></small><br>
+          <input class="form-control form-control-sm" type="text"name='email'value="{{isset($data_vendor) ?$data_vendor->email:''}}" placeholder="Email" aria-label=".form-control-sm example">
+              <small type="hidden" id="email"></small><br>
+              <input  class="form-control form-control-sm" type="text"name='address'value="{{isset($data_vendor) ?$data_vendor->address:''}}" placeholder="Address" aria-label=".form-control-sm example">
+              <small type="hidden" id="address"></small><br>
           <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 
-            <input class="form-control form-control-sm" type="text"name='mobile'value="{{isset($data_vendor) ?$data_vendor->mobile:''}}" placeholder="Mobile" aria-label=".form-control-sm example"><br>
-            @error('mobile')
-            <div class="alert alert-danger" role="alert">
-              {{$message}}
-            </div>
-            @enderror
-
+            <input class="form-control form-control-sm" type="text"name='mobile'value="{{isset($data_vendor) ?$data_vendor->mobile:''}}" placeholder="Mobile" aria-label=".form-control-sm example">
+              <small type="hidden" id="mobile"></small><br>
 
           </div>
           <select  class="form-select"name='maincategory_id' aria-label="Default select example">
 
                   <option selected disabled >Main Categories</option>
             @foreach ($maincategory as $cat)
-                  <option value="{{$cat->id}}"@isset($data_vendor) @if($data_vendor->category_id==$cat->id) selected @endif  @endisset>{{$cat->category}}</option>
+                  <option value="{{$cat->id}}"@isset($data_vendor) @if($data_vendor->maincategory_id==$cat->id) selected @endif  @endisset>{{$cat->category}}</option>
             @endforeach
 
           </select>
-          @error('category_id')
-          <div class="alert alert-danger" role="alert">
-            {{$message}}
-          </div>
-          @enderror
+              <small type="hidden" id="maincategory_id"></small>
 
      @isset($data_vendor)
                   <input name='id'type='hidden'value='{{$data_vendor->id}}'>@endisset
           <br><br>
          @isset($data_vendor)
           <div class="form-check form-switch">
-            <input class="form-check-input"name='action' value='1' type="checkbox" id="flexSwitchCheckChecked" @if($data_vendor->action==1) checked @endif>
+            <input class="form-check-input"name='statue' value='1' type="checkbox" id="flexSwitchCheckChecked" @if($data_vendor->getActive()) checked @endif>
             <label class="form-check-label" for="flexSwitchCheckChecked">Statue</label>
           </div>
           @else
           <div class="form-check form-switch">
-            <input class="form-check-input"name='action' value='1' type="checkbox" id="flexSwitchCheckChecked"checked >
+            <input class="form-check-input"name='statue' value='1' type="checkbox" id="flexSwitchCheckChecked"checked >
             <label class="form-check-label" for="flexSwitchCheckChecked">Statue</label>
           </div>
          @endisset
-
+              <small type="hidden" id="statue"></small>
           <button type="submit" id="submitData" class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">{{isset($data_vendor)? 'Update' :'Add'}}</button>
           </form>
             </div>
@@ -147,6 +122,12 @@
             $(document).on('click','#submitData',function(e){
                 e.preventDefault();
                 var data = new FormData($('#allData')[0]);
+                $('#logo').text('');
+                $('#email').text('');
+                $('#mobile').text('');
+                $('#address').text('');
+                $('#maincategory_id').text('');
+                $('#name').text('');
                 $.ajax({
                     type:'POST',
                     url:"{{route('edit_vendor')}}",
@@ -162,7 +143,11 @@
                 alert(data.msg);
             },
             error:function(reject){
+                var response=$.parseJSON(reject.responseText);
+                $.each(response.errors,function(key,val){
+                    $('#' + key ).text(val[0]);
 
+                });
 
             }
 
@@ -173,6 +158,12 @@
         <script>
             $(document).on('click','#submitData',function(e){
                 e.preventDefault();
+                $('#logo').text('');
+                $('#email').text('');
+                $('#mobile').text('');
+                $('#address').text('');
+                $('#maincategory_id').text('');
+                $('#name').text('');
                 var data = new FormData($('#allData')[0]);
                 $.ajax({
                     type:'POST',
@@ -189,7 +180,11 @@
                 alert(data.msg);
             },
             error:function(reject){
+                var response=$.parseJSON(reject.responseText);
+                $.each(response.errors,function(key,val){
+                    $('#' + key ).text(val[0]);
 
+                });
 
             }
 

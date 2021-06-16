@@ -126,10 +126,10 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
           Route::get('/create',[VendorControll::class,'create'])->name('create_vendor')->middleware('RedirMainCat');
           Route::POST('/store_vendor',[VendorControll::class,'store'])->name('store_vendor');
          // Route::get('/vendors',[VendorControll::class,'Vendors'])->name('store_vendor');
-          Route::get('/delete_vendor/{vendor_id}',[VendorControll::class,'delete'])->name('delete_vendor');
+          Route::POST('/delete_vendor',[VendorControll::class,'delete'])->name('delete_vendor');
           Route::get('form_edit_vendor/{vendor_id}',[VendorControll::class,'form_edit'])->name('form_edit_vendor');
           Route::POST('edit_vendor',[VendorControll::class,'edit'])->name('edit_vendor');
-          Route::get('change_statue/{vendorId}',[VendorControll::class,'change_statue'])->name('change_statue_vendor');
+          Route::POST('change_statue',[VendorControll::class,'change_statue'])->name('change_statue_vendor');
 
 });
 });

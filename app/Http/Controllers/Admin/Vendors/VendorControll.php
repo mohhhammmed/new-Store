@@ -26,8 +26,8 @@ class VendorControll extends Controller
            try{
               DB::beginTransaction();
               if( isset($request) && !empty($request)) {
-                  if (!isset($request->action)) {
-                      $request->request->add(['action' => 0]);
+                  if (!isset($request->statue)) {
+                      $request->request->add(['statue' => 0]);
                   }
                   $logo = $this->setPhoto($request->logo, $request->name, 'admin/images/vendors');
 
@@ -43,7 +43,7 @@ class VendorControll extends Controller
 
               }
                  } catch(\Exception $ex){
-                    return $ex;
+                   // return $ex;
                DB::rollBack();
                return response()->json([
                    'statue'=>false,
@@ -55,7 +55,9 @@ class VendorControll extends Controller
 
         public function Vendors(){
             $admin=Auth::guard('admin')->user();
-                $vendors=Vendor::with('maincategory')->selection()->paginate(paginate_count);
+             $vendors=Vendor::with(['maincategory'=>function($q){
+                  $q->select('id','category','translation_lang');
+              }])->selection()->paginate(paginate_count);
              return view('admin.vendors.all_vendors',compact('vendors','admin'));
         }
 
@@ -66,24 +68,33 @@ class VendorControll extends Controller
               try{
                if(isset($vendor)&& $vendor!=null){
                    if(file_exists(Vendor::PathImage().$vendor->logo) && $vendor->logo !=null) {
-                       unlink(Vendor::Image() . $vendor->logo);
+                       unlink(Vendor::PathImage() . $vendor->logo);
                    }
-
                     $vendor->delete();
-                    return redirect(route('admin_vendors'))->with('success','Deleted Done');
-
+                   return response()->json([
+                       'statue'=>true,
+                       'msg'=>'Deleted Done Reload Page '
+                   ]);
                   }
+                  return response()->json([
+                      'statue'=>false,
+                      'msg'=>'Not  Exists'
+                  ]);
               }catch(\Exception $ex){
-
-               return redirect(route('admin_vendors'))->with('error','Deleted Fails');
+             //return $ex;
+                  return response()->json([
+                      'statue'=>false,
+                      'msg'=>'There Is Error'
+                  ]);
               }
 
         }
 
         public function form_edit(vendor $vendor_id){
             $data_vendor=$vendor_id;
+            $lang=$vendor_id->maincategory->translation_lang;
             $admin=Auth::guard('admin')->user();
-            $maincategory=Maincategory::Active()->where('translation_lang',app()->getLocale());;
+            $maincategory=Maincategory::Active()->where('translation_lang',$lang);;
           return view('admin.vendors.create',compact('admin','data_vendor','maincategory'));
         }
 
@@ -100,8 +111,8 @@ class VendorControll extends Controller
                                  $logo= $this->setPhoto($request->logo,$request->name,'admin\images\vendors');
                                 $up_vendor['logo']=$logo;
                              }
-                            if(!$request->has('action')){
-                                $up_vendor['action']=0;
+                            if(!$request->has('statue')){
+                                $up_vendor['statue']=0;
                              }
 
                          $vendor->update($up_vendor);
@@ -121,19 +132,36 @@ class VendorControll extends Controller
 
     }
 
-          public function change_statue($vendor_id){
+          public function change_statue(Request $request){
 
-            $vendor_data= Vendor::find($vendor_id) ;
+         // return $request;
              try{
-                   if(isset($vendor_data) && $vendor_data->count() > 0 ){
-                       $statue= $vendor_data->action==0 ? 1 : 0;
-                       $vendor_data->action=$statue;
-                       $vendor_data->save();
-                       return redirect(route('admin_vendors'))->with('success','The '.$vendor_data->name.' '.$vendor_data->getAction());
-                   }
+                 if(isset($request) && !empty($request) )
+                {
+                    $vendor = Vendor::find($request->id);
+
+                    if (isset($vendor) && $vendor != null) {
+                        $statue = $vendor->statue == 0 ? 1 : 0;
+                        $vendor->statue = $statue;
+                        $vendor->save();
+
+                        return response()->json([
+                            'statue' => true,
+                            'msg' => $vendor->name . ' is ' . $vendor->getStatue() . ' reload page',
+                        ]);
+                    }
+                    return response()->json([
+                        'statue' => false,
+                        'msg' => 'Not Exists',
+                    ]);
+                }
+
                 }catch(\Exception $ex){
-              //   return $ex;
-                 return redirect(route('admin_vendors'))->with('error','There is problem');
+                 return $ex;
+                 return response()->json([
+                     'statue'=>false,
+                     'msg'=>'There Is Error',
+                 ]);
                     }
           }
 
