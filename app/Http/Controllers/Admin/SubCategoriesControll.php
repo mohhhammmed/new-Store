@@ -123,6 +123,8 @@ class SubCategoriesControll extends Controller
         }
 
    }
+public function form_edit(){
 
+}
 
 }

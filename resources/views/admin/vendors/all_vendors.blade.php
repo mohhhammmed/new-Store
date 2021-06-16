@@ -99,11 +99,11 @@
                               <i class="fa fa-edit"></i>
                             </a>
                           </li>
-                          <li class="list-inline-item">
-                            <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit" href="{{route('edit_vendor',$vendor->id)}}">
-                              <i class="fa fa-pencil"></i>
-                            </a>
-                          </li>
+                            <li class="list-inline-item">
+                                <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit" href="{{route('form_edit_vendor',$vendor->id)}}">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                            </li>
                           <li class="list-inline-item">
                             <a class="delete" data-toggle="tooltip" data-placement="top" title="Delete" href="{{route('delete_vendor',$vendor->id)}}">
                               <i class="fa fa-trash"></i>

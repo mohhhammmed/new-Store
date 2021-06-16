@@ -28,4 +28,7 @@ return [
     'Popular Category'=>'المنتج المفضل',
     'Trending Adds'=>'الفئات الاكثر تداولا',
     'Results For Search'=>'نتائج البحث',
+    'Category by lang ar'=>' ادخل القسم باللغه العربيه',
+    'Category by lang en'=>' ادخل القسم باللغه الانجليزيه',
+    'Category by lang fr'=>' ادخل القسم باللغه الفرنسيه',
 ];

@@ -27,5 +27,9 @@ return [
     'Buy & Sell Near You'=>'Buy & Sell Near You',
     'Popular Category'=>'Popular Category',
     'Trending Adds'=>'Trending Adds',
-    'Results For Search'=>'Results For Search'
+    'Results For Search'=>'Results For Search',
+    'Category by lang ar en'=>'Category by lang english',
+    'Category by lang ar'=>'Category by lang arabic',
+    'Category by lang en'=>'Category by lang english',
+    'Category by lang fr'=>' Category by lang french',
 ];

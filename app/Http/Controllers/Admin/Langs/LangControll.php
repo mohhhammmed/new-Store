@@ -54,7 +54,7 @@ class LangControll extends Controller
         return view('admin.langs.available_langs',compact('langs','admin','user'));
     }
 
-       public function delete($request){
+       public function delete(Request $request){
         if(isset($request) && !empty($request)) {
             $data = Lang::where('id', $request->id)->first();
             if (isset($data) && $data != null) {
@@ -75,23 +75,36 @@ class LangControll extends Controller
 
     public function form_edit($lang_id){
         $data_lang=Lang::data()->find($lang_id);
-        return view('admin.langs.add_lang',compact('data_lang',$data_lang));
+        $admin=Auth::guard('admin')->user();
+        return view('admin.langs.add_lang',compact('admin','data_lang'));
     }
 
-    public function edit(ValidLang $request,$lang_id){
-       // return $request;
+    public function edit(ValidLang $request){
+
        try{
-        $action=$request->statue[0];
-        $data_lang=Lang::data()->find($lang_id);
-        $data_lang->update([
-            'name'=>$request->name,
-            'abbr'=>$request->abbr,
-            'action'=>$action,
-            'direction'=>$request->direction
-        ]);
-        return redirect(route('available_langs'))->with('success','Updated Done');
+           if(isset($request) && !empty($request)) {
+               $data_lang = Lang::find($request->id);
+               if (isset($data_lang) && $data_lang != null) {
+                     $up_lang=$request->except('statue');
+                    $up_lang['statue']=$request->statue[0];
+                   $data_lang->update($up_lang);
+                   return response()->json([
+                       'statue' => true,
+                       'msg' => 'Updated Done',
+                   ]);
+               }
+               return response()->json([
+                   'statue'=>false,
+                   'msg'=>'Not Found',
+               ]);
+           }
+
        }catch(\Exception $ex){
-        return redirect(route('available_langs'))->with('error','There is proplem');
+           return $ex;
+           return response()->json([
+               'statue'=>false,
+               'msg'=>'There Is Error',
+           ]);
        }
 
     }

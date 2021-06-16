@@ -35,7 +35,7 @@ class Maincategory extends Model
         return $this->hasMany(AverageCategory::class,'maincategory_id');
     }
     public function vendors(){
-      return $this->hasMany(Vendor::class,'category_id');
+      return $this->hasMany(Vendor::class,'maincategory_id');
     }
     public function subcategories(){
         return $this->hasMany(SubCategory::class,'maincategory_id');

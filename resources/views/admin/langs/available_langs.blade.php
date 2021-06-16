@@ -103,7 +103,7 @@
                             </a>
                           </li>
                           <li class="list-inline-item">
-                            <a class="delete" data-toggle="tooltip" data-placement="top" title="Delete" href="{{route('delete_lang',$lang->id)}}">
+                            <a class="delete delData" get_id="{{$lang->id}}" data-toggle="tooltip" data-placement="top" title="Delete" href="{{route('delete_lang',$lang->id)}}">
                               <i class="fa fa-trash"></i>
                             </a>
                           </li>
@@ -129,10 +129,7 @@
 
 				</div>
         <!-- pagination -->
-
       </div>
-
-
     </div>
     <!-- Row End -->
   </div>
@@ -150,3 +147,31 @@
         display: none;
     }
 </style>
+@section('scripts')
+
+    <script>
+        $(document).on('click','.delData',function(e){
+            e.preventDefault();
+            var id=$(this).attr('get_id');
+            $.ajax({
+                type:'POST',
+                url:"{{route('delete_lang')}}",
+                data:{
+                    'id':id,
+                    '_token':"{{csrf_token()}}",
+                },
+
+                success:function(data){
+                    if(data.statue==true) {
+                        alert(data.msg);
+                    }
+                    alert(data.msg);
+                },
+                error:function(reject){
+
+                }
+
+            });
+        });
+    </script>
+@endsection

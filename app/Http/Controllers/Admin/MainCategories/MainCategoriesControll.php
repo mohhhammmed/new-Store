@@ -48,25 +48,23 @@ class MainCategoriesControll extends Controller
 
             if (isset($req) && !empty($req) && isset($maincategory) && $maincategory != null) {
 
-            $some_data = $req->category[0];
-            $data = Maincategory::get();
-            $st = $req->category[0];
+            $up_maincategory = $req->category[0];
             if ($req->has('image')) {
-                $st['image'] = $this->setPhoto($req->image, $st['category'], 'admin/images/maincategories');
+                $up_maincategory['image'] = $this->setPhoto($req->image, $up_maincategory['category'], 'admin/images/maincategories');
 
             }else {
-                $st['image'] = $maincategory->image;
+                $up_maincategory['image'] = $maincategory->image;
             }
 
             if (!isset($st['action'])) {
-                $st['action'] = 0;
+                $up_maincategory['action'] = 0;
             }
                     if(file_exists(Maincategory::Image().$maincategory->image) && $maincategory->image !=null)
                     {
                         unlink(Maincategory::Image().$maincategory->image);
                     }
 
-            $maincategory->update($st);
+            $maincategory->update($up_maincategory);
             return redirect(route('form_edit_maincategory',$maincategory->id))->with('success', 'Updated Done');
         }
             return redirect(route('form_edit_maincategory',$maincategory->id))->with('error','There is proplem');
@@ -88,7 +86,7 @@ class MainCategoriesControll extends Controller
                 $image = $this->setPhoto($r->image, $r->category[0]['category'], 'admin/images/maincategories');
                 $data = collect($r->category);
                 $data_ar = $data->filter(function ($val, $key) {
-                    return $val['translation_lang'] = 'ar';
+                    return $val['translation_lang'] == 'ar';
                 });
                 if (isset($data_ar[0])) {
                     $data_ar = $data_ar[0];

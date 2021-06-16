@@ -72,14 +72,14 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
     Route::POST('store_lang',[LangControll::class,'store'])->name('store_lang');
     Route::POST('del_lang',[LangControll::class,'delete'])->name('delete_lang');
     Route::get('form_edit_lang/{lang_id}',[LangControll::class,'form_edit'])->name('form_edit_lang');
-    Route::POST('edit_lang/{lang_id}',[LangControll::class,'edit'])->name('edit_lang');
+    Route::POST('edit_lang',[LangControll::class,'edit'])->name('edit_lang');
     Route::get('change_statue/{lang_id}',[LangControll::class,'change_statue'])->name('change_statue_lang');
 
 
                                ////////////////                 /////////////////
 /////////////////////////////////////////////// logout Of admin/////////////////////////////////////
 
-          //Route::get('/mmm',[LogoutControll::class,'mm']);
+
           Route::get('/logout',[LogoutControll::class,'logout'])->name('store.logout');
 
                                ////////////////                 /////////////////
@@ -102,7 +102,7 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
     Route::POST('/store_parent',[ParentSubCategory::class,'store'])->name('store_parent');
     Route::get('/create_parent',[ParentSubCategory::class,'create'])->name('create_parent');
     //  Route::POST('/store_categories',[MainCategoriesControll::class,'store_categories'])->name('store_category');
-    Route::get('form_edit/{category_id}',[ParentSubCategory::class,'form_edit'])->name('form_edit_parent');
+    Route::get('form_edit_parent/{category_id}',[ParentSubCategory::class,'form_edit'])->name('form_edit_parent');
     Route::POST('edit_maincategory/{category_id}',[ParentSubCategory::class,'edit'])->name('edit_parent');
     Route::get('delete_parent',[ParentSubCategory::class,'delete'])->name('delete_parent');
     Route::get('change_statue/{category_id}',[ParentSubCategory::class,'change_statue'])->name('change_statue_parent');
@@ -112,9 +112,9 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
 
     Route::get('subcategories',[SubCategoriesControll::class,'subcategories'])->name('all_subcategories');
     Route::POST('/store_subcategory',[SubCategoriesControll::class,'store'])->name('store_subcategory');
-    Route::get('/create_subcategory',[SubCategoriesControll::class,'create'])->name('create_subcategory');
+    Route::get('/create_subcategory',[SubCategoriesControll::class,'create'])->name('create_subcategory')->middleware('RedirMainCat');
     //  Route::POST('/store_categories',[MainCategoriesControll::class,'store_categories'])->name('store_category');
-    Route::get('form_edit/{category_id}',[SubCategoriesControll::class,'form_edit'])->name('form_edit_subcategory');
+    Route::get('form_edit_subcategories/{category_id}',[SubCategoriesControll::class,'form_edit'])->name('form_edit_subcategory');
     Route::POST('edit_subcategory/{category_id}',[SubCategoriesControll::class,'edit'])->name('edit_subcategory');
     Route::get('delete_subcategory',[SubCategoriesControll::class,'delete'])->name('delete_subcategory');
     Route::get('change_statue_subcat/{subcategory_id}',[SubCategoriesControll::class,'change_statue'])->name('change_statue_subcategory');
@@ -123,12 +123,12 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
 /////////////////////////////////////////////// admin Of Vendors/////////////////////////////////////
 
           Route::get('/all_vendors',[VendorControll::class,'vendors'])->name('all_vendors');
-          Route::get('/create',[VendorControll::class,'create'])->name('create_vendor');
+          Route::get('/create',[VendorControll::class,'create'])->name('create_vendor')->middleware('RedirMainCat');
           Route::POST('/store_vendor',[VendorControll::class,'store'])->name('store_vendor');
          // Route::get('/vendors',[VendorControll::class,'Vendors'])->name('store_vendor');
           Route::get('/delete_vendor/{vendor_id}',[VendorControll::class,'delete'])->name('delete_vendor');
-          Route::get('form_edit/{vendor_id}',[VendorControll::class,'edit'])->name('form_edit_vendor');
-          Route::POST('edit_vendor/{vendor_id}',[VendorControll::class,'update'])->name('edit_vendor');
+          Route::get('form_edit_vendor/{vendor_id}',[VendorControll::class,'form_edit'])->name('form_edit_vendor');
+          Route::POST('edit_vendor',[VendorControll::class,'edit'])->name('edit_vendor');
           Route::get('change_statue/{vendorId}',[VendorControll::class,'change_statue'])->name('change_statue_vendor');
 
 });

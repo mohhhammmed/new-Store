@@ -16,15 +16,15 @@ class Vendor extends Model
     public function scopeSelection($q){
         return $q->select('id','name','email','address','action','logo','maincategory_id','mobile');
     }
-    public function mainCategory(){
-        return $this->belongsTo(Maincategory::class,'category_id');
+    public function maincategory(){
+        return $this->belongsTo(Maincategory::class,'maincategory_id');
     }
 
     public function getAction(){
         return $this->action==1?'active':'not active';
     }
 
-    public function scopeImage($q){
-        return 'store/images/vendors/';
+    public function scopePathImage($q){
+        return 'admin/images/vendors/';
     }
 }

@@ -1,6 +1,6 @@
-@extends('admin.layouts.html')
+@extends('layouts.html')
 @section('content')
-    @include('admin.layouts.section')
+    @include('layouts.section')
     <section class="dashboard section">
         <!-- Container Start -->
         <div class="container">
@@ -9,7 +9,7 @@
             <div class="col-md-10 offset-md-1 col-lg-4 offset-lg-0">
               <div class="sidebar">
                 <!-- admin Widget -->
-                @include('admin.profile')
+                @include('profiles.profile')
 
 
 
@@ -51,11 +51,11 @@
             <div class="widget dashboard-container my-adslist">
               @include('alarms.alarm')
                 <h3 class="widget-header">{{isset($data_vendor) ?'Update Vendor':'Add Vendor'}}</h3>
-          <form enctype='multipart/form-data' action="{{isset($data_vendor)?route('edit_vendor',$data_vendor->id):route('store_vendor')}}"method='POST'>
+          <form id="allData" enctype='multipart/form-data' action=""method='POST'>
             @csrf
             @isset($data_vendor)
               <label for="exampleFormControlInput1" class="form-label">Logo Vendor</label><br>
-              <img width="120px" height="auto" src="{{asset('store/images/vendors/'.$data_vendor->logo)}}"><br>
+              <img width="120px" height="auto" src="{{asset('admin/images/vendors/'.$data_vendor->logo)}}"><br>
               @endisset
               <label for="exampleFormControlInput1" class="form-label">Choose Logo</label>
 
@@ -109,7 +109,8 @@
           </div>
           @enderror
 
-     @isset($data_vendor)  <input name='id'type='hidden'value='{{$data_vendor->id}}'>@endisset
+     @isset($data_vendor)
+                  <input name='id'type='hidden'value='{{$data_vendor->id}}'>@endisset
           <br><br>
          @isset($data_vendor)
           <div class="form-check form-switch">
@@ -123,7 +124,7 @@
           </div>
          @endisset
 
-          <button type="submit" class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">{{isset($data_vendor)? 'Update' :'Add'}}</button>
+          <button type="submit" id="submitData" class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">{{isset($data_vendor)? 'Update' :'Add'}}</button>
           </form>
             </div>
           </div>
@@ -133,6 +134,68 @@
 
       <!-- Container End -->
     </section>
-    <!--================
-    @include('admin.layouts.footer')
+
+    <!--======Footer=====-->
+    <!--==================-->
+    @include('layouts.footer')
+@endsection
+
+@section('scripts')
+
+    @if(isset($data_vendor))
+        <script>
+            $(document).on('click','#submitData',function(e){
+                e.preventDefault();
+                var data = new FormData($('#allData')[0]);
+                $.ajax({
+                    type:'POST',
+                    url:"{{route('edit_vendor')}}",
+                    data:data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    {{--//'_token':'{{csrf_token()}}',--}}
+            success:function(data){
+                if(data.statue==true){
+                    alert(data.msg);
+                }
+                alert(data.msg);
+            },
+            error:function(reject){
+
+
+            }
+
+        });
+    });
+</script>
+@else
+        <script>
+            $(document).on('click','#submitData',function(e){
+                e.preventDefault();
+                var data = new FormData($('#allData')[0]);
+                $.ajax({
+                    type:'POST',
+                    url:"{{route('store_vendor')}}",
+                    data:data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    {{--//'_token':'{{csrf_token()}}',--}}
+            success:function(data){
+                if(data.statue==true){
+                    alert(data.msg);
+                }
+                alert(data.msg);
+            },
+            error:function(reject){
+
+
+            }
+
+        });
+    });
+</script>
+@endif
+
 @endsection

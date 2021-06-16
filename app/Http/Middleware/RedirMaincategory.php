@@ -19,7 +19,7 @@ class RedirMaincategory
     {
         $maincategories=Maincategory::all();
         if($maincategories->count() == null){
-            return redirect(route('admin.addCategories'));
+            return redirect(route('create_maincategory'));
         }
         return $next($request);
     }

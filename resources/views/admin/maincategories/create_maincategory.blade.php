@@ -168,7 +168,7 @@
 								<input type="file" name='image' class="form-control"><br>
                                       <small type="hidden"id="image"></small>
 								@foreach ($langs as $count=> $lang)
-									<h2 class="alert alert-primary d-flex align-items-center">{{'Category by lang '.$lang->name}}</h2>
+									<h2 class="alert alert-primary d-flex align-items-center">{{__('trans.Category by lang '.$lang->abbr)}}</h2>
 
 
 									<input class="form-control form-control-lg"name='category[{{$count}}][category]' type="text" placeholder="Name" aria-label=".form-control-lg example">

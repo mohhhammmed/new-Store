@@ -49,7 +49,7 @@
             <div class="widget dashboard-container my-adslist">
               @include('alarms.alarm')
                 <h3 class="widget-header">{{isset($data_lang) ?'Update Lang':'Add Lang'}}</h3>
-          <form id="allData" action="{{isset($data_lang)?route('edit_lang',$data_lang->id):route('store_lang')}}"method='POST'>
+          <form id="allData" action="{{isset($data_lang)?'':route('store_lang')}}"method='POST'>
             @csrf
           <input class="form-control form-control-lg"name='name'value='{{isset($data_lang) ?$data_lang->name:''}}' type="text" placeholder="Name" aria-label=".form-control-lg example"> <br>
           @error('name')
@@ -74,14 +74,16 @@
             <option value="ltr">Ltr</option>
             @endisset
 
-
+         @isset($data_lang)
+             <input type="hidden"name="id" value="{{$data_lang->id}}">
+                @endisset
           </select><br><br>
           <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
             @isset($data_lang)
-            <input type="radio" class="btn-check" name="statue[]"value='1' id="btnradio1"autocomplete="off" @if($data_lang->action=='active') checked @endif   >
+            <input type="radio" class="btn-check" name="statue[]"value='1' id="btnradio1"autocomplete="off" @if($data_lang->getStatue()=='active') checked @endif   >
             <label class="btn btn-outline-primary" for="btnradio1">active</label>
 
-            <input type="radio" class="btn-check" value='0' name="statue[]" id="btnradio2"autocomplete="off" @if($data_lang->action=='not active') checked @endif >
+            <input type="radio" class="btn-check" value='0' name="statue[]" id="btnradio2"autocomplete="off" @if($data_lang->getStatue()=='not active') checked @endif >
             <label class="btn btn-outline-primary" for="btnradio2">not active</label>
 
             @else
@@ -109,30 +111,61 @@
 @endsection
 
 @section('scripts')
-    <script>
-        $(document).on('click','#submitData',function(e){
-            e.preventDefault();
-            var data = new FormData($('#allData')[0]);
-            $.ajax({
-                type:'POST',
-                url:"{{route('store_lang')}}",
-                data:data,
-                processData: false,
-                contentType: false,
-                cache: false,
-                {{--//'_token':'{{csrf_token()}}',--}}
-        success:function(data){
-            if(data.statue==true){
-                alert(data.msg);
-            }
-            alert(data.msg);
-        },
-        error:function(reject){
+
+    @if(isset($data_lang))
+        <script>
+            $(document).on('click','#submitData',function(e){
+                e.preventDefault();
+                var data = new FormData($('#allData')[0]);
+                $.ajax({
+                    type:'POST',
+                    url:"{{route('edit_lang')}}",
+                    data:data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    {{--//'_token':'{{csrf_token()}}',--}}
+                    success:function(data){
+                        if(data.statue==true){
+                            alert(data.msg);
+                        }
+                        alert(data.msg);
+                    },
+                    error:function(reject){
 
 
-        }
+                    }
 
-    });
-});
-</script>
+                });
+            });
+        </script>
+    @else
+        <script>
+            $(document).on('click','#submitData',function(e){
+                e.preventDefault();
+                var data = new FormData($('#allData')[0]);
+                $.ajax({
+                    type:'POST',
+                    url:"{{route('store_lang')}}",
+                    data:data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    {{--//'_token':'{{csrf_token()}}',--}}
+                    success:function(data){
+                        if(data.statue==true){
+                            alert(data.msg);
+                        }
+                        alert(data.msg);
+                    },
+                    error:function(reject){
+
+
+                    }
+
+                });
+            });
+        </script>
+    @endif
+
 @endsection
