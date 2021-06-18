@@ -92,7 +92,7 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
           Route::get('form_edit_maincat/{maincategory_id}',[MainCategoriesControll::class,'form_edit'])->name('form_edit_maincategory');
           Route::POST('edit_maincat/{maincategory_id}',[MainCategoriesControll::class,'edit'])->name('edit_maincategory');
           Route::POST('delete_maincat',[MainCategoriesControll::class,'delete'])->name('delete_maincategory');
-          Route::get('change_statue_maincat/{maincategory_id}',[MainCategoriesControll::class,'change_statue'])->name('change_statue_maincategory');
+        //  Route::get('change_statue_maincat/{maincategory_id}',[MainCategoriesControll::class,'change_statue'])->name('change_statue_maincategory');
 
 
                                     ////////////////                 /////////////////
@@ -100,7 +100,7 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
 
     Route::get('maincategories',[ParentSubCategory::class,'subcategories'])->name('parent_subcategories');
     Route::POST('/store_parent',[ParentSubCategory::class,'store'])->name('store_parent');
-    Route::get('/create_parent',[ParentSubCategory::class,'create'])->name('create_parent');
+    Route::get('/create_parent',[ParentSubCategory::class,'create'])->name('create_parent')->middleware('RedirMainCat');
     //  Route::POST('/store_categories',[MainCategoriesControll::class,'store_categories'])->name('store_category');
     Route::get('form_edit_parent/{category_id}',[ParentSubCategory::class,'form_edit'])->name('form_edit_parent');
     Route::POST('edit_maincategory/{category_id}',[ParentSubCategory::class,'edit'])->name('edit_parent');
@@ -115,8 +115,8 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
     Route::get('/create_subcategory',[SubCategoriesControll::class,'create'])->name('create_subcategory')->middleware('RedirMainCat');
     //  Route::POST('/store_categories',[MainCategoriesControll::class,'store_categories'])->name('store_category');
     Route::get('form_edit_subcategories/{category_id}',[SubCategoriesControll::class,'form_edit'])->name('form_edit_subcategory');
-    Route::POST('edit_subcategory/{category_id}',[SubCategoriesControll::class,'edit'])->name('edit_subcategory');
-    Route::get('delete_subcategory',[SubCategoriesControll::class,'delete'])->name('delete_subcategory');
+    Route::POST('edit_subcategory',[SubCategoriesControll::class,'edit'])->name('edit_subcategory');
+    Route::POST('delete_subcategory',[SubCategoriesControll::class,'delete'])->name('delete_subcategory');
     Route::get('change_statue_subcat/{subcategory_id}',[SubCategoriesControll::class,'change_statue'])->name('change_statue_subcategory');
 
                                ////////////////                 /////////////////

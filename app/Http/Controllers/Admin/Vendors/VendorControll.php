@@ -90,12 +90,21 @@ class VendorControll extends Controller
 
         }
 
-        public function form_edit(vendor $vendor_id){
-            $data_vendor=$vendor_id;
-            $lang=$vendor_id->maincategory->translation_lang;
-            $admin=Auth::guard('admin')->user();
-            $maincategory=Maincategory::Active()->where('translation_lang',$lang);;
-          return view('admin.vendors.create',compact('admin','data_vendor','maincategory'));
+        public function form_edit($vendor_id){
+           try{
+               $vendor=vendor::find($vendor_id);
+               if(isset($vendor) && !empty($vendor)) {
+                   $lang = $vendor->maincategory->translation_lang;
+                   $admin = Auth::guard('admin')->user();
+                   $maincategory = Maincategory::Active()->where('translation_lang', $lang);;
+                   return view('admin.vendors.create', compact('admin', 'vendor', 'maincategory'));
+               }
+               return redirect(route('all_vendors'))->with('error','Not Exists');
+           }catch(\exception $ex){
+               return $ex;
+               return redirect(route('all_vendors'))->with('error','There Is Error');
+           }
+
         }
 
     public function edit(ValidVendors $request){

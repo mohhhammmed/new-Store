@@ -41,35 +41,40 @@ class MainCategoriesControll extends Controller
         return $this->editCategory($category_id);
     }
 
-    public function edit(CategoryValid $req,$maincategory_id){
+    public function edit(CategoryValid $request,$maincategory_id){
 
         try {
             $maincategory = Maincategory::find($maincategory_id);
+            if (isset($request) && !empty($request) && isset($maincategory) && $maincategory != null) {
 
-            if (isset($req) && !empty($req) && isset($maincategory) && $maincategory != null) {
-
-            $up_maincategory = $req->category[0];
-            if ($req->has('image')) {
-                $up_maincategory['image'] = $this->setPhoto($req->image, $up_maincategory['category'], 'admin/images/maincategories');
+            $up_maincategory = $request->category[0];
+            if ($request->has('image')) {
+                $up_maincategory['image'] = $this->setPhoto($request->image, $up_maincategory['category'], 'admin/images/maincategories');
 
             }else {
                 $up_maincategory['image'] = $maincategory->image;
             }
 
-            if (!isset($st['action'])) {
-                $up_maincategory['action'] = 0;
+            if (!isset($st['statue'])) {
+                $up_maincategory['statue'] = 0;
             }
-                    if(file_exists(Maincategory::Image().$maincategory->image) && $maincategory->image !=null)
+                    if(file_exists(Maincategory::PathImage().$maincategory->image) && $maincategory->image !=null)
                     {
-                        unlink(Maincategory::Image().$maincategory->image);
+                        unlink(Maincategory::PathImage().$maincategory->image);
+                    }
+                              ////////////////////////////////////
+                            ///update average for all categories///
+                    if(isset($maincategory->average) && !empty($maincategory->average)) {
+                        $this->update_averages($request->average,$maincategory);
                     }
 
-            $maincategory->update($up_maincategory);
-            return redirect(route('form_edit_maincategory',$maincategory->id))->with('success', 'Updated Done');
+                     $maincategory->update($up_maincategory);
+
+              return redirect(route('form_edit_maincategory',$maincategory->id))->with('success', 'Updated Done');
         }
             return redirect(route('form_edit_maincategory',$maincategory->id))->with('error','There is proplem');
         }catch(\Exception $ex){
-            //return $ex;
+          //  return $ex;
             return redirect(route('form_edit_maincategory',$maincategory->id))->with('error','There is proplem');
         }
     }
@@ -147,7 +152,7 @@ class MainCategoriesControll extends Controller
 
          return $this->del_ajax($request);
      }
-    public function activate_statue(Maincategory $category_id){
+    public function change_statue(Maincategory $category_id){
         $data_category=$category_id;
         // return $data_category->action;
         if(isset($data_category) && $data_category->count() >0)
@@ -165,6 +170,18 @@ class MainCategoriesControll extends Controller
         }
     }
 
+
+    public function update_averages($average,$maincategory){
+        if(isset($maincategory->translations) && $maincategory->translations->count() > 0)
+        {
+            $maincategory->average()->update(['average'=>$average]);
+            foreach($maincategory->translations  as $maincat){
+                $maincat->average()->update([
+                    'average'=>$average,
+                ]);
+            }
+        }
+    }
 
 
 }

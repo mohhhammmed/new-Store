@@ -21,16 +21,16 @@ class SubCategoriesControll extends Controller
         $branches=Branch::all();
         $admin=Auth::guard('admin')->user();
         $parentSubCat=Parentt::select('id','type')->where('translation_lang',app()->getLocale())->get();
-         $maincategories=Maincategory::select('id','category','translation_lang')->where('translation_lang',app()->getLocale())->get();
-             foreach($maincategories as $cat){
-                 if(isset($cat->parents[0])){
+        $lang_maincategory=Maincategory::where('translation_lang',app()->getLocale())->first();
+         $maincats=Maincategory::select('id','category','translation_lang')->where('translation_lang',app()->getLocale())->get();
+             foreach($maincats as $maincategory){
+                 if(isset($maincategory->parents[0])){
 
-                     $maincats[]= $cat;
+                     $maincategories[]= $maincategory;
                  }
              }
 
-       $lang_maincategory=Maincategory::where('translation_lang',app()->getLocale())->first();
-             if(isset($maincats) && count($maincats) > 0) {
+             if(isset($maincategories) && count($maincategories) > 0) {
                  return view('admin.subcategories.create', compact('parentSubCat', 'branches', 'maincats', 'lang_maincategory', 'admin'));
              }
              return redirect(route('create_parent'));
@@ -62,7 +62,7 @@ class SubCategoriesControll extends Controller
 
         }catch(\Exception $ex){
             DB::rollBack();
-          // return $ex;
+           return $ex;
             return response()->json([
               'statue'=>false,
               'msg'=>'There is error'
@@ -92,13 +92,17 @@ class SubCategoriesControll extends Controller
     }
    }
 
-   public function deleteSub(Request $request){
+   public function delete(Request $request){
         try{
             if(isset($request->id) && $request->id!=null) {
 
-                $data=SubCategory::find($request->id);
-                if(isset($data) && $data!=null){
-                    $data->delete();
+                $subcategory=SubCategory::find($request->id);
+                if(isset($subcategory) && $subcategory!=null){
+                    if(file_exists(SubCategory::PathImage().$subcategory->image) && $subcategory->image != null)
+                    {
+                        unlink(SubCategory::PathImage().$subcategory->image);
+                    }
+                    $subcategory->delete();
                     return response()->json([
                         'statue'=>true,
                         'msg'=>'Deleted Done Reload Page',
@@ -115,7 +119,7 @@ class SubCategoriesControll extends Controller
             ]);
 
         }catch(\Exception $ex){
-
+          return $ex;
             return response()->json([
                 'statue'=>false,
                 'msg'=>'There is Error',
@@ -123,8 +127,26 @@ class SubCategoriesControll extends Controller
         }
 
    }
-public function form_edit(){
+        public function form_edit($subcategory_id){
+        $subcategory_edit=Subcategory::find($subcategory_id);
+            $admin=Auth::guard('admin')->user();
+            $parentSubCat=Parentt::select('id','type')->where('translation_lang',app()->getLocale())->get();
 
-}
+            $maincats=Maincategory::select('id','category','translation_lang')->where('translation_lang',app()->getLocale())->get();
+
+            foreach($maincats as $maincategory){
+                if(isset($maincategory->parents[0])){
+                    $maincategories[]= $maincategory;
+                }
+            }
+
+            if(isset($maincategories) && count($maincategories) > 0) {
+                return view('admin.subcategories.create', compact('parentSubCat','subcategory_edit',  'maincats',  'admin'));
+            }
+        }
+
+        public function edit(Request $request){
+        return $this->editSubcategory($request);
+        }
 
 }

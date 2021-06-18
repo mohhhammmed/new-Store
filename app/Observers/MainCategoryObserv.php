@@ -26,8 +26,6 @@ class MainCategoryObserv
      */
     public function updated(Maincategory $maincategory)
     {
-        //$statue_vendor=$maincategory->vendors();
-
             if($maincategory->action==0) {
                 $maincategory->vendors()->update(['action' => $maincategory->action]);
             }
@@ -41,6 +39,8 @@ class MainCategoryObserv
      */
     public function deleted(Maincategory $maincategory)
     {
+                      ///////////////////////////
+        ///////////////////Delete Sub Categories/////////
            $subcategories=$maincategory->subcategories();
            if(isset($subcategories)&& $subcategories->count() > 0){
                foreach($maincategory->subcategories as $subcategory){
@@ -50,20 +50,34 @@ class MainCategoryObserv
                $subcategories->delete();
            }
 
+                       ////////////////////////////
+             //////////////////Delete Average////////////
            if(isset($maincategory->average) && $maincategory->average!=null){
                $maincategory->average()->delete();
            }
+
+           /////////////////////////////////////////////////////////////////////////////////
+////////////////Delete Translations && Translation's Subcategories && Translation's vendors////////////
         $translations=$maincategory->translations();
         if(isset($translations) && $translations->count()!=null){
             if(isset($translations->subcategories) && $translations->subcategories->count() > 0){
-                foreach($maincategory->translations->subcategories as $trans) {
+                foreach($maincategory->translations as $trans) {
                     foreach($trans->subcategories as $subcategory) {
                         $subcategory->delete();
-                }
+                    }
+                    foreach($trans->vendors as $vendor) {
+                        $vendor->delete();
+                    }
                 }
             }
             $translations->delete();
+        }
 
+                    ///////////////////////////////////
+  //////////////////////////////Delete Vendors///////////////////////////
+        if(isset($maincategory->vendors) && $maincategory->vendors->count() > 0 )
+        {
+            $maincategory->vendors()->delete();
         }
 
 

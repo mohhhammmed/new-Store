@@ -78,12 +78,12 @@
                   {{$maincategory->translation_lang}}
                 </td>
                 <td class="product-category"><span class="categories"> {{$maincategory->category}}</span></td>
-                <td class="product-category"><span class="categories"> {{$maincategory->getAction()}}</span></td>
+                <td class="product-category"><span class="categories"> {{$maincategory->getStatue()}}</span></td>
                 <td class="action" data-title="Action">
                   <div class="">
                     <ul class="list-inline justify-content-center">
                       <li class="list-inline-item">
-                        <a data-toggle="tooltip" data-placement="top" title="{{$maincategory->action==1? 'Disactivate':'Activate'}}" class="view" href="{{route('change_statue_maincategory',$maincategory->id)}}">
+                        <a data-toggle="tooltip" data-placement="top" title="{{$maincategory->action==1? 'Disactivate':'Activate'}}" class="view" href="">
                           <i class="fa fa-edit"></i>
                         </a>
                       </li>

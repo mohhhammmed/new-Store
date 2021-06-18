@@ -27,7 +27,7 @@
                                     </a>
                                     <!-- Dropdown list -->
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{route('create_parent')}}">Add parent of sub Categories</a>
+
                                         <a class="dropdown-item" href="{{route('all_maincategories')}}">Main Categories</a>
                                         <a class="dropdown-item" href="{{route('create_maincategory')}}">Add Main Categories</a>
                                    </div>
@@ -38,8 +38,8 @@
                                     <!-- Dropdown list -->
                                     <div class="dropdown-menu">
 
-
-                                        <a class="dropdowen-item" href="{{route('all_subcategories')}}">Sub Categories</a>
+                                        <a class="dropdown-item" href="{{route('create_parent')}}">Add parent of sub Categories</a>
+                                        <a class="dropdown-item" href="{{route('all_subcategories')}}">Sub Categories</a>
                                         <a class="dropdown-item" href="{{route('create_subcategory')}}">Add Sub Categories</a>
 
                                     </div>

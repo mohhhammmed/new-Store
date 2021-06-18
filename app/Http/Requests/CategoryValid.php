@@ -24,12 +24,13 @@ class CategoryValid extends FormRequest
     public function rules()
     {
         return [
-           
+
             'image'=>'required_Without:id|mimes:jpg,png',
             'category'=>'required|array',
-            'category.*.category'=>'required|string',
+            'category.*.category'=>'required|string|unique:maincategories,category,'.$this->id,
             'category.*.translation_lang'=>'required|string',
             'category.*.action'=>'numeric|min:1',
+            'average'=>'sometimes|nullable|numeric',
         ];
     }
 }

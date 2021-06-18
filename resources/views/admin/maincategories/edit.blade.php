@@ -50,7 +50,7 @@
             <!-- Recently Favorited -->
             <div class="widget dashboard-container my-adslist">
               @include('alarms.alarm')
-                <h3 class="widget-header">Edit Category</h3>
+                <h3 class="widget-header">Edit  Main Category</h3>
           <form  action="{{route('edit_maincategory',$data_category->id)}}"method='POST'enctype='multipart/form-data'>
             @csrf
                  <input type='hidden' name="id"value='{{$data_category->id}}'>
@@ -91,6 +91,15 @@
             <label class="form-check-label" for="flexSwitchCheckDefault">Statue</label>
           </div>
 
+              @if(app()->getLocale() == 'ar')
+              <input class="form-control form-control-sm" type="text" name='average' value="{{isset($data_category->average)?$data_category->average->average:''}}" placeholder="The Average">
+              @error('average')
+              <div class="alert alert-danger" role="alert">
+                  {{$message}}
+              </div>
+              @enderror
+              @endif
+              <br>
 
           <button type="submit" class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">Update</button>
           </form>
@@ -98,10 +107,10 @@
             </div>
 
 
-  @isset($data_category->transes)
+  @isset($data_category->translations)
 
                   <ul class="nav nav-tabs">
-  @foreach ($data_category->transes as $c=> $trans)
+  @foreach ($data_category->translations as $c=> $trans)
         <li class="nav-item">
           <a class="nav-link" data-toggle="tab" href="#home{{$trans->id}}">{{$trans->translation_lang}}</a>
         </li>
@@ -109,35 +118,23 @@
 
      </ul>
                   <div class="tab-content">
-                      @foreach ($data_category->transes as $c=> $trans)
+                      @foreach ($data_category->translations as $c=> $trans)
 
                           <div class="tab-pane container active" id="home{{$trans->id}}">
                               <div class="widget dashboard-container my-adslist">
                                   @include('alarms.alarm')
-                                  <h3 class="widget-header">Edit Category</h3>
+                                  <h3 class="widget-header">Edit Main Category</h3>
 
                                   <form class="allData" action="{{route('edit_maincategory',$trans->id)}}"method='POST'enctype='multipart/form-data'>
                                       @csrf
                                       <input type='hidden' name="id"value='{{$trans->id}}'>
-                                      {{-- photo --}}
-                                      <label for="exampleFormControlInput1" class="form-label">Image Category</label>
-                                      <img width="120px" height="auto" src="{{asset('admin/images/maincategories/'.$trans->image)}}"><br>
 
-
-                                      <input type="file" name='image' class="form-control">
-                                      @error('image')
-                                      <div class="alert alert-danger" role="alert">
-                                          {{$message}}
-                                      </div>
-                                      @enderror
                                       <br>
                                       <select name="category[0][translation_lang]">
                                           @foreach($langs as $lang)
                                               <option @if($lang->abbr==$trans->translation_lang) selected @endif>{{$lang->abbr}}</option>
                                           @endforeach
-
-
-                                      </select> <br>
+                                      </select> <br><br>
                                       @error('category.0.translation_lang')
                                       <div class="alert alert-danger" role="alert">
                                           {{$message}}

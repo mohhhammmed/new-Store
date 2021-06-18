@@ -37,8 +37,8 @@ class SubCategoryObserv
      */
     public function deleted(SubCategory $subCategory)
     {
-        if(isset($subCategory->descripe) && $subCategory->descripe->description!=null) {
-            $subCategory->descripe()->delete();
+        if(isset($subCategory->description) && $subCategory->description!=null) {
+            $subCategory->description()->delete();
         }
     }
 

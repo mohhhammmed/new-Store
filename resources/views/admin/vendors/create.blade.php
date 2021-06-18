@@ -84,12 +84,12 @@
           </select>
               <small type="hidden" id="maincategory_id"></small>
 
-     @isset($data_vendor)
-                  <input name='id'type='hidden'value='{{$data_vendor->id}}'>@endisset
+     @isset($vendor)
+                  <input name='id'type='hidden'value='{{$vendor->id}}'>@endisset
           <br><br>
-         @isset($data_vendor)
+         @isset($vendor)
           <div class="form-check form-switch">
-            <input class="form-check-input"name='statue' value='1' type="checkbox" id="flexSwitchCheckChecked" @if($data_vendor->getActive()) checked @endif>
+            <input class="form-check-input"name='statue' value='1' type="checkbox" id="flexSwitchCheckChecked" @if($vendor->getActive()) checked @endif>
             <label class="form-check-label" for="flexSwitchCheckChecked">Statue</label>
           </div>
           @else
@@ -99,7 +99,7 @@
           </div>
          @endisset
               <small type="hidden" id="statue"></small>
-          <button type="submit" id="submitData" class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">{{isset($data_vendor)? 'Update' :'Add'}}</button>
+          <button type="submit" id="submitData" class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">{{isset($vendor)? 'Update' :'Add'}}</button>
           </form>
             </div>
           </div>
@@ -117,7 +117,7 @@
 
 @section('scripts')
 
-    @if(isset($data_vendor))
+    @if(isset($vendor))
         <script>
             $(document).on('click','#submitData',function(e){
                 e.preventDefault();

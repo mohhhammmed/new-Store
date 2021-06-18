@@ -33,7 +33,7 @@ class Maincategory extends Model
       return $this->hasMany(self::class,'translation_of');
     }
     public function average(){
-        return $this->hasMany(AverageCategory::class,'maincategory_id');
+        return $this->hasOne(AverageCategory::class,'maincategory_id');
     }
     public function vendors(){
       return $this->hasMany(Vendor::class,'maincategory_id');
@@ -48,7 +48,7 @@ class Maincategory extends Model
     public function type(){
         return $this->belongsTo(TypeAllCat::class,'type_id');
     }
-    public function scopeImage($q){
-      return 'admin/images/categories/';
+    public function scopePathImage($q){
+      return 'admin/images/maincategories/';
   }
 }

@@ -89,12 +89,12 @@
                         </a>
                       </li>
                       <li class="list-inline-item">
-                        <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit" href="#">
+                        <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit" href="{{route('form_edit_subcategory',$subcategory->id)}}">
                           <i class="fa fa-pencil"></i>
                         </a>
                       </li>
                       <li class="list-inline-item">
-                        <a class="delete delData" attr="{{$subcategory->id}}"data-toggle="tooltip" data-placement="top" title="Delete" href="{{route('delete_subcategory',$subcategory->id)}}">
+                        <a class="delete delData" get_id="{{$subcategory->id}}"data-toggle="tooltip" data-placement="top" title="Delete" href="{{route('delete_subcategory',$subcategory->id)}}">
                           <i class="fa fa-trash"></i>
                         </a>
                       </li>
@@ -161,7 +161,7 @@
     <script>
         $(document).on('click','.delData',function(e){
             e.preventDefault();
-            var id= $(this).attr('attr');
+            var id= $(this).attr('get_id');
            // alert(id);
             $.ajaxSetup({
                 headers: {
