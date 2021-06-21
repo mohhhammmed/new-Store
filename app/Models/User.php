@@ -20,6 +20,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'confirmation_password',
+        'image'
     ];
 
     /**
@@ -51,5 +53,16 @@ class User extends Authenticatable
              'name'=>$user->getName(),
 
         ]);
+    }
+    public function setpasswordAttribute($val){
+        return $this->attributes['password']=bcrypt($val);
+    }
+
+    public function setCONFIRMATIONPASSWORDAttribute($val){
+        return $this->attributes['confirmation_password']=bcrypt($val);
+    }
+
+    public function scopePathImage($q){
+        return 'user/images/';
     }
 }

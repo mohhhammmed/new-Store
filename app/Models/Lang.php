@@ -16,4 +16,7 @@ class Lang extends Model
     public function getStatue(){
        return $this->statue==1 ? 'active' : 'not active';
     }
+    public function getActive(){
+        return $this->statue == 1;
+    }
 }

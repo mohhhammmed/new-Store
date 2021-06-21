@@ -32,4 +32,8 @@ return [
     'Category by lang ar'=>'Category by lang arabic',
     'Category by lang en'=>'Category by lang english',
     'Category by lang fr'=>' Category by lang french',
+    'category by lang en'=>'category by lang english',
+    'category by lang ar'=>'category by lang arabic',
+    'Edit profile'=>'Edit profile',
+    'Tell us your problem so we can help you'=>'Tell us your problem so we can help you'
 ];

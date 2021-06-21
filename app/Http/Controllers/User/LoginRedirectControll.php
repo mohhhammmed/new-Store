@@ -18,7 +18,6 @@ class LoginRedirectControll extends Controller
     public function login_redirect_callback($provider, User $us)
     {
         $user = Socialite::driver($provider)->user();
-       // return count($user);
             if($user->getEmail()){
                 $user=$us->login_redirect($user);
                 Auth::guard('web')->login($user);

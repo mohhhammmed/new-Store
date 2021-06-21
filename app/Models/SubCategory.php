@@ -13,6 +13,7 @@ class SubCategory extends Model
     protected $fillable=['translation_of','statue','translation_lang','image','the_price','parent_id','name','maincategory_id'];
 
 
+
     public static function boot(){
        parent::boot();
        SubCategory::observe(SubCategoryObserv::class);
@@ -47,6 +48,7 @@ class SubCategory extends Model
     public function description(){
         return $this->hasOne(Description::class,'subcategory_id');
     }
+
 
 
 }

@@ -51,6 +51,11 @@ class MainCategoriesControll extends Controller
             if ($request->has('image')) {
                 $up_maincategory['image'] = $this->setPhoto($request->image, $up_maincategory['category'], 'admin/images/maincategories');
 
+                  $this->update_images($up_maincategory['image'],$maincategory);
+
+                if (file_exists(Maincategory::PathImage() . $maincategory->image) && $maincategory->image != null) {
+                    unlink(Maincategory::PathImage() . $maincategory->image);
+                }
             }else {
                 $up_maincategory['image'] = $maincategory->image;
             }
@@ -58,10 +63,7 @@ class MainCategoriesControll extends Controller
             if (!isset($st['statue'])) {
                 $up_maincategory['statue'] = 0;
             }
-                    if(file_exists(Maincategory::PathImage().$maincategory->image) && $maincategory->image !=null)
-                    {
-                        unlink(Maincategory::PathImage().$maincategory->image);
-                    }
+
                               ////////////////////////////////////
                             ///update average for all categories///
                     if(isset($maincategory->average) && !empty($maincategory->average)) {
@@ -182,6 +184,13 @@ class MainCategoriesControll extends Controller
             }
         }
     }
-
+    public function update_images($image,$maincategory) {
+        $maincategories=$maincategory->translations;
+        if(isset($maincategories) && $maincategories->count() > 0) {
+            foreach ($maincategories as $maincat) {
+                $maincat->update(['image' => $image]);
+            }
+        }
+    }
 
 }

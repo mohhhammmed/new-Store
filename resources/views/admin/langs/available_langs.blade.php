@@ -78,6 +78,7 @@
                             @if($lang->getStatue() == 'active')
                             <li class="list-inline-item">
                                 <a data-toggle="tooltip" data-placement="top" title="{{$lang->abbr==app()->getLocale()?'the Used':'choose'}}" class="view" href="{{ LaravelLocalization::getLocalizedURL($lang->abbr) }}">
+
                                     <i class="fa fa-language"></i>
                                 </a>
                             </li>

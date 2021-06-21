@@ -6,6 +6,7 @@ use App\Models\Maincategory;
 use App\Models\SubCategory;
 use Illuminate\Support\Facades\Auth;
 use Str;
+use Validator;
 Trait Helper{
 
        public function setPhoto($image,$name,$path){
@@ -83,6 +84,35 @@ Trait Helper{
            }catch(\Exception $ex){
                return $ex;
            }
+
+      }
+
+      public function valid($request){
+           if($request->has('image') || $request->has('name'))
+           {
+               $request->validate([
+                   'name'=>'required_without:image',
+                   'image'=>'required_without:name|mimes:jpg,png,jpeg'
+               ]);
+
+           }
+          if($request->has('new_password'))
+          {
+             $request->validate([
+                 'password'=>'required|min:10',
+                  'new_password'=>'required|min:10',
+                  'confirm_password'=>'required_without:new_password|same:new_password'
+              ]);
+
+          }
+          if($request->has('new_email'))
+          {
+             $request->validate([
+                  'email'=>'required|exists:users,email|email',
+                  'new_email'=>'required|email|unique:users,email'
+              ]);
+
+          }
 
       }
 

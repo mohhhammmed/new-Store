@@ -51,10 +51,10 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-6">
                             <div class="widget personal-info">
-                                @include('messages.err_or_succ')
+                                @include('alarms.alarm')
 
                                 <h3 class="widget-header user">Edit Information</h3>
-                                <form action="{{route('admin.edit_profile',Auth::guard('admin')->id())}}"method='post' enctype='multipart/form-data'>
+                                <form action="{{route('edit_profile',Auth::guard('admin')->id())}}"method='post' enctype='multipart/form-data'>
                                      @csrf
                                     <!-- Name -->
                                     <div class="form-group">

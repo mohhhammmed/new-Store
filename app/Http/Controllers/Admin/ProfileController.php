@@ -12,15 +12,16 @@ use Illuminate\Support\Facades\Auth;
 class ProfileController extends Controller
 {
     use Helper;
-    public function form_edit_profile($profile_id){
+    public function form_edit($profile_id){
         $admin=Admin::find($profile_id);
-        return view('admin.editprofile',compact('admin'));
-
+        if(isset($admin) && !empty($admin)) {
+            return view('admin.editprofile', compact('admin'));
+        }
   }
 
-    public function edit_profile(ValidRegister $request,$profile_id){
+    public function edit(ValidRegister $request,$profile_id){
  try{
-     if(isset($request)){
+     if(isset($request) && !empty($request)){
         $admin=Admin::find($profile_id);
 
          if($request->password==null){

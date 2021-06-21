@@ -27,7 +27,7 @@
                         </button>
                       </div>
                       <div class="modal-body text-center">
-                        <img src="store/images/account/Account1.png" class="img-fluid mb-2" alt="">
+                        <img src="{{asset('admin/images/account/Account1.png')}}" class="img-fluid mb-2" alt="">
                         <h6 class="py-2">Are you sure you want to delete your account?</h6>
                         <p>Do you really want to delete these records? This process cannot be undone.</p>
                         <textarea name="message" id="" cols="40" rows="4" class="w-100 rounded"></textarea>

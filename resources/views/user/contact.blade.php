@@ -41,21 +41,28 @@
                                     <div class="col-lg-6 py-2">
                                         <input type="text"name="name" placeholder="Name" class="form-control" >
                                     </div>
+                                    <small type="hidden" id="name" class="text text-danger"></small>
                                     <div class="col-lg-6 py-2">
                                         <input type="text"name="email" placeholder="Your Email" class="form-control" >
                                     </div>
-
+                                    <small type="hidden" id="email" class="text text-danger"></small>
                                 </div>
                                 <div >
                                     <input type="text"name="mobile" placeholder="Mobile" class="form-control w-100" >
                                 </div>
+                                <small type="hidden" id="mobile" class="text text-danger" ></small>
                             </div>
 
                             <div >
                                 <label><strong>Your Category</strong></label>
                                 <input type="text"value="{{$subcategory->name}}"name="category" placeholder="Category Name" class="form-control w-100" required>
                             </div>
+                            <small type="hidden" id="category" class="text text-danger"></small>
 
+                            <div >
+                                <label><strong>Your Category</strong></label>
+                                <input type="hidden"value="{{$subcategory->id}}"name="id">
+                            </div>
 
                             <div class="btn-grounp">
                                 <button type="submit" id="submitData" class="btn btn-primary mt-2 float-right">SUBMIT</button>
@@ -79,6 +86,11 @@
                 $(document).on('click','#submitData',function(e){
                     e.preventDefault();
                     var data=new FormData($('#allData')[0]);
+                    $('#email').text('');
+                    $('#name').text('');
+                    $('#mobile').text('');
+                    $('#category').text('');
+
                    // return data;
                    //  $.ajaxSetup({
                    //      headers: {
@@ -100,6 +112,12 @@
                             alert(data.msg);
                         },
                         error:function(reject){
+                            var response=$.parseJSON(reject.responseText);
+                            $.each(response.errors,function(key,val){
+
+                               $('#' + key).text(val[0]);
+
+                            });
 
                         }
                     });

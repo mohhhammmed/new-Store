@@ -26,31 +26,31 @@
 			<!-- Left sidebar -->
 			<div class="col-md-8">
 				<div class="product-details">
-					<h1 class="product-title">Hp Dual Core 2gb Ram-Slim Laptop Available In Very Low Price</h1>
+					<h1 class="product-title">{{isset($category->name)?$category->name:''}}</h1>
 					<div class="product-meta">
 						<ul class="list-inline">
 							<li class="list-inline-item"><i class="fa fa-user-o"></i> By <a href="">Andrew</a></li>
-							<li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a href="">Electronics</a></li>
+							<li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a href="">{{isset($category)?$category->maincategory->type->type:''}}</a></li>
 							<li class="list-inline-item"><i class="fa fa-location-arrow"></i> Location<a href="">Dhaka Bangladesh</a></li>
 						</ul>
 					</div>
 
 					<!-- product slider -->
 					<div class="product-slider">
-						<div class="product-slider-item my-4" data-image="images/products/products-1.jpg">
+						<div class="product-slider-item my-4" data-image="{{asset('admin/images/subcategories/'.$category->image)}}">
 							<img class="img-fluid w-100" src="{{asset('admin/images/subcategories/'.$category->image)}}" alt="product-img">
 						</div>
-						<div class="product-slider-item my-4" data-image="{{asset('admin/images/products/products-2.jpg')}}">
-							<img class="d-block img-fluid w-100" src="{{asset("admin/images/products/products-2.jpg")}}" alt="Second slide">
+						<div class="product-slider-item my-4" data-image="{{asset('admin/images/subcategories/'.$category->image)}}">
+							<img class="d-block img-fluid w-100" src="{{asset('admin/images/subcategories/'.$category->image)}}" alt="Second slide">
 						</div>
-						<div class="product-slider-item my-4" data-image="{{asset("admin/images/products/products-3.jpg")}}">
-							<img class="d-block img-fluid w-100" src="images/products/products-3.jpg" alt="Third slide">
+						<div class="product-slider-item my-4" data-image="{{asset('admin/images/subcategories/'.$category->image)}}">
+							<img class="d-block img-fluid w-100" src="{{asset('admin/images/subcategories/'.$category->image)}}" alt="Third slide">
 						</div>
-						<div class="product-slider-item my-4" data-image="images/products/products-1.jpg">
-							<img class="d-block img-fluid w-100" src="images/products/products-1.jpg" alt="Third slide">
+						<div class="product-slider-item my-4" data-image="{{asset('admin/images/subcategories/'.$category->image)}}">
+							<img class="d-block img-fluid w-100" src="{{asset('admin/images/subcategories/'.$category->image)}}" alt="Third slide">
 						</div>
-						<div class="product-slider-item my-4" data-image="images/products/products-2.jpg">
-							<img class="d-block img-fluid w-100" src="images/products/products-2.jpg" alt="Third slide">
+						<div class="product-slider-item my-4" data-image="{{asset('admin/images/subcategories/'.$category->image)}}">
+							<img class="d-block img-fluid w-100" src="{{asset('admin/images/subcategories/'.$category->image)}}" alt="Third slide">
 						</div>
 					</div>
 					<!-- product slider -->
@@ -93,11 +93,11 @@
 									<tbody>
 										<tr>
 											<td>Seller Price</td>
-											<td>$450</td>
+											<td>${{round($category->the_price /18)}}</td>
 										</tr>
 										<tr>
 											<td>Added</td>
-											<td>26th December</td>
+											<td>{{$category->created_at}}</td>
 										</tr>
 										<tr>
 											<td>State</td>
@@ -105,7 +105,7 @@
 										</tr>
 										<tr>
 											<td>Brand</td>
-											<td>Apple</td>
+											<td>{{$category->parent->type}}</td>
 										</tr>
 										<tr>
 											<td>Condition</td>
@@ -113,7 +113,7 @@
 										</tr>
 										<tr>
 											<td>Model</td>
-											<td>2017</td>
+											<td>{{date('y',time())}}</td>
 										</tr>
 										<tr>
 											<td>State</td>
@@ -131,38 +131,29 @@
 								<div class="product-review">
 									<div class="media">
 										<!-- Avater -->
-										<img src="images/user/user-thumb.jpg" alt="avater">
+										<img src="{{asset(\App\Models\SubCategory::PathImage().$category->image)}}" alt="avater">
 										<div class="media-body">
 											<!-- Ratings -->
 											<div class="ratings">
 												<ul class="list-inline">
-													<li class="list-inline-item">
-														<i class="fa fa-star"></i>
-													</li>
-													<li class="list-inline-item">
-														<i class="fa fa-star"></i>
-													</li>
-													<li class="list-inline-item">
-														<i class="fa fa-star"></i>
-													</li>
-													<li class="list-inline-item">
-														<i class="fa fa-star"></i>
-													</li>
-													<li class="list-inline-item">
-														<i class="fa fa-star"></i>
-													</li>
+
+                                                        @for( $c=0; $c<5; $c++)
+                                                        <li class="list-inline-item">
+                                                            <i class="fa fa-star"></i>
+                                                        </li>
+                                                            @endfor
+
 												</ul>
 											</div>
 											<div class="name">
-												<h5>Jessica Brown</h5>
+												<h5>{{isset($category->name)?$category->name:''}}</h5>
 											</div>
 											<div class="date">
 												<p>Mar 20, 2018</p>
 											</div>
 											<div class="review-comment">
 												<p>
-													Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremqe laudant tota rem ape
-													riamipsa eaque.
+                                                    {{__('trans.Tell us your problem so we can help you')}}
 												</p>
 											</div>
 										</div>
@@ -174,7 +165,7 @@
 											<div class="starrr"></div>
 										</div>
 										<div class="review-submit">
-											<form action="#" class="row">
+											<form id="allData" action="#" class="row">
 												<div class="col-lg-6">
 													<input type="text" name="name" id="name" class="form-control" placeholder="Name">
 												</div>
@@ -185,7 +176,7 @@
 													<textarea name="review" id="review" rows="10" class="form-control" placeholder="Message"></textarea>
 												</div>
 												<div class="col-12">
-													<button type="submit" class="btn btn-main">Sumbit</button>
+													<button id="submitData" type="submit" class="btn btn-main">Sumbit</button>
 												</div>
 											</form>
 										</div>
@@ -200,7 +191,7 @@
 				<div class="sidebar">
 					<div class="widget price text-center">
 						<h4>Price</h4>
-						<p>${{ceil($category->the_price /18)}}</p>
+						<p>${{round($category->the_price /18)}}</p>
 					</div>
 					<!-- User Profile widget -->
 					<div class="widget user text-center">
@@ -260,3 +251,40 @@
 =============================-->
 @include('layouts.footer')
 @endsection
+
+
+@section('scripts')
+    <script>
+        $(document).on('click','#submitData',function(e){
+            e.preventDefault();
+            var data=new FormData($('#allData')[0]);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type:'POST',
+                url:"{{route('review')}}",
+                data:data,
+                processData: false,
+                contentType: false,
+                cache: false,
+
+                success:function(data){
+                    if(data.statue==true){
+
+                    }
+
+                },
+                error:function(reject){
+
+
+                }
+
+
+            });
+        });
+    </script>
+
+    @endsection

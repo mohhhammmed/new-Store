@@ -33,8 +33,8 @@ class VendorControll extends Controller
 
                   $arr = $request->except('logo');
                   $arr['logo'] = $logo;
-                  Vendor::create($arr);
-                  // Notification::send($customer,new VendorNotify());
+                $customer= Vendor::create($arr);
+                   Notification::send($customer,new VendorNotify());
                   DB::commit();
                   return response()->json([
                       'statue'=>true,
@@ -43,7 +43,7 @@ class VendorControll extends Controller
 
               }
                  } catch(\Exception $ex){
-                   // return $ex;
+                    return $ex;
                DB::rollBack();
                return response()->json([
                    'statue'=>false,

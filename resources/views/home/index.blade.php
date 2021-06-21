@@ -38,19 +38,11 @@
                                         @csrf
                                         <div class="form-row">
 
-                                            <div class="form-group col-md-5">
-                                                <select name="maincategory_id" class="w-100 form-control mt-lg-1 mt-md-2">
-                                                    @if(isset($maincategories) && $maincategories->count() > 0 )
-                                                    @foreach($maincategories as $category)
-                                                        <option value="{{$category->id}}">{{$category->category}}</option>
-                                                        @endforeach
-                                                        @endif
-                                                </select>
+
+                                            <div class="form-group col-md-9">
+                                                <input type="text" name="category" class="form-control my-2 my-lg-1" id="inputLocation4" placeholder="{{__('trans.category by lang '. app()->getLocale())}}">
                                             </div>
-                                            <div class="form-group col-md-5">
-                                                <input type="text" name="category" class="form-control my-2 my-lg-1" id="inputLocation4" placeholder="Type by lang {{app()->getLocale()}}">
-                                            </div>
-                                            <div class="form-group col-md-2 align-self-center">
+                                            <div style="margin-left: 50px" class="form-group col-md-2 align-self-end">
                                                 <button type="submit" class="btn btn-primary">Search Now</button>
                                             </div>
                                         </div>

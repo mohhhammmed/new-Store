@@ -104,8 +104,8 @@
 								@csrf
 
 								<select name='maincategory_id'>
-									@if(isset($maincats) && count($maincats) > 0)
-									@foreach ($maincats as $maincategory)
+									@if(isset($maincategories) && $maincategories->count() > 0)
+									@foreach ($maincategories as $maincategory)
 									<option value="{{$maincategory->id}}" @if(isset($subcategory_edit) && $subcategory_edit->maincategory_id == $maincategory->id) selected @endif>{{$maincategory->category}}</option>
 									@endforeach
 									@endif

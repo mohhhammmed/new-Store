@@ -26,4 +26,5 @@ class Admin extends Authenticatable
            return $admin;
        }
    }
+
 }

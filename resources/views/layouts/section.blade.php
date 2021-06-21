@@ -69,10 +69,21 @@
 
 								<!-- Dropdown list -->
 
+
 								<div class="dropdown-menu">
-									<a class="dropdown-item" href="{{route('available_langs')}}">Langs</a>
+
+                                    @foreach(App\Models\Lang::all() as $lang)
+                                        @if($lang->getActive())
+
+                                        <a data-toggle="tooltip" data-placement="top" title="{{$lang->abbr==app()->getLocale()?'the Used':'choose'}}" class="dropdown-item" href="{{ LaravelLocalization::getLocalizedURL($lang->abbr) }}">
+                                            {{$lang->name}}
+                                        </a>
+                                        @endif
+                                    @endforeach
+
 
 									@if(Auth::guard('admin')->user())
+                                  <a class="dropdown-item" data-toggle="tooltip" title="settings" href="{{route('available_langs')}}">Langs</a>
 									<a class="dropdown-item" href="{{route('create_Lang')}}">Add Lang</a>
 
 									@endif
@@ -82,23 +93,30 @@
 							</li>
 							@if(Auth::guard('web')->user())
 							<li class="nav-item active">
-								<a class="nav-link" href="{{route('user_profile')}}">Edit Profile</a>
+								<a class="nav-link" href="{{route('form_edit_user_profile',Auth::guard('web')->id())}}">Edit Profile</a>
 							</li>
+
+
 							@endif
 						</ul>
 						@endif
 						<ul class="navbar-nav ml-auto mt-10">
 							<li class="nav-item">
-								@auth
-								<a class="nav-link login-button" href="{{route('store.logout')}}">Logout</a>
-								@else
-								<a class="nav-link login-button" href="{{route('login')}}">Login</a>
-								@endauth
+								@if(Auth::guard('web')->user())
+								<a class="nav-link login-button" href="{{route('logout')}}">Logout</a>
+                                    @else
+                                    <a class="nav-link login-button" href="{{route('all_requests')}}">Seller Notifications<span class="badge bg-primary rounded-pill" style="color:white">{{\App\Models\Notify::find(1)->counter==0?'':\App\Models\Notify::find(1)->counter}}</span>
+                                    </a>
+								@endif
+                                @auth()
+                                    @else
+                                        <a class="nav-link login-button" href="{{route('login')}}">Login</a>
+                                    @endauth
 
 							</li>
-							@if(Auth::guard('admin')->user())
+							@if(Auth::guard('web')->user())
 							<li class="nav-item">
-								<a class="nav-link text-white add-button" href="ad-listing.html"><i class="fa fa-plus-circle"></i> Add Listing</a>
+								<a class="nav-link text-white add-button" href="{{route('sell_your_category')}}"><i class="fa fa-plus-circle"></i>Sell Category</a>
 							</li>
 							@endif
 						</ul>

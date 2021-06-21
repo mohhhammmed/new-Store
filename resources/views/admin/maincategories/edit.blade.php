@@ -55,8 +55,10 @@
             @csrf
                  <input type='hidden' name="id"value='{{$data_category->id}}'>
             {{-- photo --}}
-            <label for="exampleFormControlInput1" class="form-label">Image Category</label><br>
-            <img width="120px" height="auto" src="{{asset('admin/images/maincategories/'.$data_category->image)}}"><br>
+              <label for="exampleFormControlInput1" class="form-label">Image Category</label><br>
+              <img width="120px" height="auto" src="{{asset('admin/images/maincategories/'.$data_category->image)}}"><br>
+              <br>
+          @if(app()->getLocale() == 'ar')
 
             <label for="exampleFormControlInput1" class="form-label"></label><br>
             <input type="file" name='image' class="form-control"><br>
@@ -65,6 +67,7 @@
                 {{$message}}
               </div>
             @enderror
+              @endif
           <input class="form-control form-control-sm" type="text"name='category[0][category]'value="{{$data_category->category}}" placeholder="The Category" aria-label=".form-control-sm example"><br>
           @error('category.0.category')
           <div class="alert alert-danger" role="alert">

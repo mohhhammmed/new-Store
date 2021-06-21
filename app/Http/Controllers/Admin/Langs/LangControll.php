@@ -114,7 +114,7 @@ class LangControll extends Controller
                 if(isset($lang) && $lang !=null){
                    $statue=$lang->statue==1 ? 0 : 1 ;
                     $lang->update(['statue'=>$statue]);
-                    return redirect(route('available_langs'))->with('success','Langs ia '. $lang->getStatue());
+                    return redirect(route('available_langs'))->with('success','Lang '.$lang->name.' is '. $lang->getStatue());
                 }
             return redirect(route('avalibale_langs'))->with('error','Not Found');
         }

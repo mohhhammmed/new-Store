@@ -1,10 +1,12 @@
 <?php
 
 //use App\Http\Controllers\store\admin\HomeController;
+use App\Http\Controllers\Admin\ComplaintsOfCategories;
 use App\Http\Controllers\Admin\Dashboard;
 use App\Http\Controllers\Admin\MainCategories\MainCategoriesControll;
 use App\Http\Controllers\Admin\ParentSubCategory;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\Requests\RequestControll;
 use App\Http\Controllers\Admin\SubCategoriesControll;
 use App\Http\Controllers\Admin\Vendors\VendorControll;
 use App\Http\Controllers\Auth\AuthController;
@@ -42,7 +44,11 @@ $paginate_count=define('paginate_count',10);
                 return view('the_interface');
             });
 
+                             ////////////////                 /////////////////
+/////////////////////////////////////////////// logout Of admin/////////////////////////////////////
 
+
+Route::get('/logout',[LogoutControll::class,'logout'])->name('logout');
 
 
 Route::group(['prefix' => LaravelLocalization::setLocale(),
@@ -61,7 +67,7 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
 /////////////////////////////////////////////// Profile Of admin/////////////////////////////////////
 
 
-    Route::get('profile',[ProfileController::class,'profile'])->name('profile');
+    Route::get('form_edit_profile/{prof_id}',[ProfileController::class,'form_edit'])->name('form_edit_profile');
     Route::POST('edit_prof/{prof_id}',[ProfileController::class,'edit'])->name('edit_profile');
 
                                ////////////////                 /////////////////
@@ -76,11 +82,7 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
     Route::get('change_statue/{lang_id}',[LangControll::class,'change_statue'])->name('change_statue_lang');
 
 
-                               ////////////////                 /////////////////
-/////////////////////////////////////////////// logout Of admin/////////////////////////////////////
 
-
-          Route::get('/logout',[LogoutControll::class,'logout'])->name('store.logout');
 
                                ////////////////                 /////////////////
 /////////////////////////////////////////////// Main Categories Of admin/////////////////////////////////////
@@ -131,8 +133,31 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
           Route::POST('edit_vendor',[VendorControll::class,'edit'])->name('edit_vendor');
           Route::POST('change_statue',[VendorControll::class,'change_statue'])->name('change_statue_vendor');
 
+    Route::get('/all_requests',[RequestControll::class,'requests'])->name('all_requests');
+//    Route::get('/create',[VendorControll::class,'create'])->name('create_vendor')->middleware('RedirMainCat');
+//    Route::POST('/store_vendor',[VendorControll::class,'store'])->name('store_vendor');
+//    // Route::get('/vendors',[VendorControll::class,'Vendors'])->name('store_vendor');
+    Route::POST('/delete_request',[RequestControll::class,'delete'])->name('delete_request');
+//    Route::get('form_edit_vendor/{vendor_id}',[VendorControll::class,'form_edit'])->name('form_edit_vendor');
+//    Route::POST('edit_vendor',[VendorControll::class,'edit'])->name('edit_vendor');
+//    Route::POST('change_statue',[VendorControll::class,'change_statue'])->name('change_statue_vendor');
+
+
 });
 });
+//
+//Route::get('trashed',function(){
+//    $ss= \App\Models\CategoryOfSeller::withTrashed()->get();
+//    foreach($ss as $s) {
+//        if ($s->trashed()) {
+//           echo $s;
+//        }
+//    }
+//    return 'sdfkjsdhf';
+//});
+
+
+
 
 Route::prefix('store')->group(function(){
 

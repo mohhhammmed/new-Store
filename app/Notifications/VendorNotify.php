@@ -43,7 +43,7 @@ class VendorNotify extends Notification
          $greeting= sprintf(' !s%hello',$notifiable->name);
         //$line2 = sprintf(' %s: your store done ', $this->orders->title). '<br>' . sprintf('Faculty: %s ', $this->orders->f_name);
         return (new MailMessage)
-                    //->subject($line2)
+
                     ->subject('your store is done')
                     ->greeting($greeting)
                     ->line('your store is done.')

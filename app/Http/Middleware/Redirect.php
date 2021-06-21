@@ -18,7 +18,7 @@ class Redirect
     {
         if(Auth::guard('admin')->check()){
             return redirect(route('dashboard'));
-        }elseif(Auth::check()){
+        }elseif(Auth::guard('web')->check()){
             return redirect(route('home'));
         }
         return $next($request);

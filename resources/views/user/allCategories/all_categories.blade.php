@@ -25,7 +25,7 @@
                             <ul class="category-list">
             @foreach ($maincategories as $maincategory)
                 @foreach ($maincategory->parents as $parent)
-                <li><a href="{{route('product_categories',$parent->id)}}">{{$parent->type}}<span>{{$parent->subcategories->count()}}</span></a></li>
+                <li><a href="{{route('categories_from_parent',$parent->id)}}">{{$parent->type}}<span>{{$parent->subcategories->count()}}</span></a></li>
             @endforeach
             @endforeach
                             </ul>
@@ -146,7 +146,7 @@
                                         </a>
                                     </div>
                                     <div class="card-body">
-                                        <h4 class="card-title"><a href="{{route('single_category',$subcat->id)}}">{{$subcat->name}}</a></h4>
+                                        <h4 class="card-title"><a href="{{route('description_category',$subcat->id)}}">{{$subcat->name}}</a></h4>
                                         <ul class="list-inline product-meta">
                                             <li class="list-inline-item">
                                                 <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$subcat->maincategory->type->type}}</a>
@@ -175,12 +175,12 @@
                             <div class="card">
                                 <div class="thumb-content">
                                     <!-- <div class="price">$200</div> -->
-                                    <a href="single.html">
+                                    <a href="{{route('description_category',$category->id)}}">
                                         <img class="card-img-top img-fluid" src="{{asset("admin/images/subcategories/".$category->image)}}" alt="Card image cap">
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title"><a href="{{route('single_category',$category->id)}}">{{$category->name}}</a></h4>
+                                    <h4 class="card-title"><a href="{{route('description_category',$category->id)}}">{{$category->name}}</a></h4>
                                     <ul class="list-inline product-meta">
                                         <li class="list-inline-item">
                                             <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$category->maincategory->type->type}}</a>
@@ -245,7 +245,7 @@
                                 </a>
                             </div>
                             <div class="card-body">
-                                <h4 class="card-title"><a href="{{route('single_category',$subcategory->id)}}">{{$category->name}}</a></h4>
+                                <h4 class="card-title"><a href="{{route('description_category',$subcategory->id)}}">{{$category->name}}</a></h4>
                                 <ul class="list-inline product-meta">
                                     <li class="list-inline-item">
                                         <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$subcategory->maincategory->type->type}}</a>

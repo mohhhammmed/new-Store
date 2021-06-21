@@ -22,16 +22,10 @@ class SubCategoriesControll extends Controller
         $admin=Auth::guard('admin')->user();
         $parentSubCat=Parentt::select('id','type')->where('translation_lang',app()->getLocale())->get();
         $lang_maincategory=Maincategory::where('translation_lang',app()->getLocale())->first();
-         $maincats=Maincategory::select('id','category','translation_lang')->where('translation_lang',app()->getLocale())->get();
-             foreach($maincats as $maincategory){
-                 if(isset($maincategory->parents[0])){
-
-                     $maincategories[]= $maincategory;
-                 }
-             }
+        $maincategories=Maincategory::wherehas('parents')->select('id','category','translation_lang')->where('translation_lang',app()->getLocale())->get();
 
              if(isset($maincategories) && count($maincategories) > 0) {
-                 return view('admin.subcategories.create', compact('parentSubCat', 'branches', 'maincats', 'lang_maincategory', 'admin'));
+                 return view('admin.subcategories.create', compact('parentSubCat', 'branches', 'maincategories', 'lang_maincategory', 'admin'));
              }
              return redirect(route('create_parent'));
     }
@@ -47,6 +41,7 @@ class SubCategoriesControll extends Controller
                 $data['statue']=0;
             }
             //return $data;
+
 
            $id=SubCategory::insertGetId($data);
             Description::create([

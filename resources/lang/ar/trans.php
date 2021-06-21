@@ -31,4 +31,8 @@ return [
     'Category by lang ar'=>' ادخل القسم باللغه العربيه',
     'Category by lang en'=>' ادخل القسم باللغه الانجليزيه',
     'Category by lang fr'=>' ادخل القسم باللغه الفرنسيه',
+    'category by lang ar'=>'المنتج باللغه العربيه',
+    'category by lang en'=>'المنتج باللغه الانجليزيه',
+    'Edit profile'=>'تعديل الملف الشخصي',
+    'Tell us your problem so we can help you'=>'اخبرنا مشكلتك حتي نستطيع مساعدتك'
 ];

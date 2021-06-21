@@ -22,7 +22,7 @@ class LogoutControll extends Controller
            Auth::guard('admin')->logout($admin);
            return redirect(route('login'));
           }
-         $user=Auth::user();
+          $user=Auth::guard('web')->user();
           Auth::guard('web')->logout($user);
 
           return redirect(route('login'));
