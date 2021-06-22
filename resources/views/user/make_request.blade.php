@@ -163,7 +163,7 @@
             $('#image').text('');
             $.ajax({
                 type:'POST',
-                url:"{{route('store_seller_categories')}}",
+                url:"{{route('store_request')}}",
                 data:data,
                 processData: false,
                 contentType: false,

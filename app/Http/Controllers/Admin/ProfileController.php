@@ -37,12 +37,13 @@ class ProfileController extends Controller
           if(file_exists('admin/images/'.$admin->image) && $admin->image!=null){
               unlink('admin/images/'.$admin->image);
           }
+         // return $data;
          $admin->update($data);
-         return redirect(route('admin.form_edit_profile',$admin->id))->with('success','Updated Done');
+         return redirect(route('form_edit_profile',$admin->id))->with('success','Updated Done');
      }
  }catch(\Exception $ex){
     // return $ex;
-     return redirect(route('admin.form_edit_profile',$admin->id))->with('error','there is proplem');
+     return redirect(route('form_edit_profile',$admin->id))->with('error','there is proplem');
  }
 
     }

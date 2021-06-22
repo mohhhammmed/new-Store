@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\Dashboard;
 use App\Http\Controllers\Admin\MainCategories\MainCategoriesControll;
 use App\Http\Controllers\Admin\ParentSubCategory;
 use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\Requests\RequestControll;
+use App\Http\Controllers\Admin\Orders\CustomersOrdersControll;
 use App\Http\Controllers\Admin\SubCategoriesControll;
 use App\Http\Controllers\Admin\Vendors\VendorControll;
 use App\Http\Controllers\Auth\AuthController;
@@ -133,11 +133,19 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
           Route::POST('edit_vendor',[VendorControll::class,'edit'])->name('edit_vendor');
           Route::POST('change_statue',[VendorControll::class,'change_statue'])->name('change_statue_vendor');
 
-    Route::get('/all_requests',[RequestControll::class,'requests'])->name('all_requests');
-//    Route::get('/create',[VendorControll::class,'create'])->name('create_vendor')->middleware('RedirMainCat');
+                            /////////////////////////////////////////////////
+///////////////////////////////////////////////////Buy Category//////////////////////////////////////////////////
+
+    Route::get('/buy_orders',[CustomersOrdersControll::class,'buy_orders'])->name('buy_orders');
+    Route::POST('/delete_order',[CustomersOrdersControll::class,'delete'])->name('delete_order');
+
+                                /////////////////////////////////////////////////
+///////////////////////////////////////////////////Sell Category//////////////////////////////////////////////////
+
+    Route::get('/sell_order',[CustomersOrdersControll::class,'sell_order'])->name('sell_orders');
+    Route::POST('/del_order',[CustomersOrdersControll::class,'del'])->name('del_orders');
 //    Route::POST('/store_vendor',[VendorControll::class,'store'])->name('store_vendor');
 //    // Route::get('/vendors',[VendorControll::class,'Vendors'])->name('store_vendor');
-    Route::POST('/delete_request',[RequestControll::class,'delete'])->name('delete_request');
 //    Route::get('form_edit_vendor/{vendor_id}',[VendorControll::class,'form_edit'])->name('form_edit_vendor');
 //    Route::POST('edit_vendor',[VendorControll::class,'edit'])->name('edit_vendor');
 //    Route::POST('change_statue',[VendorControll::class,'change_statue'])->name('change_statue_vendor');

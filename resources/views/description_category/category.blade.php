@@ -200,7 +200,7 @@
 						<p class="member-time">Member Since Jun 27, 2017</p>
 						<a href="">See all ads</a>
 						<ul class="list-inline mt-20">
-							<li class="list-inline-item"><a href="{{route('contact',$category->id)}}" class="btn btn-contact d-inline-block  btn-primary px-lg-5 my-1 px-md-3">Contact</a></li>
+							<li class="list-inline-item"><a href="{{route('make_order',$category->id)}}" class="btn btn-contact d-inline-block  btn-primary px-lg-5 my-1 px-md-3">Contact</a></li>
 
 						</ul>
 					</div>

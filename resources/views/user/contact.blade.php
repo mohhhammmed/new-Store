@@ -33,11 +33,14 @@
                 </div>
             </div>
             <div class="col-md-6">
+                @include('alarms.alarm')
                     <form id="allData" action="" method="post">
                         @csrf
+
                         <fieldset class="p-4">
                             <div class="form-group">
                                 <div class="row">
+
                                     <div class="col-lg-6 py-2">
                                         <input type="text"name="name" placeholder="Name" class="form-control" >
                                     </div>
@@ -46,11 +49,19 @@
                                         <input type="text"name="email" placeholder="Your Email" class="form-control" >
                                     </div>
                                     <small type="hidden" id="email" class="text text-danger"></small>
+
                                 </div>
                                 <div >
                                     <input type="text"name="mobile" placeholder="Mobile" class="form-control w-100" >
                                 </div>
-                                <small type="hidden" id="mobile" class="text text-danger" ></small>
+                                <small type="hidden" id="mobile" class="text text-danger" ></small><br>
+                                <div >
+                                    <input type="text"name="address" placeholder="Address" class="form-control w-100" >
+                                </div>
+                                <small type="hidden" id="address" class="text text-danger" ></small>
+
+                                <img src="{{asset(\App\Models\SubCategory::PathImage().$subcategory->image)}}"width="160px" height="150px">
+
                             </div>
 
                             <div >
@@ -60,7 +71,7 @@
                             <small type="hidden" id="category" class="text text-danger"></small>
 
                             <div >
-                                <label><strong>Your Category</strong></label>
+
                                 <input type="hidden"value="{{$subcategory->id}}"name="id">
                             </div>
 
@@ -88,6 +99,7 @@
                     var data=new FormData($('#allData')[0]);
                     $('#email').text('');
                     $('#name').text('');
+                    $('#address').text('');
                     $('#mobile').text('');
                     $('#category').text('');
 
@@ -99,7 +111,7 @@
                    //  });
                     $.ajax({
                         type:'post',
-                        url:"{{route('make_order')}}",
+                        url:"{{route('store_order')}}",
                         data:data,
                         processData: false,
                         contentType: false,

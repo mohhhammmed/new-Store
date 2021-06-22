@@ -30,23 +30,23 @@
 							</tr>
 						</thead>
 						<tbody>
-                        @if(isset($requests) && !empty($requests))
-                            @foreach($requests as $request)
+                        @if(isset($orders) && !empty($orders))
+                            @foreach($orders as $order)
                                 <tr>
-                                    <td>{{$request->name}}</td>
-                                    <td class="text-center">{{$request->email}}</td>
-                                    <td class="text-center">{{$request->category}}</td>
+                                    <td>{{$order->name}}</td>
+                                    <td class="text-center">{{$order->email}}</td>
+                                    <td class="text-center">{{$order->category}}</td>
                                     <td class="product-thumb text-center">
-                                        <img width="80px" height="auto" src="{{asset(\App\Models\CategoryOfSeller::PathImage().$request->image)}}" alt="image description"></td>
-                                    <td class="text-center">{{$request->mobile}}</td>
+                                        <img width="80px" height="auto" src="{{asset(\App\Models\CategoryOfSeller::PathImage().$order->image)}}" alt="image description"></td>
+                                    <td class="text-center">{{$order->mobile}}</td>
                                     <td class="product-details text-center">
 
-                                        {{$request->description}}
+                                        {{$order->description}}
                                     </td>
-                                    <td class="text-center">{{$request->address}}</td>
-                                    <td class="text-center">{{$request->the_price}}</td>
-                                    <td class="text-center">{{$request->condition}}</td>
-{{--                                    <td class="product-category"><span class="categories">Laptops</span></td>--}}
+                                    <td class="text-center">{{$order->address}}</td>
+                                    <td class="text-center">{{$order->the_price}}</td>
+                                    <td class="text-center">{{$order->condition}}</td>
+                                    <td class="product-category"><span class="categories">Laptops</span></td>
                                     <td class="action text-center" data-title="Action">
                                         <div class="">
                                             <ul class="list-inline justify-content-center">
@@ -56,7 +56,7 @@
                                                     </a>
                                                 </li>
                                                 <li class="list-inline-item">
-                                                    <a data-toggle="tooltip" data-placement="top" title="trash" get_id="{{$request->id}}" class="delete delData" href="{{route('delete_request',$request->id)}}">
+                                                    <a data-toggle="tooltip" data-placement="top" title="trash" get_id="{{$order->id}}" class="delete delData" href="{{route('delete_order',$order->id)}}">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
                                                 </li>
@@ -65,6 +65,7 @@
                                     </td>
                                 </tr>
                             @endforeach
+                            @else
                             @endif
 
 						</tbody>
@@ -77,7 +78,7 @@
 					<nav aria-label="Page navigation example">
 						<ul class="pagination">
 
-                            {{$requests->links()}}
+                            {{$orders->links()}}
 
 
 						</ul>
@@ -116,7 +117,7 @@
             var id=$(this).attr('get_id');
             $.ajax({
                 type:'POST',
-                url:"{{route('delete_request')}}",
+                url:"{{route('delete_order')}}",
                 data:{
                     'id':id,
                     '_token':"{{csrf_token()}}",

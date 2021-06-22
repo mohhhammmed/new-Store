@@ -104,8 +104,14 @@
 							<li class="nav-item">
 								@if(Auth::guard('web')->user())
 								<a class="nav-link login-button" href="{{route('logout')}}">Logout</a>
-                                    @else
-                                    <a class="nav-link login-button" href="{{route('all_requests')}}">Seller Notifications<span class="badge bg-primary rounded-pill" style="color:white">{{\App\Models\Notify::find(1)->counter==0?'':\App\Models\Notify::find(1)->counter}}</span>
+                                    @elseif(Auth::guard('admin')->user())
+                                    <a class="nav-link login-button" href="{{route('buy_orders')}}">
+                                        Requests Notifications<span class="badge bg-primary rounded-pill" style="color:white">
+                                            {{\App\Models\Notify::GetNotifyBuy() != null?\App\Models\Notify::GetNotifyBuy()->counter:0}}</span>
+                                    </a>
+                                              <br>
+                                    <a class="nav-link login-button" href="{{route('sell_orders')}}">Order Notifications<span class="badge bg-primary rounded-pill" style="color:white">
+                                            {{\App\Models\Notify::GetNotifyOrder() != null ?\App\Models\Notify::GetNotifyOrder()->counter:0}}</span>
                                     </a>
 								@endif
                                 @auth()
@@ -116,7 +122,7 @@
 							</li>
 							@if(Auth::guard('web')->user())
 							<li class="nav-item">
-								<a class="nav-link text-white add-button" href="{{route('sell_your_category')}}"><i class="fa fa-plus-circle"></i>Sell Category</a>
+								<a class="nav-link text-white add-button" href="{{route('make_request')}}"><i class="fa fa-plus-circle"></i>Sell Category</a>
 							</li>
 							@endif
 						</ul>

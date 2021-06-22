@@ -23,8 +23,12 @@ class AllCategories extends Controller
 
     public function categories_from_parent($parient_id){
         try{
-            $categories=Parentt::find($parient_id)->subcategories;
-            return view('user.allCategories.all_categories',compact('categories'));
+          $parent=Parentt::find($parient_id);
+            if(isset($parent) && $parent->count() > 0) {
+                $categories=$parent->subcategories;
+                return view('user.allCategories.all_categories', compact('categories'));
+            }
+            return redirect()->back()->with('error','Categories Not Exists');
         }catch(\Exception $ex){
             return $ex;
         }

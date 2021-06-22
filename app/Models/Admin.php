@@ -11,7 +11,7 @@ class Admin extends Authenticatable
     //use AuthenticableTrait;
     use HasFactory;
     protected $table='admins';
-    protected $fillable=['email','password'];
+    protected $fillable=['email','password','name','image','confirm_password'];
    public $timestamps=false;
    public function redir($user){
               $admin=$this->where('email',$user->getEmail())->first();
