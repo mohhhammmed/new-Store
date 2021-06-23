@@ -45,10 +45,15 @@ class MainCategoryObserv
            if(isset($subcategories)&& $subcategories->count() > 0){
                foreach($maincategory->subcategories as $subcategory){
                    $subcategory->description()->delete();
-                   $subcategory->parent()->delete();
                }
                $subcategories->delete();
            }
+                   ////////////////////////////////////////
+           ////////////////Del Parent Subcategories/////////////////////
+                    if(isset($maincategory->parents) && $maincategory->parents->count() > 0)
+                    {
+                        $maincategory->parents()->delete();
+                    }
 
                        ////////////////////////////
              //////////////////Delete Average////////////

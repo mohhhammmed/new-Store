@@ -50,7 +50,7 @@
                                                         </a>
                                                     </li>
                                                     <li class="list-inline-item">
-                                                        <a data-toggle="tooltip" data-placement="top" title="trash" get_id="{{$order->id}}" class="delete delData" href="{{route('del_orders',$order->id)}}">
+                                                        <a data-toggle="tooltip" data-placement="top" title="trash" get_id="{{$order->id}}" class="delete delData" href="{{route('delete_orders',$order->id)}}">
                                                             <i class="fa fa-trash"></i>
                                                         </a>
                                                     </li>
@@ -111,7 +111,7 @@
             var id=$(this).attr('get_id');
             $.ajax({
                 type:'POST',
-                url:"{{route('del_orders')}}",
+                url:"{{route('delete_orders')}}",
                 data:{
                     'id':id,
                     '_token':"{{csrf_token()}}",

@@ -87,10 +87,11 @@ Route::group(['prefix'=>'user','middleware'=>'auth'],function(){
 
                           ///////////////////////////////////////
 ///////////////////////////////////////Requests and Orders///////////////////////////////////////////
-    Route::get('make_request',[ContactControll::class,'make_request'])->name('make_request');
-    Route::POST('store_request',[ContactControll::class,'store_request'])->name('store_request');
-    Route::POST('/store_order',[ContactControll::class,'store_order'])->name('store_order');
+    Route::get('make_request',[ContactControll::class,'make_over'])->name('make_over');
+    Route::POST('store_over',[ContactControll::class,'store_over'])->name('store_over');
     Route::get('make_order/{subcategory_id}',[ContactControll::class,'make_order'])->name('make_order');
+    Route::POST('/store_order',[ContactControll::class,'store_order'])->name('store_order');
+
 
 
 

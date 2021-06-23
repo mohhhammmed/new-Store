@@ -25,8 +25,8 @@ class CategoriesOfSellerValid extends FormRequest
     {
         return [
             'name'=>'required|string',
-            'email'=>'required|email|unique:categories_of_sellers,email',
-            'mobile'=>'required|numeric|unique:categories_of_sellers,mobile',
+            'email'=>'required|email|unique:overs,email',
+            'mobile'=>'required|numeric|unique:overs,mobile',
             'address'=>'required|string',
             'category'=>'required|string',
             'the_price'=>'required|numeric',

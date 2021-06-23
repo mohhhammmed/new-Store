@@ -70,8 +70,26 @@
                             </div>
                             <small type="hidden" id="category" class="text text-danger"></small>
 
-                            <div >
+                            <div class="col-lg-6 my-3">
+                                <span class="mb-3 d-block">Our payment methods:</span>
+                                <ul>
+                                    <li>
+                                        <input type="radio" id="bank-transfer"value="Direct Bank Transfer" name="paying_off">
+                                        <label for="bank-transfer" class="font-weight-bold text-dark py-1">Direct Bank Transfer</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" id="Cheque-Payment"value="Cheque Payment" name="paying_off">
+                                        <label for="Cheque-Payment" class="font-weight-bold text-dark py-1">Cheque Payment</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" id="Credit-Card" value="Credit Card" name="paying_off">
+                                        <label for="Credit-Card" class="font-weight-bold text-dark py-1">Credit Card</label>
+                                    </li>
+                                    <small type="hidden" class="text text-danger" id="paying_off"></small>
+                                </ul>
+                            </div>
 
+                            <div>
                                 <input type="hidden"value="{{$subcategory->id}}"name="id">
                             </div>
 
@@ -102,6 +120,7 @@
                     $('#address').text('');
                     $('#mobile').text('');
                     $('#category').text('');
+                    $('#paying_off').text('');
 
                    // return data;
                    //  $.ajaxSetup({

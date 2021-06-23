@@ -14,8 +14,8 @@ class LangControll extends Controller
 
 
     public function create(){
-        $admin=Auth::guard('admin')->user();
-        return view('admin.langs.add_lang',compact('admin'));
+
+        return view('admin.langs.add_lang');
     }
     public function store(ValidLang $request){
 
@@ -38,7 +38,7 @@ class LangControll extends Controller
             }
             return response()->json([
                 'statue'=>false,
-                'msg'=>'Request not  found'
+                'msg'=>'Over not  found'
             ]);
         }catch(\Exception $ex){
             return response()->json([
@@ -49,9 +49,7 @@ class LangControll extends Controller
     }
     public function available_langs(){
         $langs= Lang::Data()->paginate(paginate_count);
-        $admin=Auth::guard('admin')->user();
-        $user=Auth::guard('web')->user();
-        return view('admin.langs.available_langs',compact('langs','admin','user'));
+        return view('admin.langs.available_langs',compact('langs',));
     }
 
        public function delete(Request $request){
@@ -75,8 +73,8 @@ class LangControll extends Controller
 
     public function form_edit($lang_id){
         $data_lang=Lang::data()->find($lang_id);
-        $admin=Auth::guard('admin')->user();
-        return view('admin.langs.add_lang',compact('admin','data_lang'));
+
+        return view('admin.langs.add_lang',compact('data_lang'));
     }
 
     public function edit(ValidLang $request){

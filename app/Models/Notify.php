@@ -14,7 +14,7 @@ class Notify extends Model
     public function scopeGetNotifyOrder($q){
         return $q->where('belongs_to_table','orders')->first() !=null?$q->where('belongs_to_table','orders')->first():'';
     }
-    public function scopeGetNotifyBuy($q){
-        return $q->where('belongs_to_table','categories_of_sellers')->first() != null?$q->where('belongs_to_table','categories_of_sellers')->first() :'';
+    public function scopeGetNotifyOver($q){
+        return $q->where('belongs_to_table','overs')->first() != null?$q->where('belongs_to_table','overs')->first() :'';
     }
 }

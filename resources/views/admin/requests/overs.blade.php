@@ -37,7 +37,7 @@
                                     <td class="text-center">{{$order->email}}</td>
                                     <td class="text-center">{{$order->category}}</td>
                                     <td class="product-thumb text-center">
-                                        <img width="80px" height="auto" src="{{asset(\App\Models\CategoryOfSeller::PathImage().$order->image)}}" alt="image description"></td>
+                                        <img width="80px" height="auto" src="{{asset(\App\Models\Over::PathImage().$order->image)}}" alt="image description"></td>
                                     <td class="text-center">{{$order->mobile}}</td>
                                     <td class="product-details text-center">
 
@@ -56,7 +56,7 @@
                                                     </a>
                                                 </li>
                                                 <li class="list-inline-item">
-                                                    <a data-toggle="tooltip" data-placement="top" title="trash" get_id="{{$order->id}}" class="delete delData" href="{{route('delete_order',$order->id)}}">
+                                                    <a data-toggle="tooltip" data-placement="top" title="trash" get_id="{{$order->id}}" class="delete delData" href="{{route('delete_overs',$order->id)}}">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
                                                 </li>
@@ -117,7 +117,7 @@
             var id=$(this).attr('get_id');
             $.ajax({
                 type:'POST',
-                url:"{{route('delete_order')}}",
+                url:"{{route('delete_overs')}}",
                 data:{
                     'id':id,
                     '_token':"{{csrf_token()}}",

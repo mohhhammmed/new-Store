@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\Dashboard;
 use App\Http\Controllers\Admin\MainCategories\MainCategoriesControll;
 use App\Http\Controllers\Admin\ParentSubCategory;
 use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\Orders\CustomersOrdersControll;
+use App\Http\Controllers\Admin\requests\OrdersAndOvers;
 use App\Http\Controllers\Admin\SubCategoriesControll;
 use App\Http\Controllers\Admin\Vendors\VendorControll;
 use App\Http\Controllers\Auth\AuthController;
@@ -136,14 +136,14 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
                             /////////////////////////////////////////////////
 ///////////////////////////////////////////////////Buy Category//////////////////////////////////////////////////
 
-    Route::get('/buy_orders',[CustomersOrdersControll::class,'buy_orders'])->name('buy_orders');
-    Route::POST('/delete_order',[CustomersOrdersControll::class,'delete'])->name('delete_order');
+    Route::get('/overs',[OrdersAndOvers::class,'overs'])->name('overs');
+    Route::POST('/delete_overs',[OrdersAndOvers::class,'delete_over'])->name('delete_overs');
 
                                 /////////////////////////////////////////////////
 ///////////////////////////////////////////////////Sell Category//////////////////////////////////////////////////
 
-    Route::get('/sell_order',[CustomersOrdersControll::class,'sell_order'])->name('sell_orders');
-    Route::POST('/del_order',[CustomersOrdersControll::class,'del'])->name('del_orders');
+    Route::get('/orders',[OrdersAndOvers::class,'orders'])->name('orders');
+    Route::POST('/del_order',[OrdersAndOvers::class,'delete_order'])->name('delete_orders');
 //    Route::POST('/store_vendor',[VendorControll::class,'store'])->name('store_vendor');
 //    // Route::get('/vendors',[VendorControll::class,'Vendors'])->name('store_vendor');
 //    Route::get('form_edit_vendor/{vendor_id}',[VendorControll::class,'form_edit'])->name('form_edit_vendor');
@@ -155,7 +155,7 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
 });
 //
 //Route::get('trashed',function(){
-//    $ss= \App\Models\CategoryOfSeller::withTrashed()->get();
+//    $ss= \App\Models\Over::withTrashed()->get();
 //    foreach($ss as $s) {
 //        if ($s->trashed()) {
 //           echo $s;

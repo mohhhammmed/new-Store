@@ -17,8 +17,8 @@ class VendorControll extends Controller
         use Helper;
         public function create(){
              $maincategory= Maincategory::where('translation_lang',app()->getLocale())->Active();
-            $admin=Auth::guard('admin')->user();
-            return view('admin.vendors.create',compact('maincategory',$maincategory,'admin'));
+
+            return view('admin.vendors.create',compact('maincategory'));
         }
 
         public function store(ValidVendors $request){
@@ -29,7 +29,7 @@ class VendorControll extends Controller
                   if (!isset($request->statue)) {
                       $request->request->add(['statue' => 0]);
                   }
-                  $logo = $this->setPhoto($request->logo, $request->name, 'admin/images/vendors');
+                  $logo = $this->setPhoto($request->logo, $request->name, Vendor::PathImage());
 
                   $arr = $request->except('logo');
                   $arr['logo'] = $logo;
@@ -54,11 +54,11 @@ class VendorControll extends Controller
         }
 
         public function Vendors(){
-            $admin=Auth::guard('admin')->user();
+
              $vendors=Vendor::with(['maincategory'=>function($q){
                   $q->select('id','category','translation_lang');
               }])->selection()->paginate(paginate_count);
-             return view('admin.vendors.all_vendors',compact('vendors','admin'));
+             return view('admin.vendors.all_vendors',compact('vendors'));
         }
 
         public function delete(Request $request){
@@ -95,13 +95,13 @@ class VendorControll extends Controller
                $vendor=vendor::find($vendor_id);
                if(isset($vendor) && !empty($vendor)) {
                    $lang = $vendor->maincategory->translation_lang;
-                   $admin = Auth::guard('admin')->user();
+
                    $maincategory = Maincategory::Active()->where('translation_lang', $lang);;
-                   return view('admin.vendors.create', compact('admin', 'vendor', 'maincategory'));
+                   return view('admin.vendors.create', compact( 'vendor', 'maincategory'));
                }
                return redirect(route('all_vendors'))->with('error','Not Exists');
            }catch(\exception $ex){
-               return $ex;
+              // return $ex;
                return redirect(route('all_vendors'))->with('error','There Is Error');
            }
 
@@ -117,7 +117,7 @@ class VendorControll extends Controller
                                 if(file_exists(Vendor::PathImage().$vendor->logo) && $vendor->logo!=null ){
                                     unlink(Vendor::PathImage().$vendor->logo);
                                 }
-                                 $logo= $this->setPhoto($request->logo,$request->name,'admin\images\vendors');
+                                 $logo= $this->setPhoto($request->logo,$request->name,Vendor::PathImage());
                                 $up_vendor['logo']=$logo;
                              }
                             if(!$request->has('statue')){

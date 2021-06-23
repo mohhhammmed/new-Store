@@ -29,7 +29,8 @@ class ContactValid extends FormRequest
             'address'=>'required|string',
             'id'=>'required|numeric|exists:sub_categories,id',
             'mobile'=>'required|numeric|unique:orders',
-            'category'=>'required|exists:sub_categories,name'
+            'category'=>'required|exists:sub_categories,name',
+            'paying_off'=>'required|string',
         ];
     }
 }

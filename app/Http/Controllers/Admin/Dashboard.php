@@ -16,7 +16,7 @@ class Dashboard extends Controller
 
 
     public function Dashboard(){
-           $admin=Auth::guard('admin')->user();
-        return view('admin.dashboard.dashboard',compact('admin'));
+
+        return view('admin.dashboard.dashboard');
     }
 }

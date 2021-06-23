@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CategoryOfSeller extends Model
+class Over extends Model
 {
     use HasFactory;
     use softDeletes;
 
-    protected $table='categories_of_sellers';
+    protected $table='overs';
     protected $fillable=['name','email','address','mobile','image','category','the_price','description','condition','paying_off','negotiate'];
 
     public function scopePathImage(){
-        return 'admin/images/categories_of_sellers/';
+        return 'admin/images/overs/';
     }
 
     public function scopeSelection($q){

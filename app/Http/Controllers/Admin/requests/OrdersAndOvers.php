@@ -1,40 +1,42 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Orders;
+namespace App\Http\Controllers\Admin\requests;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactValid;
-use App\Models\CategoryOfSeller;
+use App\Models\Over;
 use App\Models\Notify;
 use App\Models\NotifyOfbuy;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
-class CustomersOrdersControll extends Controller
+class OrdersAndOvers extends Controller
 {
-    public function buy_orders(){
+    public function overs(){
 
-     $orders= CategoryOfSeller::Selection()->paginate(paginate_count);
+     $orders= Over::Selection()->paginate(paginate_count);
 
-         $notify=Notify::GetNotifyBuy();
+         $notify=Notify::GetNotifyOver();
          if(isset($notify) && $notify != null){
              $notify->update([
                  'counter'=>0,
              ]);
          }
-         return view('admin.requests.buy_orders',compact('orders'));
+         return view('admin.requests.overs',compact('orders'));
 
     }
 
-    public function delete(Request $request){
+    public function delete_over(Request $request){
         try{
+
             if(isset($request) && !empty($request)){
-                $req=CategoryOfSeller::find($request->id);
-                if(isset($req) && $req != null){
-                    $req->delete();
+                $over=Over::find($request->id);
+                if(isset($over) && $over != null){
+
+                    $over->delete();
                     return response()->json([
                         'statue'=>true,
-                        'msg'=>'Deleted Done'
+                        'msg'=>'Trashed Done Reload Page'
                     ]);
                 }
                 return response()->json([
@@ -53,17 +55,17 @@ class CustomersOrdersControll extends Controller
 
     }
 
-    public function sell_order(){
+    public function orders(){
         $orders= Order::Selection()->paginate(paginate_count);
         $notify=Notify::GetNotifyOrder();
         if(isset($notify) && $notify != null){
             $notify->update(['counter'=>0]);
         }
-        return view('admin.requests.sell_orders',compact('orders'));
+        return view('admin.requests.orders',compact('orders'));
 
     }
 
-    public function del(Request $request){
+    public function delete_order(Request $request){
         try{
             if(isset($request) && !empty($request)){
                 $order=Order::find($request->id);

@@ -13,7 +13,7 @@ class CreateCategdgoriesTable extends Migration
      */
     public function up()
     {
-        Schema::table('categories_of_sellers', function (Blueprint $table) {
+        Schema::table('overs', function (Blueprint $table) {
             $table->softDeletes();
         });
     }
@@ -25,7 +25,7 @@ class CreateCategdgoriesTable extends Migration
      */
     public function down()
     {
-        Schema::table('categories_of_sellers', function (Blueprint $table) {
+        Schema::table('overs', function (Blueprint $table) {
 
         });
     }

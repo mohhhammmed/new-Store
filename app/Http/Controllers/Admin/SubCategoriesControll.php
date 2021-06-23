@@ -19,13 +19,13 @@ class SubCategoriesControll extends Controller
     use Helper;
     public function create(){
         $branches=Branch::all();
-        $admin=Auth::guard('admin')->user();
+
         $parentSubCat=Parentt::select('id','type')->where('translation_lang',app()->getLocale())->get();
         $lang_maincategory=Maincategory::where('translation_lang',app()->getLocale())->first();
-        $maincategories=Maincategory::wherehas('parents')->select('id','category','translation_lang')->where('translation_lang',app()->getLocale())->get();
+        $maincategories=Maincategory::Selection()->wherehas('parents')->where('translation_lang',app()->getLocale())->get();
 
              if(isset($maincategories) && count($maincategories) > 0) {
-                 return view('admin.subcategories.create', compact('parentSubCat', 'branches', 'maincategories', 'lang_maincategory', 'admin'));
+                 return view('admin.subcategories.create', compact('parentSubCat', 'branches', 'maincategories', 'lang_maincategory'));
              }
              return redirect(route('create_parent'));
     }
@@ -34,7 +34,7 @@ class SubCategoriesControll extends Controller
 
         try{
            DB::beginTransaction();
-            $image= $this->setPhoto($request->image,$request->name,'admin/images/subcategories');
+            $image= $this->setPhoto($request->image,$request->name,SubCategory::PathImage());
             $data=$request->except('image','description','_token');
             $data['image']=$image;
             if(!$request->has('statue')){
@@ -66,10 +66,10 @@ class SubCategoriesControll extends Controller
      }
 
      public function subcategories(){
-         $admin=Auth::guard('admin')->user();
+
           $subcategories=SubCategory::with('maincategory')->Selection()->where('translation_lang',app()->getLocale())->paginate(paginate_count);
 
-        return view('admin.subcategories.indexes',compact('subcategories','admin'));
+        return view('admin.subcategories.indexes',compact('subcategories'));
      }
      public function change_statue($subcategory_id){
       //  $subcategories=SubCategory::with('maincategory')->selection();
@@ -114,7 +114,7 @@ class SubCategoriesControll extends Controller
             ]);
 
         }catch(\Exception $ex){
-          return $ex;
+         // return $ex;
             return response()->json([
                 'statue'=>false,
                 'msg'=>'There is Error',
@@ -123,20 +123,13 @@ class SubCategoriesControll extends Controller
 
    }
         public function form_edit($subcategory_id){
-        $subcategory_edit=Subcategory::find($subcategory_id);
-            $admin=Auth::guard('admin')->user();
+
+            $subcategory_edit=Subcategory::find($subcategory_id);
             $parentSubCat=Parentt::select('id','type')->where('translation_lang',app()->getLocale())->get();
-
-            $maincats=Maincategory::select('id','category','translation_lang')->where('translation_lang',app()->getLocale())->get();
-
-            foreach($maincats as $maincategory){
-                if(isset($maincategory->parents[0])){
-                    $maincategories[]= $maincategory;
-                }
-            }
+            $maincategories=Maincategory::Selection()->wherehas('parents')->where('translation_lang',app()->getLocale())->get();
 
             if(isset($maincategories) && count($maincategories) > 0) {
-                return view('admin.subcategories.create', compact('parentSubCat','subcategory_edit',  'maincats',  'admin'));
+                return view('admin.subcategories.create', compact('parentSubCat','subcategory_edit',  'maincategories'));
             }
         }
 

@@ -18,8 +18,8 @@ Trait Helper{
        public function editCategory($maincategory_id){
              $data_category=Maincategory::with('translations')->find($maincategory_id);
              $langs=Lang::get();
-             $admin=Auth::guard('admin')->user();
-             return view('admin.maincategories.edit',compact('admin','data_category','langs'));
+
+             return view('admin.maincategories.edit',compact('data_category','langs'));
 
        }
        public function del_ajax($request){

@@ -25,16 +25,16 @@ class MainCategoriesControll extends Controller
 
 
     public function maincategories(){
-        $admin=Auth::guard('admin')->user();
+
         $maincategories=Maincategory::Selection()->where('translation_lang',app()->getLocale())->paginate(paginate_count);
 
-        return view('admin.maincategories.MainCategories',compact('maincategories','admin'));
+        return view('admin.maincategories.MainCategories',compact('maincategories'));
     }
     public function create(){
-        $admin=Auth::guard('admin')->user();
+
         $types_categories=TypeAllCat::select('type','id')->get();
         $langs=Lang::data()->where('statue',1)->get();
-        return view('admin.maincategories.create_maincategory',compact('langs','types_categories','admin'));
+        return view('admin.maincategories.create_maincategory',compact('langs','types_categories'));
     }
     public function form_edit($category_id){
 
@@ -49,7 +49,7 @@ class MainCategoriesControll extends Controller
 
             $up_maincategory = $request->category[0];
             if ($request->has('image')) {
-                $up_maincategory['image'] = $this->setPhoto($request->image, $up_maincategory['category'], 'admin/images/maincategories');
+                $up_maincategory['image'] = $this->setPhoto($request->image, $up_maincategory['category'], Maincategory::PathImage());
 
                   $this->update_images($up_maincategory['image'],$maincategory);
 
@@ -90,7 +90,7 @@ class MainCategoriesControll extends Controller
             if(isset($r) && !empty($r)) {
                 DB::beginTransaction();
 
-                $image = $this->setPhoto($r->image, $r->category[0]['category'], 'admin/images/maincategories');
+                $image = $this->setPhoto($r->image, $r->category[0]['category'], Maincategory::PathImage());
                 $data = collect($r->category);
                 $data_ar = $data->filter(function ($val, $key) {
                     return $val['translation_lang'] == 'ar';
