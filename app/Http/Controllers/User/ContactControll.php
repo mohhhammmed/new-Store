@@ -19,66 +19,72 @@ use Illuminate\Support\Facades\DB;
 class ContactControll extends Controller
 {
     use Helper;
-    public function make_order($subcategory_id){
 
-       $subcategory=SubCategory::find($subcategory_id);
-        if(isset($subcategory) && !empty($subcategory)){
-            return view('user.contact.make_order',compact('subcategory'));
+    public function make_order($subcategory_id)
+    {
+
+        $subcategory = SubCategory::find($subcategory_id);
+
+        if (isset($subcategory) && !empty($subcategory)) {
+            return view('user.contact.make_order', compact('subcategory'));
         }
-      return redirect()->back()->with('error','This Category not exists');
+        return redirect()->back()->with('error', 'This Category not exists');
     }
 
 
-    public function make_over(){
-        $maincategories=Maincategory::Selection()->where('translation_lang',app()->getLocale())->get();
-        return view('user.contact.make_over',compact('maincategories'));
+    public function make_over()
+    {
+        $maincategories = Maincategory::Selection()->where('translation_lang', app()->getLocale())->get();
+        return view('user.contact.make_over', compact('maincategories'));
     }
 
-    public function store_over(CategoriesOfSellerValid $request){
-        try{
+    public function store_over(CategoriesOfSellerValid $request)
+    {
+        try {
             DB::beginTransaction();
-            if(isset($request) && !empty($request)) {
-                $data=$request->except('image');
-                $image=$this->setPhoto($request->image,$request->category,Request::PathImage());
-                $data['image']=$image;
-                Request::create($data);
+            if (isset($request) && !empty($request)) {
+                $data = $request->except('image');
+                $image = $this->setPhoto($request->image, $request->category, Over::PathImage());
+                $data['image'] = $image;
+                Over::create($data);
 
-                $notify=Notify::where('belongs_to_table','overs')->first();
+                $notify = Notify::where('belongs_to_table', 'overs')->first();
 
-                if(isset($notify) && !empty($notify)){
+                if (isset($notify) && !empty($notify)) {
                     $notify->update([
                         'counter' => $notify->counter + 1,
                     ]);
-                }else{
+                } else {
                     Notify::create([
-                        'counter'=>1,
-                        'belongs_to_table'=>'overs'
+                        'counter' => 1,
+                        'belongs_to_table' => 'overs'
                     ]);
                 }
 
                 DB::commit();
 
                 return response()->json([
-                    'statue'=>true,
-                    'msg'=>'Your Over Is Sent'
+                    'statue' => true,
+                    'msg' => 'Your Over Is Sent'
                 ]);
             }
             return response()->json([
-                'statue'=>false,
-                'msg'=>'Error'
+                'statue' => false,
+                'msg' => 'Error'
             ]);
-        }catch(\Exception $ex){
+        } catch (\Exception $ex) {
             DB::rollBack();
-            // return $ex;
+             return $ex;
             return response()->json([
-                'statue'=>false,
-                'msg'=>'Error'
+                'statue' => false,
+                'msg' => 'Error'
             ]);
         }
 
     }
 
-    public function store_order(ContactValid $request){
+    public function store_order(ContactValid $request)
+    {
         try{
             DB::beginTransaction();
             if(isset($request) && !empty($request)) {
@@ -113,7 +119,7 @@ class ContactControll extends Controller
             ]);
         }catch(\Exception $ex){
             DB::rollBack();
-           // return $ex;
+           //return $ex;
             return response()->json([
                 'statue' => false,
                 'msg' => 'There Is Error',
@@ -121,5 +127,6 @@ class ContactControll extends Controller
         }
 
     }
+
 
 }

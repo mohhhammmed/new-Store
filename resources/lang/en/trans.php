@@ -35,5 +35,18 @@ return [
     'category by lang en'=>'category by lang english',
     'category by lang ar'=>'category by lang arabic',
     'Edit profile'=>'Edit profile',
-    'Tell us your problem so we can help you'=>'Tell us your problem so we can help you'
+    'Your review matters to us'=>'Your review matters to us',
+    'You are welcome'=>'You are welcome',
+    'Product Details'=>'Product Details',
+    'Specifications'=>'Specifications',
+    'Reviews'=>'Review',
+    'Product Description'=>'Product Description',
+    'Product Specifications'=>'Product Specifications',
+    'Product Review'=>'Product Review',
+    'Payment after receiving delivery to all provinces'=>'Payment after receiving delivery to all provinces',
+     'Have a great product to post ? Share it with your fellow users'=>
+     'Have a great product to post ?
+      Share it with your fellow users',
+      'Submit Listing'=>'Submit Listing',
+      'Submit your review'=>'Submit your review'
 ];

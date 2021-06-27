@@ -10,7 +10,7 @@
                     <div class="content-block">
                         <h1>{{__('trans.Buy & Sell Near You')}}</h1>
                         <p>{{__('trans.Join the millions who buy and sell from each other')}}<br>{{__('trans.everyday in local communities around the world')}}</p>
-                        <div class="short-popular-category-list text-center">
+                        <div class="short-popular-category-list text-cfenter">
                             <h2>{{__('trans.Popular Category')}}</h2>
                             <ul class="list-inline">
                                    @if(isset($maincategories))
@@ -43,7 +43,7 @@
                                                 <input type="text" name="category" class="form-control my-2 my-lg-1" id="inputLocation4" placeholder="{{__('trans.category by lang '. app()->getLocale())}}">
                                             </div>
                                             <div style="margin-left: 50px" class="form-group col-md-2 align-self-end">
-                                                <button type="submit" class="btn btn-primary">Search Now</button>
+                                                <button type="submit" class="btn btn-primary">{{app()->getLocale() != 'en'? __('trans.Search Now'):'Search Now'}}</button>
                                             </div>
                                         </div>
                                     </form>
@@ -69,7 +69,7 @@
                 <div class="col-md-12">
                     <div class="section-title">
                         <h2>{{__('trans.Trending Adds')}}</h2>
-                        <p>{{__('trans.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas, magnam')}}.</p>
+                        
                     </div>
                 </div>
             </div>

@@ -2,78 +2,56 @@
 @section('content')
 
 @include('layouts.section')
-<section class="page-search">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<!-- Advance Search -->
-				<div class="advance-search">
-					<form>
-						<div class="form-row">
-							<div class="form-group col-md-4">
-								<input type="text" class="form-control my-2 my-lg-0" id="inputtext4" placeholder="What are you looking for">
-							</div>
-							<div class="form-group col-md-3">
-								<input type="text" class="form-control my-2 my-lg-0" id="inputCategory4" placeholder="Category">
-							</div>
-							<div class="form-group col-md-3">
-								<input type="text" class="form-control my-2 my-lg-0" id="inputLocation4" placeholder="Location">
-							</div>
-							<div class="form-group col-md-2">
 
-								<button type="submit" class="btn btn-primary">Search Now</button>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<section class="section-sm">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="search-result bg-gray">
-					<h2>Results For "Electronics"</h2>
-					<p>123 Results on 12 December, 2017</p>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-3">
-				<div class="category-sidebar">
-					<div class="widget category-list">
-	<h4 class="widget-header">All Category</h4>
-	<ul class="category-list">
-        @if(isset($maincategories)&& $maincategories->count()>0)
-            @foreach($maincategories as $maincategory)
-		<li><a href="category.html">{{$maincategory->category}} <span>{{$maincategory->subcategories->count()}}</span></a></li>
+<section class="dashboard section">
+  <!-- Container Start -->
+  <div class="container">
+    <!-- Row Start -->
+    <div class="row">
+      <div class="col-md-10 offset-md-1 col-lg-4 offset-lg-0">
+        <div class="sidebar">
+          <!-- admin Widget -->
+           @include('profiles.profile')
 
-            @endforeach
-            @endif
-	</ul>
-</div>
 
-<div class="widget category-list">
-	<h4 class="widget-header">Nearby</h4>
-	<ul class="category-list">
-        @if(isset($branches)&& $branches->count() > 0)
-            @foreach($branches as $branch)
-		<li><a href="category.html">{{$branch->governorate}}</a></li>
 
-            @endforeach
-            @endif
-	</ul>
-</div>
+          <!-- delete-account modal -->
+          						  <!-- delete account popup modal start-->
+                <!-- Modal -->
+                <div class="modal fade" id="deleteaccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header border-bottom-0">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body text-center">
+                        <img src="{{asset('admin/images/account/Account1.png')}}" class="img-fluid mb-2" alt="">
+                        <h6 class="py-2">Are you sure you want to delete your account?</h6>
+                        <p>Do you really want to delete these records? This process cannot be undone.</p>
+                        <textarea name="message" id="" cols="40" rows="4" class="w-100 rounded"></textarea>
+                      </div>
+                      <div class="modal-footer border-top-0 mb-3 mx-5 justify-content-lg-between justify-content-center">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- delete account popup modal end-->
+          <!-- delete-account modal -->
 
-				</div>
-			</div>
-			<div class="col-md-9">
+        </div>
+      </div>
+
+
+	  <div class="col-md-12 offset-md-1 col-lg-8 offset-lg-0">
 				<div class="category-search-filter">
 					<div class="row">
 						<div class="col-md-6 btn-group btn-group-lg">
-							<strong>Add SubCategory</strong>
+							<strong>Add Category</strong>
 
 						</div>
 						<div class="col-md-6">
@@ -81,11 +59,9 @@
 								<strong>Views</strong>
 								<ul class="list-inline view-switcher">
 									<li class="list-inline-item">
-										<a href="#" onclick="event.preventDefault();" class="text-info"><i class="fa fa-th-large"></i></a>
+										<a href="" onclick="event.preventDefault();" class="text-info"><i class="fa fa-th-large"></i></a>
 									</li>
-									<li class="list-inline-item">
-										<a href="ad-list-view.html"><i class="fa fa-reorder"></i></a>
-									</li>
+									
 								</ul>
 							</div>
 						</div>
@@ -95,35 +71,36 @@
 					<div class="row mt-30">
 
 							<!-- product card -->
-							<div class="col-md-10 offset-md-1 col-lg-10 offset-lg-0">
+							<div class="col-md-10 offset-md-4 col-lg-12 offset-lg-0">
 								<!-- Recently Favorited -->
 								<div class="widget dashboard-container my-adslist">
 								  @include('alarms.alarm')
-
-							  <form id='allData'  action="{{route('store_subcategory')}}"method='POST'enctype='multipart/form-data'>
+									<h3 class="widget-header">Add Category</h3>
+						 <form id='allData'  action="{{route('store_subcategory')}}"method='POST'enctype='multipart/form-data'>
 								@csrf
 
-								<select name='maincategory_id'>
+								<label for="exampleFormControlInput1" class="form-label">Main Category</label>
+								<select  name='maincategory_id'>
 									@if(isset($maincategories) && $maincategories->count() > 0)
 									@foreach ($maincategories as $maincategory)
 									<option value="{{$maincategory->id}}" @if(isset($subcategory_edit) && $subcategory_edit->maincategory_id == $maincategory->id) selected @endif>{{$maincategory->category}}</option>
 									@endforeach
 									@endif
-								</select>{{'  '}}<label for="exampleFormControlInput1" class="form-label">Main Category</label>
+								</select>
 								<h3><small type='hidden' id='maincategory_id_er'class='text text-danger'></small></h3>
 									<br>
 
-
-                                  <select name='parent_id'>
+									<label for="exampleFormControlInput1" class="form-label">Main Category Type</label>
+                                  <select  name='parent_id'>
                                       @if(isset($parentSubCat) && $parentSubCat->count() > 0)
                                           @foreach ($parentSubCat as $parent)
                                               <option value="{{$parent->id}}" @if(isset($subcategory_edit) && $subcategory_edit->parent_id == $parent->id) selected @endif>{{$parent->type}}</option>
                                           @endforeach
                                       @endif
 
-                                  </select>{{'  '}}<label for="exampleFormControlInput1" class="form-label">Main Category Type</label>
+                                  </select>
                                   <h3><small type='hidden' id='parent_id_er'class='text text-danger'></small></h3>
-                                  <br>
+                                 
 
                                   @if(isset($subcategory_edit) &&$subcategory_edit !=null )
 
@@ -162,28 +139,22 @@
 								<input class="form-check-input" name="statue"value='1' type="checkbox" id="flexSwitchCheckDefault"@if(isset($subcategory_edit) && $subcategory_edit->getActive())checked @endif>
 
 								<label class="form-check-label" for="flexSwitchCheckDefault">Statue</label>
-							  </div>
+							  </div> 
 
 
                                     <button type="submit"id='submitData' class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">Add</button>
 
                               </form>
-                                </div>
-
-
-
-
-
-
+						</div>
 						</div>
 					</div>
 				</div>
-
-
 				</div>
 			</div>
-		</div>
-	</div>
+    </div>
+    <!-- Row End -->
+  </div>
+  <!-- Container End -->
 </section>
 <!--============================
 =            Footer            =

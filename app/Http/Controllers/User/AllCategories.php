@@ -13,12 +13,19 @@ class AllCategories extends Controller
 {
     public function all_categories($maincategory_id){
         $mainncategory=Maincategory::find($maincategory_id);
-        $type= $mainncategory->type->type;
-        $typeMaintCegories=TypeAllCat::where('type',$type)->first();
-        $maincategories=$typeMaintCegories->maincategories->where('translation_lang',app()->getLocale());
-        $subcategories= $mainncategory->subcategories()->paginate(paginate_count);
-        $branches=Branch::all();
-        return view('user.allCategories.all_categories',compact('mainncategory','branches','subcategories','maincategories'));
+        if(isset($mainncategory) && $mainncategory != null){
+
+            $typeCategories= $mainncategory->type;
+           // $typeMaintCegories=TypeAllCat::where('type',$type)->first();
+            $maincategories=$typeCategories->maincategories->where('translation_lang',locale_lang());
+            $subcategories= $mainncategory->subcategories()->where('translation_lang',locale_lang())->paginate(paginate_count);
+            $branches=Branch::all();
+            return view('user.allCategories.all_categories',compact('mainncategory','branches','subcategories','maincategories'));
+    
+        }
+        return redirect()->back()->with('error','Categories Not Exists');
+    
+
     }
 
     public function categories_from_parent($parient_id){

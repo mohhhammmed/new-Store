@@ -32,7 +32,7 @@ class MainCategoriesControll extends Controller
     }
     public function create(){
 
-        $types_categories=TypeAllCat::select('type','id')->get();
+        $types_categories=TypeAllCat::select('type','id')->where('translation_lang',app()->getLocale())->get();
         $langs=Lang::data()->where('statue',1)->get();
         return view('admin.maincategories.create_maincategory',compact('langs','types_categories'));
     }

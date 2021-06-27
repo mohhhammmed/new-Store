@@ -4,27 +4,33 @@
     <!--==================================
 =            User Profile            =
 ===================================-->
-    <section class="dashboard section">
-        <!-- Container Start -->
-        <div class="container">
-            <!-- Row Start -->
-            <div class="row">
-                <div  class="col-md-12 offset-md-1 col-lg-12 offset-lg-0">
-                    <!-- Recently Favorited -->
-                    <div class="widget dashboard-container my-adslist">
-                        <h3 class="widget-header">My Ads</h3>
-                        <table  class="table table-responsive product-dashboard-table">
+
+ <div id="main" style='margin:-90px 0px 0px 0px'>
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+        <div class="page-heading">
+      
+            <section class="section">
+                <div class="card">
+                    <div class="card-header">
+                       <span style='margin-left:600px;'>Our Orders</span> 
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped" id="table1">
                             <thead>
                             <tr>
-
-                                <th >Name</th>
-                                <th class="text-center">email</th>
-                                <th class="text-center">category</th>
-                                <th class="text-center">mobile</th>
-                                <th class="text-center">Image</th>
-                                <th class="text-center">Address</th>
-                                <th class="text-center">price</th>
-                                <th class="text-center">Action</th>
+                                <th>Name</th>
+                                <th class='text text-center'>Email</th>
+                                <th class='text text-center'>Product</th>
+                                <th class='text text-center'>Phone</th>
+                                <th class='text text-center'>Image</th>
+                                <th class='text text-center'>Title</th>
+                                <th class='text text-center'>Price</th>
+                                <th class='text text-center'>Status</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -44,11 +50,7 @@
                                         <td class="action text-center" data-title="Action">
                                             <div class="">
                                                 <ul class="list-inline justify-content-center">
-                                                    <li class="list-inline-item">
-                                                        <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit" href="">
-                                                            <i class="fa fa-clipboard"></i>
-                                                        </a>
-                                                    </li>
+                                                   
                                                     <li class="list-inline-item">
                                                         <a data-toggle="tooltip" data-placement="top" title="trash" get_id="{{$order->id}}" class="delete delData" href="{{route('delete_orders',$order->id)}}">
                                                             <i class="fa fa-trash"></i>
@@ -66,44 +68,27 @@
                         </table>
 
                     </div>
-
-                    <!-- pagination -->
-                    <div class="pagination justify-content-center">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-
-                                {{$orders->links()}}
-
-
-                            </ul>
-                        </nav>
-                    </div>
-                    <!-- pagination -->
-
-
                 </div>
 
+            </section>
 
-            </div>
-            <!-- Row End -->
-        </div>
-        <!-- Container End -->
-    </section>
+      
+
+   </div>
+   </div>
     <!--============================
     =            Footer            =
     =============================-->
 
     @include('layouts.footer')
-@endsection
-
-<style>
-    .w-5{
-        display: none;
-    }
+   
+                @endsection
 
 
-</style>
-@section('scripts')
+
+
+
+ @section('scripts')
 
     <script>
         $(document).on('click','.delData',function(e){

@@ -86,7 +86,8 @@
           {{$message}}
         </div>
         @enderror
-          <div class="form-check form-switch">
+        <br><br>
+          <div style='margin-left:20px' class="form-check form-switch">
 
             <input class="form-check-input" name="category[0][action]"value='1'
              type="checkbox" id="flexSwitchCheckDefault"@if($data_category->action==1) checked @endif >
@@ -94,15 +95,16 @@
             <label class="form-check-label" for="flexSwitchCheckDefault">Statue</label>
           </div>
 
-              @if(app()->getLocale() == 'ar')
+              @if(locale_lang() == 'ar')
               <input class="form-control form-control-sm" type="text" name='average' value="{{isset($data_category->average)?$data_category->average->average:''}}" placeholder="The Average">
               @error('average')
               <div class="alert alert-danger" role="alert">
                   {{$message}}
               </div>
+              <br>
               @enderror
               @endif
-              <br>
+             
 
           <button type="submit" class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">Update</button>
           </form>

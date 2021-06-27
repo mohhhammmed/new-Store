@@ -22,7 +22,7 @@ class HomeController extends Controller
 
         $main_categories_byType=TypeAllCat::with(['maincategories'=>function($q){
          $q->select('category','translation_lang','type_id','id')->where('translation_lang',app()->getLocale());
-        }])->select('id','type')->get();
+        }])->select('id','type')->where('translation_lang',app()->getLocale())->get();
       //  $types=TypemainCat::all();
         $subcategories=SubCategory::select('id','name','image','maincategory_id','the_price')->where('translation_lang',app()->getLocale())->get();
 

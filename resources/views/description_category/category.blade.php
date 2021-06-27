@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-8 offset-md-2 text-center">
                 <!-- Title text -->
-                <h3> Your are welcome</h3>
+                <h3>{{__("trans.You are welcome")}}</h3>
             </div>
         </div>
     </div>
@@ -29,66 +29,54 @@
 					<h1 class="product-title">{{isset($category->name)?$category->name:''}}</h1>
 					<div class="product-meta">
 						<ul class="list-inline">
-							<li class="list-inline-item"><i class="fa fa-user-o"></i> By <a href="">Andrew</a></li>
-							<li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a href="">{{isset($category)?$category->maincategory->type->type:''}}</a></li>
-							<li class="list-inline-item"><i class="fa fa-location-arrow"></i> Location<a href="">Dhaka Bangladesh</a></li>
+							
+							<li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a href="">{{isset($category->maincategory)?$category->maincategory->type->type:''}}</a></li>
+							
 						</ul>
 					</div>
 
 					<!-- product slider -->
+					
+					@if(isset($category->images) && $category->images->count() > 0)
 					<div class="product-slider">
-						<div class="product-slider-item my-4" data-image="{{asset('admin/images/subcategories/'.$category->image)}}">
-							<img class="img-fluid w-100" src="{{asset('admin/images/subcategories/'.$category->image)}}" alt="product-img">
+					@foreach($category->images as $image)
+						<div class="product-slider-item my-4" data-image="{{asset('admin/images/subcategories/'.$image->image)}}">
+							<img class="img-fluid w-100" src="{{asset('admin/images/subcategories/'.$image->image)}}" alt="product-img">
 						</div>
-						<div class="product-slider-item my-4" data-image="{{asset('admin/images/subcategories/'.$category->image)}}">
-							<img class="d-block img-fluid w-100" src="{{asset('admin/images/subcategories/'.$category->image)}}" alt="Second slide">
+						@endforeach
 						</div>
-						<div class="product-slider-item my-4" data-image="{{asset('admin/images/subcategories/'.$category->image)}}">
-							<img class="d-block img-fluid w-100" src="{{asset('admin/images/subcategories/'.$category->image)}}" alt="Third slide">
-						</div>
-						<div class="product-slider-item my-4" data-image="{{asset('admin/images/subcategories/'.$category->image)}}">
-							<img class="d-block img-fluid w-100" src="{{asset('admin/images/subcategories/'.$category->image)}}" alt="Third slide">
-						</div>
-						<div class="product-slider-item my-4" data-image="{{asset('admin/images/subcategories/'.$category->image)}}">
-							<img class="d-block img-fluid w-100" src="{{asset('admin/images/subcategories/'.$category->image)}}" alt="Third slide">
-						</div>
-					</div>
+						@endif
+					
 					<!-- product slider -->
 
 					<div class="content mt-5 pt-5">
 						<ul class="nav nav-pills  justify-content-center" id="pills-tab" role="tablist">
 							<li class="nav-item">
 								<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home"
-								 aria-selected="true">Product Details</a>
+								 aria-selected="true">{{__("trans.Product Details")}}</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile"
-								 aria-selected="false">Specifications</a>
+								 aria-selected="false">{{__("trans.Specifications")}}</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact"
-								 aria-selected="false">Reviews</a>
+								 aria-selected="false">{{__("trans.Reviews")}}</a>
 							</li>
 						</ul>
 						<div class="tab-content" id="pills-tabContent">
 							<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-								<h3 class="tab-title">Product Description</h3>
-								<p>{{isset($category->description)?$category->description->description:''}}</p>
+								<h3 class="tab-title">{{__("trans.Product Description")}}</h3>
+								<p>{{$category->name}}</p>
 
 								<iframe width="100%" height="400" src="https://www.youtube.com/embed/LUH7njvhydE?rel=0&amp;controls=0&amp;showinfo=0"
 								 frameborder="0" allowfullscreen></iframe>
 								<p></p>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam sed, officia reiciendis necessitatibus
-									obcaecati eum, quaerat unde illo suscipit placeat nihil voluptatibus ipsa omnis repudiandae, excepturi! Id
-									aperiam eius perferendis cupiditate exercitationem, mollitia numquam fuga, inventore quam eaque cumque fugiat,
-									neque repudiandae dolore qui itaque iste asperiores ullam ut eum illum aliquam dignissimos similique! Aperiam
-									aut temporibus optio nulla numquam molestias eum officia maiores aliquid laborum et officiis pariatur,
-									delectus sapiente molestiae sit accusantium a libero, eligendi vero eius laboriosam minus. Nemo quibusdam
-									nesciunt doloribus repellendus expedita necessitatibus velit vero?</p>
+								<p>{{isset($category->description)?$category->description->description:''}}</p>
 
 							</div>
 							<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-								<h3 class="tab-title">Product Specifications</h3>
+								<h3 class="tab-title">{{__("trans.Product Specifications")}}</h3>
 								<table class="table table-bordered product-table">
 									<tbody>
 										<tr>
@@ -101,33 +89,20 @@
 										</tr>
 										<tr>
 											<td>State</td>
-											<td>Dhaka</td>
+											<td>New</td>
 										</tr>
-										<tr>
-											<td>Brand</td>
-											<td>{{$category->parent->type}}</td>
-										</tr>
-										<tr>
-											<td>Condition</td>
-											<td>Used</td>
-										</tr>
+										
 										<tr>
 											<td>Model</td>
 											<td>{{date('y',time())}}</td>
 										</tr>
-										<tr>
-											<td>State</td>
-											<td>Dhaka</td>
-										</tr>
-										<tr>
-											<td>Battery Life</td>
-											<td>23</td>
-										</tr>
+										
+										
 									</tbody>
 								</table>
 							</div>
 							<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-								<h3 class="tab-title">Product Review</h3>
+								<h3 class="tab-title">{{__("trans.Product Review")}}</h3>
 								<div class="product-review">
 									<div class="media">
 										<!-- Avater -->
@@ -153,13 +128,13 @@
 											</div>
 											<div class="review-comment">
 												<p>
-                                                    {{__('trans.Tell us your problem so we can help you')}}
+                                                    {{__('trans.Your review matters to us')}}
 												</p>
 											</div>
 										</div>
 									</div>
 									<div class="review-submission">
-										<h3 class="tab-title">Submit your review</h3>
+										<h3 class="tab-title">{{__('trans.Submit your review')}}</h3>
 										<!-- Rate -->
 										<div class="rate">
 											<div class="starrr"></div>
@@ -190,7 +165,7 @@
 			<div class="col-md-4">
 				<div class="sidebar">
 					<div class="widget price text-center">
-						<h4>Price</h4>
+						<h4>{{locale_lang() != 'en' ? __('trans.Price'):'Price'}}</h4>
 						<p>${{round($category->the_price /18)}}</p>
 					</div>
 					<!-- User Profile widget -->
@@ -200,7 +175,8 @@
 						<p class="member-time">Member Since Jun 27, 2017</p>
 						<a href="">See all ads</a>
 						<ul class="list-inline mt-20">
-							<li class="list-inline-item"><a href="{{route('make_order',$category->id)}}" class="btn btn-contact d-inline-block  btn-primary px-lg-5 my-1 px-md-3">Contact</a></li>
+							<li class="list-inline-item"><a href="{{route('make_order',$category->id)}}" class="btn btn-contact d-inline-block  btn-primary px-lg-5 my-1 px-md-6">Contact</a></li>
+                            <li class="list-inline-item"><a href="{{route('make_order_electronic',$category->id)}}" class="btn btn-contact d-inline-block  btn-primary px-lg-5 my-1 px-md-3">ُُElectronic Payment</a></li>
 
 						</ul>
 					</div>
@@ -211,32 +187,21 @@
 						</div>
 					</div>
 					<!-- Rate Widget -->
-					<div class="widget rate">
-						<!-- Heading -->
-						<h5 class="widget-header text-center">What would you rate
-							<br>
-							this product</h5>
-						<!-- Rate -->
-						<div class="starrr"></div>
-					</div>
+					
 					<!-- Safety tips widget -->
 					<div class="widget disclaimer">
 						<h5 class="widget-header">Safety Tips</h5>
 						<ul>
-							<li>Meet seller at a public place</li>
-							<li>Check the item before you buy</li>
-							<li>Pay only after collecting the item</li>
-							<li>Pay only after collecting the item</li>
+							<li>{{__('trans.Payment after receiving delivery to all provinces')}}</li>
 						</ul>
 					</div>
 					<!-- Coupon Widget -->
 					<div class="widget coupon text-center">
 						<!-- Coupon description -->
-						<p>Have a great product to post ? Share it with
-							your fellow users.
+						<p>{{__('trans.Have a great product to post ? Share it with your fellow users')}}.
 						</p>
 						<!-- Submii button -->
-						<a href="" class="btn btn-transparent-white">Submit Listing</a>
+						<a href="{{route('make_over')}}" class="btn btn-transparent-white">{{__('trans.Submit Listing')}}</a>
 					</div>
 
 				</div>

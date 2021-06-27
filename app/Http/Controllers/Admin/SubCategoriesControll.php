@@ -5,6 +5,7 @@ use App\Models\Branch;
 use App\Models\Description;
 use App\Models\Maincategory;
 use App\Models\Parentt;
+use App\Models\Image;
 use App\Traits\Helper;
 use App\Models\SubCategory;
 use App\Http\Controllers\Controller;
@@ -137,4 +138,36 @@ class SubCategoriesControll extends Controller
         return $this->editSubcategory($request);
         }
 
+        public function add_images_subcategories(){
+            $subcategories=SubCategory::selection()->where('translation_lang',locale_lang())->get();
+            return view('admin.subcategories.add_images',compact('subcategories'));
+        }
+
+
+        public function store_images(Request $request){
+           
+            try{
+               
+                if(isset($request) && !empty($request)){
+                    $request->validate([
+                        'subcategory_id'=>'required|exists:sub_categories,id',
+                        'image'=>'required|mimes:jpg,png,jpeg'
+                    ]);
+                   
+                    if($request->has('image')){
+                       $data=$request->except('image');
+                           $subcategory=SubCategory::find($request->subcategory_id);
+                           $image=$this->setPhoto($request->image,$subcategory->name,SubCategory::PathImage());
+                          $data['image']=$image;
+                           Image::create($data);
+                            return get_response(true,'created_done');
+                    }
+                }
+                return get_response(false,'There is error');
+            }catch(\Exception $ex){
+                return $ex;
+                return get_response(false,'There is error');
+            }
+         
+        }
 }

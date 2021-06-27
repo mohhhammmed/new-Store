@@ -16,10 +16,15 @@
 					@if(auth()->guard('admin')->user()  || auth()->user())
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav ml-auto main-nav ">
+                        @if(Auth::guard('web')->user())
 							<li class="nav-item active">
 								<a class="nav-link" href="{{route('home')}}">Home</a>
 							</li>
-
+                          @else 
+                          <li class="nav-item active">
+								<a class="nav-link" href="{{route('dashboard')}}">Dashboard</a>
+							</li>
+                          @endif
 
 									@if(Auth::guard('admin')->user())
                                 <li class="nav-item dropdown dropdown-slide">
@@ -37,11 +42,10 @@
                                     </a>
                                     <!-- Dropdown list -->
                                     <div class="dropdown-menu">
-
-                                        <a class="dropdown-item" href="{{route('create_parent')}}">Add parent of sub Categories</a>
-                                        <a class="dropdown-item" href="{{route('all_subcategories')}}">Sub Categories</a>
-                                        <a class="dropdown-item" href="{{route('create_subcategory')}}">Add Sub Categories</a>
-
+                                        <a class="dropdown-item" href="{{route('create_parent')}}">Add parent of subcategories</a>
+                                        <a class="dropdown-item" href="{{route('all_subcategories')}}">Subcategories</a>
+                                        <a class="dropdown-item" href="{{route('create_subcategory')}}">Add Subcategories</a>
+                                        <a class="dropdown-item" href="{{route('add_images_subcategory')}}">Add Images For Subategory</a>
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown dropdown-slide">
@@ -95,22 +99,20 @@
 							<li class="nav-item active">
 								<a class="nav-link" href="{{route('form_edit_user_profile',Auth::guard('web')->id())}}">Edit Profile</a>
 							</li>
-
-
 							@endif
 						</ul>
 						@endif
-						<ul class="navbar-nav ml-auto mt-10">
+                        <ul class="navbar-nav ml-auto mt-10">
 							<li class="nav-item">
 								@if(Auth::guard('web')->user())
 								<a class="nav-link login-button" href="{{route('logout')}}">Logout</a>
                                     @elseif(Auth::guard('admin')->user())
-                                    <a class="nav-link login-button" href="{{route('overs')}}">
-                                        Overs<span class="badge bg-primary rounded-pill" style="color:white">
+                                    <a  style="border-radius:10px" class="nav-link login-button" href="{{route('overs')}}">
+                                        Overs<span class="badge bg-primary rounded-pill" style="color:white;margin-left:5px;">
                                             {{\App\Models\Notify::GetNotifyOver() != null?\App\Models\Notify::GetNotifyOver()->counter:0}}</span>
                                     </a>
-                                              <br>
-                                    <a class="nav-link login-button" href="{{route('orders')}}">Orders<span class="badge bg-primary rounded-pill" style="color:white">
+                                              </li><li class="navbar-nav ml-auto mt-10">
+                                    <a  style="border-radius:10px" class="nav-link login-button" href="{{route('orders')}}">Orders<span class="badge bg-primary rounded-pill" style="color:white;margin-left:5px">
                                             {{\App\Models\Notify::GetNotifyOrder() != null ?\App\Models\Notify::GetNotifyOrder()->counter:0}}</span>
                                     </a>
 								@endif
@@ -128,7 +130,9 @@
 						</ul>
 					</div>
 				</nav>
-			</div>
+               
+			
+            </div>
 		</div>
 	</div>
 </section>

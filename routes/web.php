@@ -7,6 +7,7 @@ use App\Http\Controllers\User\AllStoresControll;
 use App\Http\Controllers\User\ContactControll;
 use App\Http\Controllers\User\DescriptionCategory;
 use App\Http\Controllers\User\LoginRedirectControll;
+use App\Http\Controllers\User\Payment\PaymentControll;
 use App\Http\Controllers\User\ProfileControll;
 use App\Http\Controllers\user\Search\CategoriesControll;
 use App\Http\Controllers\User\SellAndBuyControll;
@@ -87,12 +88,16 @@ Route::group(['prefix'=>'user','middleware'=>'auth'],function(){
 
                           ///////////////////////////////////////
 ///////////////////////////////////////Requests and Orders///////////////////////////////////////////
-    Route::get('make_request',[ContactControll::class,'make_over'])->name('make_over');
+    Route::get('make_over',[ContactControll::class,'make_over'])->name('make_over');
     Route::POST('store_over',[ContactControll::class,'store_over'])->name('store_over');
     Route::get('make_order/{subcategory_id}',[ContactControll::class,'make_order'])->name('make_order');
-    Route::POST('/store_order',[ContactControll::class,'store_order'])->name('store_order');
+    Route::POST('store_order',[ContactControll::class,'store_order'])->name('store_order');
 
+                            ////////////////////////////////
+/////////////////////////////////////////Electronic payment////////////////////////////////////////////////////////
 
+    Route::get('make_order_electronic/{subcategory_id}',[PaymentControll::class,'make_order'])->name('make_order_electronic');
+    Route::POST('checkout_id/{subcategory_id}',[PaymentControll::class,'checkout'])->name('checkout_id');
 
 
 });
@@ -104,6 +109,19 @@ Route::group(['prefix'=>'user','middleware'=>'auth'],function(){
 
 Route::get('user/login/{provider}',[LoginRedirectControll::class,'login_redirect'])->name('login_redirect');
 Route::get('user/login/{provider}/callback',[LoginRedirectControll::class,'login_redirect_callback']);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

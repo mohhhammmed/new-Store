@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Dashboard;
 use App\Http\Controllers\Admin\MainCategories\MainCategoriesControll;
 use App\Http\Controllers\Admin\ParentSubCategory;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\requests\GetClientControll;
 use App\Http\Controllers\Admin\requests\OrdersAndOvers;
 use App\Http\Controllers\Admin\SubCategoriesControll;
 use App\Http\Controllers\Admin\Vendors\VendorControll;
@@ -23,9 +24,6 @@ $paginate_count=define('paginate_count',10);
  Route::prefix( LaravelLocalization::setLocale())->group(function(){
      Route::middleware(['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'])->group(function () {
 
-                              ////////////////////////////////////////
-         ////////////////////////////////////Website Langs////////////////////////////////////////
-         Route::get('available_langs',[LangControll::class,'available_langs'])->name('available_langs');
 
                               ////////////////                 /////////////////
 /////////////////////////////////////////////// Login /////////////////////////////////////
@@ -76,6 +74,8 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
 
     Route::get('add_lang',[LangControll::class,'create'])->name('create_Lang');
     Route::POST('store_lang',[LangControll::class,'store'])->name('store_lang');
+    Route::get('available_langs',[LangControll::class,'available_langs'])->name('available_langs');
+
     Route::POST('del_lang',[LangControll::class,'delete'])->name('delete_lang');
     Route::get('form_edit_lang/{lang_id}',[LangControll::class,'form_edit'])->name('form_edit_lang');
     Route::POST('edit_lang',[LangControll::class,'edit'])->name('edit_lang');
@@ -103,7 +103,7 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
     Route::get('maincategories',[ParentSubCategory::class,'subcategories'])->name('parent_subcategories');
     Route::POST('/store_parent',[ParentSubCategory::class,'store'])->name('store_parent');
     Route::get('/create_parent',[ParentSubCategory::class,'create'])->name('create_parent')->middleware('RedirMainCat');
-    //  Route::POST('/store_categories',[MainCategoriesControll::class,'store_categories'])->name('store_category');
+     // Route::POST('/images_categories',[MainCategoriesControll::class,'store_categories'])->name('images_category');
     Route::get('form_edit_parent/{category_id}',[ParentSubCategory::class,'form_edit'])->name('form_edit_parent');
     Route::POST('edit_maincategory/{category_id}',[ParentSubCategory::class,'edit'])->name('edit_parent');
     Route::get('delete_parent',[ParentSubCategory::class,'delete'])->name('delete_parent');
@@ -115,7 +115,8 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
     Route::get('subcategories',[SubCategoriesControll::class,'subcategories'])->name('all_subcategories');
     Route::POST('/store_subcategory',[SubCategoriesControll::class,'store'])->name('store_subcategory');
     Route::get('/create_subcategory',[SubCategoriesControll::class,'create'])->name('create_subcategory')->middleware('RedirMainCat');
-    //  Route::POST('/store_categories',[MainCategoriesControll::class,'store_categories'])->name('store_category');
+    Route::get('/add_images_subcategories',[SubCategoriesControll::class,'add_images_subcategories'])->name('add_images_subcategory');
+    Route::POST('store_images',[SubCategoriesControll::class,'store_images'])->name('store_images_subcategory');
     Route::get('form_edit_subcategories/{category_id}',[SubCategoriesControll::class,'form_edit'])->name('form_edit_subcategory');
     Route::POST('edit_subcategory',[SubCategoriesControll::class,'edit'])->name('edit_subcategory');
     Route::POST('delete_subcategory',[SubCategoriesControll::class,'delete'])->name('delete_subcategory');
@@ -150,6 +151,8 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
 //    Route::POST('edit_vendor',[VendorControll::class,'edit'])->name('edit_vendor');
 //    Route::POST('change_statue',[VendorControll::class,'change_statue'])->name('change_statue_vendor');
 
+
+    Route::get('get_client',[GetClientControll::class,'get_client']);
 
 });
 });

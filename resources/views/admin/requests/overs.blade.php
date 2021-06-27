@@ -1,22 +1,27 @@
 @extends('layouts.html')
 @section('content')
 @include('layouts.section')
-<!--==================================
-=            User Profile            =
-===================================-->
-<section class="dashboard section">
-  <!-- Container Start -->
-  <div class="container">
-    <!-- Row Start -->
-    <div class="row">
-      <div  class="col-md-12 offset-md-1 col-lg-12 offset-lg-0">
-				<!-- Recently Favorited -->
-				<div class="widget dashboard-container my-adslist">
-					<h3 class="widget-header">My Ads</h3>
-					<table  class="table table-responsive product-dashboard-table">
-						<thead>
-							<tr>
 
+
+<div id="main" style='margin:-90px 0px 0px 0px'>
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+        <div class="page-heading">
+      
+            <section class="section">
+                <div class="card">
+                    <div class="card-header">
+                       <span style='margin-left:600px;'> Our Overs</span>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped" id="table1">
+                            <thead>
+                            <tr>
+                                
                                 <th >seller</th>
                                 <th class="text-center">email</th>
                                 <th class="text-center">category</th>
@@ -27,74 +32,55 @@
                                 <th class="text-center">price</th>
                                 <th class="text-center">condition</th>
 								<th class="text-center">Action</th>
-							</tr>
-						</thead>
-						<tbody>
-                        @if(isset($orders) && !empty($orders))
-                            @foreach($orders as $order)
-                                <tr>
-                                    <td>{{$order->name}}</td>
-                                    <td class="text-center">{{$order->email}}</td>
-                                    <td class="text-center">{{$order->category}}</td>
-                                    <td class="product-thumb text-center">
-                                        <img width="80px" height="auto" src="{{asset(\App\Models\Over::PathImage().$order->image)}}" alt="image description"></td>
-                                    <td class="text-center">{{$order->mobile}}</td>
-                                    <td class="product-details text-center">
-
-                                        {{$order->description}}
-                                    </td>
-                                    <td class="text-center">{{$order->address}}</td>
-                                    <td class="text-center">{{$order->the_price}}</td>
-                                    <td class="text-center">{{$order->condition}}</td>
-                                    <td class="product-category"><span class="categories">Laptops</span></td>
-                                    <td class="action text-center" data-title="Action">
-                                        <div class="">
-                                            <ul class="list-inline justify-content-center">
-                                                <li class="list-inline-item">
-                                                    <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit" href="">
-                                                        <i class="fa fa-clipboard"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <a data-toggle="tooltip" data-placement="top" title="trash" get_id="{{$order->id}}" class="delete delData" href="{{route('delete_overs',$order->id)}}">
-                                                        <i class="fa fa-trash"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if(isset($overs) && !empty($overs))
+                                @foreach($overs as $over)
+                                    <tr>
+                                        <td>{{$over->name}}</td>
+                                        <td class="text-center">{{$over->email}}</td>
+                                        <td class="text-center">{{$over->category}}</td>
+                                       
+                                        <td class="product-thumb text-center">
+                                            <img width="80px" height="auto"
+                                                 src="{{asset(\App\Models\Over::PathImage().$over->image)}}"
+                                                 alt="image description"></td>
+                                         <td class="text-center">{{$over->mobile}}</td>
+                                         <td class="text-center">{{$over->description}}</td>
+                                        <td class="text-center">{{$over->address}}</td>
+                                        <td class="text-center">{{$over->the_price}}</td>
+                                        <td class="text-center">{{$over->condition}}</td>
+                                        <td class="action text-center" data-title="Action">
+                                            <div class="">
+                                                <ul class="list-inline justify-content-center">
+                                                    <li class="list-inline-item">
+                                                       
+                                                    </li>
+                                                    <li class="list-inline-item">
+                                                        <a data-toggle="tooltip" data-placement="top" title="trash" get_id="{{$over->id}}" class="delete delData" href="{{route('delete_overs',$over->id)}}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @else
                             @endif
 
-						</tbody>
-					</table>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-				</div>
+            </section>
 
-				<!-- pagination -->
-				<div class="pagination justify-content-center">
-					<nav aria-label="Page navigation example">
-						<ul class="pagination">
+      
 
-                            {{$orders->links()}}
-
-
-						</ul>
-					</nav>
-				</div>
-				<!-- pagination -->
-
-
-			</div>
-
-
-    </div>
-    <!-- Row End -->
-  </div>
-  <!-- Container End -->
-</section>
+   </div>
+   </div>
 <!--============================
 =            Footer            =
 =============================-->

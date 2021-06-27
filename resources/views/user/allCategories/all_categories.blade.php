@@ -124,7 +124,7 @@
                                     <p class="card-text">{{isset($subcat->description->description)?$subcat->description->description:''}}</p>
                                     <div class="product-ratings">
                                         <ul class="list-inline">
-                                          <li id="{{$subcat->the_price}}">{{$subcat->the_price}}</li>
+                                          <li id="{{$subcat->the_price}}"><span>{{locale_lang() != 'en'?__('trans.Price'):'Price'}} : </span>{{$subcat->the_price}}</li>
                                         </ul>
                                     </div>
                                 </div>

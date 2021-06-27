@@ -28,11 +28,14 @@
 }
 
 .nice-select:hover {
-  border-color: #dbdbdb;
+  border-color: #d0c8c8;
+  padding:0px 90px 0px 80px;
 }
 
 .nice-select:active, .nice-select.open, .nice-select:focus {
   border-color: #999;
+  border-radius: 5px;
+  padding:0px 90px 0px 80px;
 }
 
 .nice-select:after {

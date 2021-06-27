@@ -12,6 +12,12 @@ p, li, input, select, button {
   font-weight: 400;
 }
 
+li.option.selected.focus {
+    padding-right: 90px;
+    border-radius: 10px;
+    padding-left: 70px;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: "Muli", sans-serif;
   font-weight: 600;
@@ -1416,7 +1422,7 @@ ul.pagination .active a {
 .nice-select {
   float: none;
   display: inline-block;
-  border-radius: 0;
+  border-radius: 10px;
 }
 
 .nice-select .list {
@@ -1539,6 +1545,7 @@ ul.pagination .active a {
 
 .product-details .content {
   padding-top: 40px;
+  margin-top: -11110px;
 }
 
 .product-details .content h3 {
@@ -1595,6 +1602,7 @@ ul.pagination .active a {
 .product-slider .slick-dots {
   display: flex;
   bottom: -50px;
+  /* margin-bottom: 150px; */
 }
 
 .product-slider .slick-dots li {

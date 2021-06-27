@@ -9,9 +9,9 @@ class Order extends Model
 {
     use HasFactory;
     protected $table='orders';
-    protected $fillable=['name','email','address','mobile','category','image','the_price','paying_off'];
+    protected $fillable=['name','email','address','mobile','category','image','the_price'];
 
     public function scopeSelection($q){
-        return $q->select('id','name','email','mobile','address','category','image','the_price','paying_off');
+        return $q->select('id','name','email','mobile','address','category','image','the_price');
     }
 }

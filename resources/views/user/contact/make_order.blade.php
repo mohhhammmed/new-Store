@@ -33,12 +33,13 @@
                 </div>
             </div>
             <div class="col-md-6">
-                @include('alarms.alarm')
+
                     <form id="allData" action="" method="post">
                         @csrf
 
                         <fieldset class="p-4">
                             <div class="form-group">
+                                @include('alarms.alarm')
                                 <div class="row">
 
                                     <div class="col-lg-6 py-2">
@@ -68,33 +69,11 @@
                                 <label><strong>Your Category</strong></label>
                                 <input type="text"value="{{$subcategory->name}}"name="category" placeholder="Category Name" class="form-control w-100" required>
                             </div>
-                            <small type="hidden" id="category" class="text text-danger"></small>
+                            <small id="category" type="hidden" class="text text-danger"></small>
 
-                            <div class="col-lg-6 my-3">
-                                <span class="mb-3 d-block">Our payment methods:</span>
-                                <ul>
-                                    <li>
-                                        <input type="radio" id="bank-transfer"value="Direct Bank Transfer" name="paying_off">
-                                        <label for="bank-transfer" class="font-weight-bold text-dark py-1">Direct Bank Transfer</label>
-                                    </li>
-                                    <li>
-                                        <input type="radio" id="Cheque-Payment"value="Cheque Payment" name="paying_off">
-                                        <label for="Cheque-Payment" class="font-weight-bold text-dark py-1">Cheque Payment</label>
-                                    </li>
-                                    <li>
-                                        <input type="radio" id="Credit-Card" value="Credit Card" name="paying_off">
-                                        <label for="Credit-Card" class="font-weight-bold text-dark py-1">Credit Card</label>
-                                    </li>
-                                    <small type="hidden" class="text text-danger" id="paying_off"></small>
-                                </ul>
-                            </div>
-
-                            <div>
-                                <input type="hidden"value="{{$subcategory->id}}"name="id">
-                            </div>
-
+                       <input type="hidden"name="id" value="{{$subcategory->id}}">
                             <div class="btn-grounp">
-                                <button type="submit" id="submitData" class="btn btn-primary mt-2 float-right">SUBMIT</button>
+                                <button type="submit" id="submitData" class="btn btn-primary mt-2 float-right">Buy</button>
                             </div>
                         </fieldset>
                     </form>
@@ -102,6 +81,7 @@
         </div>
     </div>
 </section>
+
 <!-- contact us end -->
 
 <!--============================
@@ -114,7 +94,7 @@
             <script>
                 $(document).on('click','#submitData',function(e){
                     e.preventDefault();
-                    var data=new FormData($('#allData')[0]);
+                   var data=new FormData($('#allData')[0]);
                     $('#email').text('');
                     $('#name').text('');
                     $('#address').text('');
@@ -122,25 +102,24 @@
                     $('#category').text('');
                     $('#paying_off').text('');
 
-                   // return data;
-                   //  $.ajaxSetup({
-                   //      headers: {
-                   //          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                   //      }
-                   //  });
+                    // $.ajaxSetup({
+                    //     headers: {
+                    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    //     }
+                    // });
                     $.ajax({
-                        type:'post',
+                        type:'POST',
                         url:"{{route('store_order')}}",
-                        data:data,
+                        data: data,
                         processData: false,
                         contentType: false,
                         cache: false,
-                        '_token':'{{csrf_token()}}',
+
                         success:function(data){
                             if(data.statue==true){
-                                alert(data.msg);
-                            }
                             alert(data.msg);
+                            }
+
                         },
                         error:function(reject){
                             var response=$.parseJSON(reject.responseText);

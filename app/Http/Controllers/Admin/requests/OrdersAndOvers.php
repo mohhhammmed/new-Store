@@ -14,7 +14,7 @@ class OrdersAndOvers extends Controller
 {
     public function overs(){
 
-     $orders= Over::Selection()->paginate(paginate_count);
+     $overs= Over::Selection()->paginate(paginate_count);
 
          $notify=Notify::GetNotifyOver();
          if(isset($notify) && $notify != null){
@@ -22,7 +22,7 @@ class OrdersAndOvers extends Controller
                  'counter'=>0,
              ]);
          }
-         return view('admin.requests.overs',compact('orders'));
+         return view('admin.requests.overs',compact('overs'));
 
     }
 

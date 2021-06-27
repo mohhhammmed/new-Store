@@ -24,9 +24,9 @@ class validLang extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|string',
-            'abbr'=>'string|required',
-            'statue'=>'array|min:1',
+            'name'=>'required|string|unique:langs',
+            'abbr'=>'string|required|max:7',
+            'statue'=>'array|max:1',
         ];
     }
 }

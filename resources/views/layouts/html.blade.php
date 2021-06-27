@@ -11,12 +11,21 @@
 
 
       {{-- bootstrap --}}
-     
+
+      
+            @if(isset($responseData))
+        <script src="https://test.oppwa.com/v1/paymentWidgets.js?checkoutId={{$responseData['id']}}"></script>
+           @endif
     <!-- FAVICON -->
     <link href="{{asset('admin/images/favicon.png')}}" rel="shortcut icon">
     <!-- PLUGINS CSS STYLE -->
     <!-- <link href="plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet"> -->
     <!-- Bootstrap -->
+    <link rel="stylesheet" href="{{asset('admin/css/datatable.css')}}">
+    <link rel="stylesheet" href="{{asset('admin/css/bootstrap.css')}}">
+   
+
+    
     <link rel="stylesheet" href="{{asset('admin/plugins/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin/plugins/bootstrap/css/bootstrap-slider.css')}}">
     <!-- Font Awesome -->
@@ -44,11 +53,23 @@
 
 @yield('content')
 
+
+
 <!-- JAVASCRIPTS -->
 <script src="{{asset('admin/plugins/jQuery/jquery.min.js')}}"></script>
 <script src="{{asset('admin/plugins/bootstrap/js/popper.min.js')}}"></script>
 <script src="{{asset('admin/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('admin/plugins/bootstrap/js/bootstrap-slider.js')}}"></script>
+{{--      DataTable--}}
+<script src="{{asset('admin/js/simple-datatables.js')}}"></script>
+
+
+<script>
+    // Simple Datatable
+    let table1 = document.querySelector('#table1');
+    let dataTable = new simpleDatatables.DataTable(table1);
+</script>
+
 <!-- tether js -->
 <script src="{{asset('admin/plugins/tether/js/tether.min.js')}}"></script>
 <script src="{{asset('admin/plugins/raty/jquery.raty-fa.js')}}"></script>
@@ -67,7 +88,7 @@
     src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
     crossorigin="anonymous"></script>
-   
+
  @yield('scripts')
 </body>
 

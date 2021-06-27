@@ -65,11 +65,12 @@
           @enderror
           <select class="form-select"name='direction' aria-label="Default select example">
             @isset($data_lang)
-            <option selected>Open this select menu</option>
+            <option disapled>Choose Direction</option>
             <option value="rtl"@if ($data_lang->direction=='rtl')  selected @endif>Rtl</option>
             <option value="ltr"@if ($data_lang->direction=='ltr')  selected @endif>Ltr</option>
             @else
-            <option selected>Open this select menu</option>
+            
+            <option disapled>Choose Direction</option>
             <option value="rtl">Rtl</option>
             <option value="ltr">Ltr</option>
             @endisset
@@ -78,25 +79,32 @@
              <input type="hidden"name="id" value="{{$data_lang->id}}">
                 @endisset
           </select><br><br>
-          <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-            @isset($data_lang)
-            <input type="radio" class="btn-check" name="statue[]"value='1' id="btnradio1"autocomplete="off" @if($data_lang->getStatue()=='active') checked @endif   >
-            <label class="btn btn-outline-primary" for="btnradio1">active</label>
 
-            <input type="radio" class="btn-check" value='0' name="statue[]" id="btnradio2"autocomplete="off" @if($data_lang->getStatue()=='not active') checked @endif >
-            <label class="btn btn-outline-primary" for="btnradio2">not active</label>
+
+          <div class="form-check">
+            @isset($data_lang)
+          <input class="form-check-input"name='statue[]' value='1' type="radio" value="" id="flexCheckDefault" @if($data_lang->getStatue()=='active') checked @endif>
+          <label class="form-check-label" for="flexCheckDefault">Active</label>
+
+
+          <input style='margin-left:5px' class="form-check-input"name='statue[]' value='0' type="radio" value="" id="flexCheckChecked" @if($data_lang->getStatue()=='active') checked @endif>
+          <label  style='margin-left:27px' class="form-check-label" for="flexCheckChecked">Not Active</label>
+
 
             @else
 
-            <input type="radio" class="btn-check" name="statue[]"value='1' id="btnradio1"autocomplete="off" checked  >
-            <label class="btn btn-outline-primary" for="btnradio1">active</label>
+          <input class="form-check-input"name='statue[]' value='1' type="radio" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">Active</label>
 
-            <input type="radio" class="btn-check" value='0' name="statue[]" id="btnradio2"autocomplete="off" >
-            <label class="btn btn-outline-primary" for="btnradio2">not active</label>
 
+          <input style='margin-left:5px' class="form-check-input"name='statue[]' value='0' type="radio" value="" id="flexCheckChecked" checked>
+          <label  style='margin-left:27px' class="form-check-label" for="flexCheckChecked">Not Active</label>
+           
             @endisset
 
           </div>
+       
+
           <button type="submit" id='submitData' class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">Add</button>
           </form>
             </div>

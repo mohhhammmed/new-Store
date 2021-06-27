@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+
+use App\Models\Image;
 use App\Observers\SubCategoryObserv;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +21,9 @@ class SubCategory extends Model
        SubCategory::observe(SubCategoryObserv::class);
     }
 
+    public function images(){
+        return $this->hasMany(Image::class,'subcategory_id');
+    }
 
     public function maincategory(){
         return $this->belongsTo(Maincategory::class,'maincategory_id');
