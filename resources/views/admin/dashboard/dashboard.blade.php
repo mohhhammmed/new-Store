@@ -74,12 +74,13 @@
                             <tbody>
                             @if(isset($type_categories) && !empty($type_categories))
                                 @foreach($type_categories as $type)
-                                    <tr>
+                                    <tr row='6'>
                                         <td>{{$type->type}}</td>
                                        
                                         <td class="text-center">
-                                        @foreach($type->maincategories  as $maincategory)
-                                       <a href="{{route('form_edit_maincategory',$maincategory->id)}}"> {{$maincategory->category}}</a><br>
+                                        @foreach($type->maincategories  as $c=> $maincategory)
+                                       <a href="{{route('form_edit_maincategory',$maincategory->id)}}"> {{$maincategory->category}}</a> -
+                                       @if($c % 4 == 0 && $c != 0)<br> @endif
                                         @endforeach
                                         </td>
                                        

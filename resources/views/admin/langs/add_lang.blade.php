@@ -83,21 +83,21 @@
 
           <div class="form-check">
             @isset($data_lang)
-          <input class="form-check-input"name='statue[]' value='1' type="radio" value="" id="flexCheckDefault" @if($data_lang->getStatue()=='active') checked @endif>
+          <input class="form-check-input"name='statue' value='1' type="radio" value="" id="flexCheckDefault" @if($data_lang->getStatue()=='active') checked @endif>
           <label class="form-check-label" for="flexCheckDefault">Active</label>
 
 
-          <input style='margin-left:5px' class="form-check-input"name='statue[]' value='0' type="radio" value="" id="flexCheckChecked" @if($data_lang->getStatue()=='active') checked @endif>
+          <input style='margin-left:5px' class="form-check-input"name='statue' value='0' type="radio" value="" id="flexCheckChecked" @if($data_lang->getStatue()=='not active') checked @endif>
           <label  style='margin-left:27px' class="form-check-label" for="flexCheckChecked">Not Active</label>
 
 
             @else
 
-          <input class="form-check-input"name='statue[]' value='1' type="radio" value="" id="flexCheckDefault">
+          <input class="form-check-input"name='statue' value='1' type="radio" value="" id="flexCheckDefault">
           <label class="form-check-label" for="flexCheckDefault">Active</label>
 
 
-          <input style='margin-left:5px' class="form-check-input"name='statue[]' value='0' type="radio" value="" id="flexCheckChecked" checked>
+          <input style='margin-left:5px' class="form-check-input"name='statue' value='0' type="radio" value="" id="flexCheckChecked" checked>
           <label  style='margin-left:27px' class="form-check-label" for="flexCheckChecked">Not Active</label>
            
             @endisset

@@ -17,8 +17,9 @@ class AllCategories extends Controller
 
             $typeCategories= $mainncategory->type;
            // $typeMaintCegories=TypeAllCat::where('type',$type)->first();
+           $subcategories= $mainncategory->subcategories()->where('translation_lang',locale_lang())->paginate(paginate_count);
             $maincategories=$typeCategories->maincategories->where('translation_lang',locale_lang());
-            $subcategories= $mainncategory->subcategories()->where('translation_lang',locale_lang())->paginate(paginate_count);
+            
             $branches=Branch::all();
             return view('user.allCategories.all_categories',compact('mainncategory','branches','subcategories','maincategories'));
     

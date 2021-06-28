@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use App\Models\Image;
+use App\Models\Review;
 use App\Observers\SubCategoryObserv;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -54,6 +55,8 @@ class SubCategory extends Model
         return $this->hasOne(Description::class,'subcategory_id');
     }
 
-
+    public function review(){
+        return $this->hasMany(Review::class,'subcategory_id');
+    }
 
 }

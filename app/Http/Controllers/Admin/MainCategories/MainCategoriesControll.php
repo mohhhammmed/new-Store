@@ -130,22 +130,13 @@ class MainCategoriesControll extends Controller
                     ]);
                 }
                 DB::commit();
-                return response()->json([
-                    'statue' => true,
-                    'msg' => 'created Done',
-                ]);
+                return get_response(true,'created Done');
             }
-            return response()->json([
-                'statue' => false,
-                'msg' => 'your request is not found',
-            ]);
+          
         }catch(\Exception $ex){
             DB::rollBack();
            // return $ex;
-            return response()->json([
-                'statue'=>false,
-                'msg'  =>'error',
-            ]);
+           return get_response(false,'Error');
 
         }
 

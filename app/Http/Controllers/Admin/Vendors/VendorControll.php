@@ -36,19 +36,13 @@ class VendorControll extends Controller
                 $customer= Vendor::create($arr);
                    Notification::send($customer,new VendorNotify());
                   DB::commit();
-                  return response()->json([
-                      'statue'=>true,
-                      'msg'=>'Created Done'
-                  ]);
+                  return get_response(true,'Created Done');
 
               }
                  } catch(\Exception $ex){
                     return $ex;
                DB::rollBack();
-               return response()->json([
-                   'statue'=>false,
-                   'msg'=>'Created false'
-               ]);
+               return get_response(false,'Created false');
 
            }
         }
@@ -71,21 +65,14 @@ class VendorControll extends Controller
                        unlink(Vendor::PathImage() . $vendor->logo);
                    }
                     $vendor->delete();
-                   return response()->json([
-                       'statue'=>true,
-                       'msg'=>'Deleted Done Reload Page '
-                   ]);
+                  return get_response(true,'Deleted Done');
+                  
                   }
-                  return response()->json([
-                      'statue'=>false,
-                      'msg'=>'Not  Exists'
-                  ]);
+                return  get_response(false,'Not Exists');
+
               }catch(\Exception $ex){
              //return $ex;
-                  return response()->json([
-                      'statue'=>false,
-                      'msg'=>'There Is Error'
-                  ]);
+                  return get_response(false,'Error');
               }
 
         }
@@ -125,17 +112,11 @@ class VendorControll extends Controller
                              }
 
                          $vendor->update($up_vendor);
-                         return response()->json([
-                             'statue'=>true,
-                             'msg'=>'updated Done'
-                         ]);
+                         return get_response(true,'Updated Done');
               }
               }catch(\Exception $ex){
 
-                  return response()->json([
-                      'statue'=>false,
-                      'msg'=>'There Is error'
-                  ]);
+                  return get_response(false,'Error');
               }
 
 
@@ -153,24 +134,18 @@ class VendorControll extends Controller
                         $statue = $vendor->statue == 0 ? 1 : 0;
                         $vendor->statue = $statue;
                         $vendor->save();
-
-                        return response()->json([
-                            'statue' => true,
-                            'msg' => $vendor->name . ' is ' . $vendor->getStatue() . ' reload page',
-                        ]);
+                               
+                        return get_response(true,$vendor->name . ' is ' . $vendor->getStatue() . ' reload page');
+                         
                     }
-                    return response()->json([
-                        'statue' => false,
-                        'msg' => 'Not Exists',
-                    ]);
+                    return get_response(false,'Not Exists');
+                       
                 }
 
                 }catch(\Exception $ex){
-                 return $ex;
-                 return response()->json([
-                     'statue'=>false,
-                     'msg'=>'There Is Error',
-                 ]);
+               //  return $ex;
+                 return get_response(false,'Error');
+                   
                     }
           }
 

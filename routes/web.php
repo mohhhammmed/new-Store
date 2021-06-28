@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\ComplaintsOfCategories;
+use App\Http\Controllers\Admin\ReviewControll;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\AllCategories;
 use App\Http\Controllers\User\AllStoresControll;
@@ -83,7 +83,7 @@ Route::group(['prefix'=>'user','middleware'=>'auth'],function(){
 
                            ////////////////////////////////////
 //////////////////////////////////Your Problem about Category//////////////////////////////////////
-    Route::POST('review',[ComplaintsOfCategories::class,'review'])->name('review');
+    Route::POST('review',[ReviewControll::class,'review'])->name('review');
 
 
                           ///////////////////////////////////////

@@ -24,27 +24,23 @@ Trait Helper{
        }
        public function del_ajax($request){
         //   return $request;
-           if(isset($request) && !empty($request)) {
-               $maincategory= Maincategory::find($request->id);
-               if(isset($maincategory) && $maincategory!= null){
-                 if(file_exists(Maincategory::PathImage().$maincategory->image && $maincategory->image!=null)){
-                     unlink(Maincategory::PathImage().$maincategory->image);
-                 }
-                 $maincategory->delete();
-                 return response()->json([
-                     'statue'=>true,
-                     'msg'=>'Deleted Done'
-                 ]);
-               }
-               return response()->json([
-                   'statue'=>false,
-                   'msg'=>'Not Found'
-               ]);
-           }
-           return response()->json([
-               'statue'=>false,
-               'msg'=>'Not Found'
-           ]);
+        try{
+            if(isset($request) && !empty($request)) {
+                $maincategory= Maincategory::find($request->id);
+                if(isset($maincategory) && $maincategory!= null){
+                  if(file_exists(Maincategory::PathImage().$maincategory->image && $maincategory->image!=null)){
+                      unlink(Maincategory::PathImage().$maincategory->image);
+                  }
+                  $maincategory->delete();
+                  return get_response(true,'Deleted Done');
+                }
+                return get_response(false,'Not Found');
+            }
+        }catch(\Exception $ex){
+            return get_response(false,'Not Found');
+        }
+          
+          
       }
 
       public function editSubcategory($request){
@@ -71,18 +67,13 @@ Trait Helper{
 
                        $subcategory->description->update($request->all());
                        $subcategory->update($up_subcategory);
-                       return response()->json([
-                           'statue'=>true,
-                           'msg'=>'Updated Done Reload Page'
-                       ]);
+                       return get_response(true,'Updated Done Reload Page');
                    }
-                   return response()->json([
-                       'statue'=>false,
-                       'msg'=>'Not Exists'
-                   ]);
+                   return get_response(false,'Not Exists');
                }
            }catch(\Exception $ex){
-               return $ex;
+            return get_response(false,'Error');
+              // return $ex;
            }
 
       }

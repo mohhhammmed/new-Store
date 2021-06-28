@@ -18,33 +18,17 @@ class LangControll extends Controller
         return view('admin.langs.add_lang');
     }
     public function store(ValidLang $request){
-
-       // return response()->json($req->all());
+         
 
         try{
             if(isset($request) && !empty($request)) {
-                $statue = $request->statue;
-                $data = $request->except('_token');
-                Lang::create([
-                    'abbr' => $data['abbr'],
-                    'name' => $data['name'],
-                    'direction' => $data['direction'],
-                    'statue' => $statue[0]
-                ]);
-                return response()->json([
-                    'statue' => true,
-                    'msg' => 'created done'
-                ]);
+                
+                Lang::create($request->all());
+                return get_response(true,'created done');
             }
-            return response()->json([
-                'statue'=>false,
-                'msg'=>'Over not  found'
-            ]);
+         
         }catch(\Exception $ex){
-            return response()->json([
-                'statue'=>false,
-                'msg'=>'created falis'
-            ]);
+            return get_response(false,'There is  error');
         }
     }
     public function available_langs(){
@@ -57,15 +41,9 @@ class LangControll extends Controller
             $data = Lang::where('id', $request->id)->first();
             if (isset($data) && $data != null) {
                 $data->delete();
-                return response()->json([
-                    'statue' => true,
-                    'msg' => 'Deleted Done'
-                ]);
+                return get_response(true,'Deleted Done');
             }
-            return response()->json([
-                'statue'=>false,
-                'msg'=>'Deleted fails'
-            ]);
+            return get_response(false,'Deleted fails');
         }
 
     }
@@ -76,33 +54,24 @@ class LangControll extends Controller
 
         return view('admin.langs.add_lang',compact('data_lang'));
     }
+    
 
     public function edit(ValidLang $request){
-
+   
        try{
            if(isset($request) && !empty($request)) {
                $data_lang = Lang::find($request->id);
                if (isset($data_lang) && $data_lang != null) {
-                     $up_lang=$request->except('statue');
-                    $up_lang['statue']=$request->statue[0];
-                   $data_lang->update($up_lang);
-                   return response()->json([
-                       'statue' => true,
-                       'msg' => 'Updated Done',
-                   ]);
+
+                   $data_lang->update($request->except('_token'));
+                   return get_response(true,'Updated Done');
                }
-               return response()->json([
-                   'statue'=>false,
-                   'msg'=>'Not Found',
-               ]);
+               return get_response(false,'Not Found');
            }
 
        }catch(\Exception $ex){
            return $ex;
-           return response()->json([
-               'statue'=>false,
-               'msg'=>'There Is Error',
-           ]);
+           return get_response(false,'There Is Error');
        }
 
     }

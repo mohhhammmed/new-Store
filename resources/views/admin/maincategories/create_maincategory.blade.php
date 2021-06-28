@@ -52,7 +52,7 @@
 				<div class="category-search-filter">
 					<div class="row">
 						<div class="col-md-6 btn-group btn-group-lg">
-							<strong>Add Category</strong>
+							<strong>Add Main Category</strong>
 
 						</div>
 						<div class="col-md-6">
@@ -62,9 +62,7 @@
 									<li class="list-inline-item">
 										<a href="#" onclick="event.preventDefault();" class="text-info"><i class="fa fa-th-large"></i></a>
 									</li>
-									<li class="list-inline-item">
-										<a href="ad-list-view.html"><i class="fa fa-reorder"></i></a>
-									</li>
+								
 								</ul>
 							</div>
 						</div>
@@ -78,7 +76,7 @@
 								<!-- Recently Favorited -->
 								<div class="widget dashboard-container my-adslist">
 								  @include('alarms.alarm')
-									<h3 class="widget-header">Add Category</h3>
+									<h3 class="widget-header"></h3>
 							  <form id="allData"  action="#"method='POST'enctype='multipart/form-data'>
 
 								@csrf
@@ -106,17 +104,16 @@
 
                                           <small type="hidden"class="category{{$count}}"></small>
 									<input class="form-control form-control-sm"value='{{$lang->abbr}}' type="hidden"name='category[{{$count}}][translation_lang]' placeholder="abbr" aria-label=".form-control-sm example">
-                                          <small type="hidden"id="translation_lang"></small>
-                                      <br>
-                                          <div style='margin-left:20px' class="form-check form-switch">
+                  <small type="hidden"id="translation_lang"></small>
+                              <br>
+                     <div style='margin-left:20px' class="form-check form-switch">
 
-                                              <input class="form-check-input" name="category[{{$count}}][action]"value='1' type="checkbox" id="flexSwitchCheckDefault" checked>
+                  <input class="form-check-input" name="category[{{$count}}][action]"value='1' type="checkbox" id="flexSwitchCheckDefault" checked>
 
-                                              <label class="form-check-label" for="flexSwitchCheckDefault">Statue</label>
-                                          </div>
+                  <label class="form-check-label" for="flexSwitchCheckDefault">Statue</label>
+                    </div>
 
 							  @endforeach
-
 							  @endif
                                   <input class="form-control form-control-sm" placeholder="Price Average" type="text"name='average' aria-label=".form-control-sm example">
                                   <small type="hidden" id="average-er"></small>

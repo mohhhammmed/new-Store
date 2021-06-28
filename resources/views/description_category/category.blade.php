@@ -148,7 +148,10 @@
 													<input type="email" name="email" id="email" class="form-control" placeholder="Email">
 												</div>
 												<div class="col-12">
-													<textarea name="review" id="review" rows="10" class="form-control" placeholder="Message"></textarea>
+													<textarea name="opinion" id="review" rows="10" class="form-control" placeholder="Message"></textarea>
+												</div>
+												<div class="col-12">
+													<input type='hidden' name="subcategory_id" id="id" value='{{$category->id}}' class="form-control">
 												</div>
 												<div class="col-12">
 													<button id="submitData" type="submit" class="btn btn-main">Sumbit</button>
@@ -238,9 +241,9 @@
 
                 success:function(data){
                     if(data.statue==true){
-
+                       alert(data.msg);
                     }
-
+					alert(data.msg);
                 },
                 error:function(reject){
 

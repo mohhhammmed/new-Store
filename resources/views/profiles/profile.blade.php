@@ -7,7 +7,7 @@
     </div>
     <!-- User Name -->
     <h5 class="text-center">{{Auth::guard('admin')->user()->name}}</h5>
-    <p>Joined February 06, 2017</p>
+    <p>Joined {{Auth::guard('admin')->user()->created_at}}</p>
     <a href="{{route('form_edit_profile',Auth::guard('admin')->id())}}" class="btn btn-main-sm">Edit</a>
 </div>
 <!-- Dashboard Links -->
@@ -31,7 +31,7 @@
         </div>
         <!-- User Name -->
         <h5 class="text-center">{{$user->name}}</h5>
-        <p>Joined February 06, 2017</p>
+        <p>Joined {{Auth::guard('web')->user()->created_at}}</p>
         <a href="{{route('edit_user_profile',$user->id)}}" class="btn btn-main-sm">Edit</a>
     </div>
     <!-- Dashboard Links -->

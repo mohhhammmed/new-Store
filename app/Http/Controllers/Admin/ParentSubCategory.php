@@ -28,25 +28,17 @@ class ParentSubCategory extends Controller
                 'translation_lang'=>'required|max:8'
             ]);
             if($valid->fails()){
-                return response()->json([
-                    'statue'=>false,
-                    'errors'=>$valid->errors(),
-
-                ]);
+                return get_response(false,$valid->errors());
+                   
             }
             if(isset($request)) {
                 Parentt::create($request->all());
-                return response()->json([
-                    'statue'=>true,
-                    'msg'=>'Created Done'
-                ]);
+                return get_response(true,'Created Done');
+                  
             }
         }catch(\Exception $ex){
             //return $ex;
-            return response()->json([
-                'statue'=>false,
-                'msg'=>'there is error'
-            ]);
+            return get_response(false,'Error');
         }
 
     }
