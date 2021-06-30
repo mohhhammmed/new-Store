@@ -2,17 +2,17 @@
 
 namespace App\Observers;
 
-use App\Models\SubCategory;
+use App\Models\Subcategory;
 
 class SubCategoryObserv
 {
     /**
      * Handle the SubCategory "created" event.
      *
-     * @param  \App\Models\SubCategory  $subCategory
+     * @param  \App\Models\Subcategory  $subCategory
      * @return void
      */
-    public function created(SubCategory $subCategory)
+    public function created(Subcategory $subCategory)
     {
 
 
@@ -24,7 +24,7 @@ class SubCategoryObserv
      * @param  \App\Models\SubCategory  $subCategory
      * @return void
      */
-    public function updated(SubCategory $subCategory)
+    public function updated(Subcategory $subCategory)
     {
         //
     }
@@ -32,23 +32,36 @@ class SubCategoryObserv
     /**
      * Handle the SubCategory "deleted" event.
      *
-     * @param  \App\Models\SubCategory  $subCategory
+     * @param  \App\Models\Subcategory  $subCategory
      * @return void
      */
-    public function deleted(SubCategory $subCategory)
+    public function deleted(Subcategory $subCategory)
     {
         if(isset($subCategory->description) && $subCategory->description!=null) {
             $subCategory->description()->delete();
+        }
+        if(isset($subCategory->images) && $subCategory->images->count() > 0){
+
+            foreach($subCategory->images as $image){
+                if(file_exists(Subcategory::PathImage() . $image->image)){
+                    unlink(Subcategory::PathImage() . $image->image);
+                }
+            }
+            $subCategory->images()->delete();
+        }
+
+        if(isset($subCategory->reviews) && $subCategory->reviews->count() > 0){
+            $subCategory->reviews()->delete();
         }
     }
 
     /**
      * Handle the SubCategory "restored" event.
      *
-     * @param  \App\Models\SubCategory  $subCategory
+     * @param  \App\Models\Subcategory  $subCategory
      * @return void
      */
-    public function restored(SubCategory $subCategory)
+    public function restored(Subcategory $subCategory)
     {
         //
     }
@@ -56,10 +69,10 @@ class SubCategoryObserv
     /**
      * Handle the SubCategory "force deleted" event.
      *
-     * @param  \App\Models\SubCategory  $subCategory
+     * @param  \App\Models\Subcategory  $subCategory
      * @return void
      */
-    public function forceDeleted(SubCategory $subCategory)
+    public function forceDeleted(Subcategory $subCategory)
     {
         //
     }

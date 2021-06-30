@@ -17,35 +17,14 @@
           <!-- delete-account modal -->
           						  <!-- delete account popup modal start-->
                 <!-- Modal -->
-                <div class="modal fade" id="deleteaccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-                  aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header border-bottom-0">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body text-center">
-                        <img src="{{asset('admin/images/account/Account1.png')}}" class="img-fluid mb-2" alt="">
-                        <h6 class="py-2">Are you sure you want to delete your account?</h6>
-                        <p>Do you really want to delete these records? This process cannot be undone.</p>
-                        <textarea name="message" id="" cols="40" rows="4" class="w-100 rounded"></textarea>
-                      </div>
-                      <div class="modal-footer border-top-0 mb-3 mx-5 justify-content-lg-between justify-content-center">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                @include('admin.modal')
                 <!-- delete account popup modal end-->
           <!-- delete-account modal -->
 
         </div>
       </div>
 
-<div id='app'>
+      <div id='app'>
 	  <div id="main" style='margin:-610px 0px 0px 360px'>
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
@@ -66,7 +45,7 @@
                             <tr>
                                
                                 <th >Type</th>
-                                <th class='text text-center'>Main Categories</th>
+                                <th class='text text-center'>Subcategories</th>
                                <!-- // <th class='text text-center'>Action</th> -->
                                
                             </tr>
@@ -78,29 +57,13 @@
                                         <td>{{$type->type}}</td>
                                        
                                         <td class="text-center">
-                                        @foreach($type->maincategories  as $c=> $maincategory)
-                                       <a href="{{route('form_edit_maincategory',$maincategory->id)}}"> {{$maincategory->category}}</a> -
-                                       @if($c % 4 == 0 && $c != 0)<br> @endif
+                                        @foreach($type->maincategories  as $maincategory)
+                                        @foreach($maincategory->subcategories  as $c=> $subcategory)
+                                       <a href="{{route('form_edit_subcategory',$subcategory->id)}}"> {{$subcategory->name}}</a> -
+                                       @if($c % 3 == 0 && $c != 0 && $c !=3|| $c == 2)<br> @endif
+                                       @endforeach
                                         @endforeach
                                         </td>
-                                       
-<!--                                       
-                                        <td class="action text-center" data-title="Action">
-                                            <div class="">
-                                                <ul class="list-inline justify-content-center">
-                                                    <li class="list-inline-item">
-                                                        <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit" href="">
-                                                            <i class="fa fa-clipboard"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <a data-toggle="tooltip" data-placement="top" title="trash" get_id="" class="delete delData" href="">
-                                                            <i class="fa fa-trash"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td> -->
                                     </tr>
                                 @endforeach
                             @else
@@ -113,15 +76,13 @@
                 </div>
 
             </section>
-
-      
-
-   </div>
-   </div>
-   </div>
+          </div>
+        </div>
+      </div>
     <!-- Row End -->
   </div>
   <!-- Container End -->
+
 </section>
 <!--============================
 =            Footer            =
@@ -130,3 +91,9 @@
 @include('layouts.footer')
 @endsection
 
+@section('scripts')
+<script>
+  @include('accounts.delete_account');  
+</script>
+
+@endsection

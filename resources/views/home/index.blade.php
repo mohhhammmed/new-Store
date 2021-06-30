@@ -8,10 +8,10 @@
                 <div class="col-md-12">
                     <!-- Header Contetnt -->
                     <div class="content-block">
-                        <h1>{{__('trans.Buy & Sell Near You')}}</h1>
-                        <p>{{__('trans.Join the millions who buy and sell from each other')}}<br>{{__('trans.everyday in local communities around the world')}}</p>
+                        <h1>{{website_translation('Buy & Sell Near You')}}</h1>
+                        <p>{{website_translation('Join the millions who buy and sell from each other')}}<br>{{website_translation('everyday in local communities around the world')}}</p>
                         <div class="short-popular-category-list text-cfenter">
-                            <h2>{{__('trans.Popular Category')}}</h2>
+                            <h2>{{website_translation('Popular Category')}}</h2>
                             <ul class="list-inline">
                                    @if(isset($maincategories))
 
@@ -19,7 +19,7 @@
                                         @if($count>=0 && $count <5)
 
                                         <li class="list-inline-item">
-                                            <a href="{{route('all_categories',$category->id)}}"><i class="fa fa-{{__('trans.'.$category->category)}}"></i>{{$category->category}}</a>
+                                            <a href="{{route('all_categories',$category->id)}}"><i class="fa fa-{{website_translation($category->category)}}"></i>{{$category->category}}</a>
                                         </li>
                                       @endif
                                     @endforeach
@@ -40,10 +40,10 @@
 
 
                                             <div class="form-group col-md-9">
-                                                <input type="text" name="category" class="form-control my-2 my-lg-1" id="inputLocation4" placeholder="{{__('trans.category by lang '. app()->getLocale())}}">
+                                                <input type="text" name="category" class="form-control my-2 my-lg-1" id="inputLocation4" placeholder="{{website_translation('category by lang '. app()->getLocale())}}">
                                             </div>
                                             <div style="margin-left: 50px" class="form-group col-md-2 align-self-end">
-                                                <button type="submit" class="btn btn-primary">{{app()->getLocale() != 'en'? __('trans.Search Now'):'Search Now'}}</button>
+                                                <button type="submit" class="btn btn-primary">{{website_translation('Search Now')}}</button>
                                             </div>
                                         </div>
                                     </form>
@@ -68,7 +68,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="section-title">
-                        <h2>{{__('trans.Trending Adds')}}</h2>
+                        <h2>{{website_translation('Trending Adds')}}</h2>
                         
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                                                 <h4 class="card-title"><a href="{{route('description_category',$subcategory->id)}}">{{$subcategory->name}}</a></h4>
                                                 <ul class="list-inline product-meta">
                                                     <li class="list-inline-item">
-                                                        <a href="{{isset($subcategory->maincategory->type->type)?'#'.$subcategory->maincategory->type->type:''}}"><i class="fa fa-folder-open-o"></i>{{isset($subcategory->maincategory->type->type)?__('trans.'.$subcategory->maincategory->type->type) : '' }}</a>
+                                                        <a href="{{isset($subcategory->maincategory->type->type)?'#'.$subcategory->maincategory->type->type:''}}"><i class="fa fa-folder-open-o"></i>{{isset($subcategory->maincategory->type->type)?website_translation($subcategory->maincategory->type->type): '' }}</a>
 
                                                     </li>
                                                     <li class="list-inline-item">

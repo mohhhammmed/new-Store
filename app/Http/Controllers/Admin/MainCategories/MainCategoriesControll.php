@@ -9,7 +9,7 @@ use App\Models\Maincategory;
 use App\Http\Controllers\Controller;
 use App\Models\MainCategoryType;
 use App\Models\Parentt;
-use App\Models\SubCategory;
+use App\Models\Subcategory;
 use App\Models\TypeAllCat;
 use Illuminate\Http\Request;
 //use App\Http\Requests\CategoryValid;
@@ -42,9 +42,9 @@ class MainCategoriesControll extends Controller
     }
 
     public function edit(CategoryValid $request,$maincategory_id){
-
+      
         try {
-            $maincategory = Maincategory::find($maincategory_id);
+             $maincategory = Maincategory::find($maincategory_id);
             if (isset($request) && !empty($request) && isset($maincategory) && $maincategory != null) {
 
             $up_maincategory = $request->category[0];
@@ -59,24 +59,28 @@ class MainCategoriesControll extends Controller
             }else {
                 $up_maincategory['image'] = $maincategory->image;
             }
+           
 
-            if (!isset($st['statue'])) {
-                $up_maincategory['statue'] = 0;
+            if (!isset($up_maincategory['status'])) {
+                $up_maincategory['status'] = 0;
             }
+           
 
                               ////////////////////////////////////
-                            ///update average for all categories///
+                 ////////////////////update average for all categories//////////////////
                     if(isset($maincategory->average) && !empty($maincategory->average)) {
+                      
                         $this->update_averages($request->average,$maincategory);
+                       
                     }
-
+                    
                      $maincategory->update($up_maincategory);
-
+                     
               return redirect(route('form_edit_maincategory',$maincategory->id))->with('success', 'Updated Done');
         }
             return redirect(route('form_edit_maincategory',$maincategory->id))->with('error','There is proplem');
         }catch(\Exception $ex){
-          //  return $ex;
+            return $ex;
             return redirect(route('form_edit_maincategory',$maincategory->id))->with('error','There is proplem');
         }
     }
@@ -86,7 +90,7 @@ class MainCategoriesControll extends Controller
     public function store(CategoryValid $r){
 
         try{
-
+           
             if(isset($r) && !empty($r)) {
                 DB::beginTransaction();
 
@@ -97,12 +101,12 @@ class MainCategoriesControll extends Controller
                 });
                 if (isset($data_ar[0])) {
                     $data_ar = $data_ar[0];
-                    if (!isset($data_ar['action'])) {
-                        $data_ar['action'] = 0;
+                    if (!isset($data_ar['status'])) {
+                        $data_ar['status'] = 0;
                     }
                     $data_ar['image'] = $image;
                     $data_ar['type_id'] = $r->type_id;
-
+                   
                     $id = Maincategory::insertGetId($data_ar);
                     AverageCategory::create([
                         'maincategory_id' => $id,
@@ -117,8 +121,8 @@ class MainCategoriesControll extends Controller
                 // return $data_other[0];
                 //  if(isset($data_other[0])){
                 foreach ($data_other as $data_cat) {
-                    if (!isset($data_cat['action'])) {
-                        $data_cat['action'] = 0;
+                    if (!isset($data_cat['status'])) {
+                        $data_cat['status'] = 0;
                     }
                     $data_cat['image'] = $image;
                     $data_cat['type_id'] = $r->type_id;
@@ -135,7 +139,7 @@ class MainCategoriesControll extends Controller
           
         }catch(\Exception $ex){
             DB::rollBack();
-           // return $ex;
+            return $ex;
            return get_response(false,'Error');
 
         }
@@ -145,19 +149,21 @@ class MainCategoriesControll extends Controller
 
          return $this->del_ajax($request);
      }
-    public function change_statue(Maincategory $category_id){
-        $data_category=$category_id;
+    public function change_statue($maincategory_id){
+        $maincat=Maincategory::find($maincategory_id);
+       
         // return $data_category->action;
-        if(isset($data_category) && $data_category->count() >0)
+        if(isset($maincat) && $maincat->count() >0)
         {
             try{
-                $statue= $data_category->action==1 ? 0 :1;
+                $statue= $maincat->status==1 ? 0 :1;
+                
+                $maincat->update(['status'=>$statue]);
 
-                $data_category->update(['action'=>$statue]);
-                return redirect(route('store.maincategories'))->with('success','The '. $data_category->category.' category '.'is '.$data_category->getAction());
+                return redirect(route('all_maincategories'))->with('success','The '. $maincat->category.' category '.'is '.$maincat->getStatue());
             }catch(\exception $ex){
-                //return $ex;
-                return redirect(route('store.maincategories'))->with('error','There is proplem');
+                return $ex;
+                return redirect(route('all_maincategories'))->with('error','There is proplem');
             }
 
         }
@@ -165,15 +171,17 @@ class MainCategoriesControll extends Controller
 
 
     public function update_averages($average,$maincategory){
-        if(isset($maincategory->translations) && $maincategory->translations->count() > 0)
-        {
+       
             $maincategory->average()->update(['average'=>$average]);
-            foreach($maincategory->translations  as $maincat){
-                $maincat->average()->update([
-                    'average'=>$average,
-                ]);
-            }
-        }
+            if(isset($maincategory->translations) && $maincategory->translations->count() > 0)
+            {
+                foreach($maincategory->translations  as $maincat){
+                    $maincat->average()->update([
+                        'average'=>$average,
+                    ]);
+               }
+           }
+       
     }
     public function update_images($image,$maincategory) {
         $maincategories=$maincategory->translations;

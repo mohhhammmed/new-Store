@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Maincategory;
 use App\Models\Parentt;
-use App\Models\SubCategory;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -14,7 +14,7 @@ class ParentSubCategory extends Controller
 {
     public function create(){
         $maincategories=Maincategory::select('id','category')->where('translation_lang',app()->getLocale())->get();
-        $subcategories=SubCategory::select('id','name')->get();
+        $subcategories=Subcategory::select('id','name')->get();
 
         return view('admin.subcategories.parent_subcategories',compact('maincategories','subcategories'));
     }

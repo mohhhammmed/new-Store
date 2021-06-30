@@ -1559,8 +1559,9 @@ ul.pagination .active a {
 }
 
 .product-details .content .nav {
+  FONT-WEIGHT: 400;
   text-align: center;
-  margin-bottom: 5px;
+  margin-top: 140px;
 }
 
 .product-details .content .nav .nav-item {
@@ -1585,6 +1586,7 @@ ul.pagination .active a {
 .product-details .content .tab-content {
   background: #fff;
   padding: 30px;
+  margin-top: 10px;
 }
 
 .product-slider {
@@ -1602,7 +1604,7 @@ ul.pagination .active a {
 .product-slider .slick-dots {
   display: flex;
   bottom: -50px;
-  /* margin-bottom: 150px; */
+  margin-bottom: -150px;
 }
 
 .product-slider .slick-dots li {
@@ -1622,7 +1624,7 @@ ul.pagination .active a {
 
 .product-slider .slick-dots li img {
   max-width: 100%;
-  height: auto;
+  height: 200px;
 }
 
 .product-table {

@@ -16,28 +16,7 @@
                 <!-- delete-account modal -->
                                           <!-- delete account popup modal start-->
                       <!-- Modal -->
-                      <div class="modal fade" id="deleteaccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header border-bottom-0">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body text-center">
-                              <img src="{{asset('admin/images/account/Account1.png')}}" class="img-fluid mb-2" alt="">
-                              <h6 class="py-2">Are you sure you want to delete your account?</h6>
-                              <p>Do you really want to delete these records? This process cannot be undone.</p>
-                              <textarea name="message" id="" cols="40" rows="4" class="w-100 rounded"></textarea>
-                            </div>
-                            <div class="modal-footer border-top-0 mb-3 mx-5 justify-content-lg-between justify-content-center">
-                              <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                              <button type="button" class="btn btn-danger">Delete</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      @include('admin.modal')
                       <!-- delete account popup modal end-->
                 <!-- delete-account modal -->
 
@@ -84,12 +63,12 @@
           </select>
               <small type="hidden" id="maincategory_id"></small>
 
-     @isset($vendor)
-                  <input name='id'type='hidden'value='{{$vendor->id}}'>@endisset
+     @isset($data_vendor)
+                  <input name='id'type='hidden'value='{{$data_vendor->id}}'>@endisset
           <br><br>
-         @isset($vendor)
+         @isset($data_vendor)
           <div class="form-check form-switch">
-            <input class="form-check-input"name='statue' value='1' type="checkbox" id="flexSwitchCheckChecked" @if($vendor->getActive()) checked @endif>
+            <input class="form-check-input"name='statue' value='1' type="checkbox" id="flexSwitchCheckChecked" @if($data_vendor->getActive()) checked @endif>
             <label class="form-check-label" for="flexSwitchCheckChecked">Statue</label>
           </div>
           @else
@@ -99,7 +78,7 @@
           </div>
          @endisset
               <small type="hidden" id="statue"></small>
-          <button type="submit" id="submitData" class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">{{isset($vendor)? 'Update' :'Add'}}</button>
+          <button type="submit" id="submitData" class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">{{isset($data_vendor)? 'Update' :'Add'}}</button>
           </form>
             </div>
           </div>
@@ -117,7 +96,7 @@
 
 @section('scripts')
 
-    @if(isset($vendor))
+    @if(isset($data_vendor))
         <script>
             $(document).on('click','#submitData',function(e){
                 e.preventDefault();
@@ -137,7 +116,7 @@
                     cache: false,
                     {{--//'_token':'{{csrf_token()}}',--}}
             success:function(data){
-                if(data.statue==true){
+                if(data.status==true){
                     alert(data.msg);
                 }
                 alert(data.msg);
@@ -153,6 +132,10 @@
 
         });
     });
+
+
+////////////////Delete Account/////////
+    @include('accounts.delete_account');  
 </script>
 @else
         <script>
@@ -174,7 +157,7 @@
                     cache: false,
                     {{--//'_token':'{{csrf_token()}}',--}}
             success:function(data){
-                if(data.statue==true){
+                if(data.status==true){
                     alert(data.msg);
                 }
                 alert(data.msg);
@@ -190,6 +173,8 @@
 
         });
     });
+
+    @include('accounts.delete_account');  
 </script>
 @endif
 

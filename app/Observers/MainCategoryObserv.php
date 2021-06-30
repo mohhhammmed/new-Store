@@ -3,6 +3,8 @@
 namespace App\Observers;
 
 use App\Models\Maincategory;
+use App\Models\Subcategory;
+use App\Models\Vendor;
 
 class MainCategoryObserv
 {
@@ -26,8 +28,8 @@ class MainCategoryObserv
      */
     public function updated(Maincategory $maincategory)
     {
-            if($maincategory->action==0) {
-                $maincategory->vendors()->update(['action' => $maincategory->action]);
+            if($maincategory->status==0) {
+                $maincategory->vendors()->update(['statue' => $maincategory->status]);
             }
     }
 
@@ -45,15 +47,27 @@ class MainCategoryObserv
            if(isset($subcategories)&& $subcategories->count() > 0){
                foreach($maincategory->subcategories as $subcategory){
                    $subcategory->description()->delete();
+
+       ////////////////////////Images Of Categories////////////////////////
+                   foreach($subcategory->images as $image){
+                       if(file_exists(Subcategory::PathImage() . $image->image)){
+                            unlink(Subcategory::PathImage() . $image->image);
+                         }
+                       $image->delete();
+                   }
+
+                   if(file_exists(Subcategory::PathImage() . $subcategory->image)){
+                         unlink(Subcategory::PathImage() . $subcategory->image);
+                     }
                }
                $subcategories->delete();
            }
                    ////////////////////////////////////////
            ////////////////Del Parent Subcategories/////////////////////
-                    if(isset($maincategory->parents) && $maincategory->parents->count() > 0)
-                    {
-                        $maincategory->parents()->delete();
-                    }
+            if(isset($maincategory->parents) && $maincategory->parents->count() > 0)
+            {
+              $maincategory->parents()->delete();
+            }
 
                        ////////////////////////////
              //////////////////Delete Average////////////
@@ -62,26 +76,42 @@ class MainCategoryObserv
            }
 
            /////////////////////////////////////////////////////////////////////////////////
-////////////////Delete Translations && Translation's Subcategories && Translation's vendors////////////
-        $translations=$maincategory->translations();
-        if(isset($translations) && $translations->count()!=null){
-            if(isset($translations->subcategories) && $translations->subcategories->count() > 0){
-                foreach($maincategory->translations as $trans) {
+////////////////Delete Translations && Transla/tion's Subcategories && Translation's vendors////////////
+        $translations=$maincategory->translations;
+        if(isset($translations) && $translations->count() > 0){
+          //  if(isset($translations->subcategories) && $translations->subcategories->count() > 0){
+                foreach($translations as $trans) {
+                   
+                       $trans->average()->delete();
+                    
+                  if(isset($trans->subcategories) && $trans->subcategories->count() > 0){
                     foreach($trans->subcategories as $subcategory) {
                         $subcategory->delete();
                     }
+
+
                     foreach($trans->vendors as $vendor) {
+                        if(file_exists(Vendor::PathImage() . $vendor->logo)){
+                            unlink(Vendor::PathImage() . $vendor->logo);
+                         }
                         $vendor->delete();
                     }
                 }
             }
-            $translations->delete();
+           
+            $maincategory->translations()->delete();
         }
 
                     ///////////////////////////////////
   //////////////////////////////Delete Vendors///////////////////////////
         if(isset($maincategory->vendors) && $maincategory->vendors->count() > 0 )
         {
+            foreach($maincategory->vendors as $vendor) {
+                if(file_exists(Vendor::PathImage() . $vendor->logo)){
+                    unlink(Vendor::PathImage() . $vendor->logo);
+                 }
+              
+            }
             $maincategory->vendors()->delete();
         }
 

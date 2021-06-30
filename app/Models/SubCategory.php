@@ -9,17 +9,17 @@ use App\Observers\SubCategoryObserv;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SubCategory extends Model
+class Subcategory extends Model
 {
     use HasFactory;
-    protected $table='sub_categories';
+    protected $table='subcategories';
     protected $fillable=['translation_of','statue','translation_lang','image','the_price','parent_id','name','maincategory_id'];
 
 
 
     public static function boot(){
        parent::boot();
-       SubCategory::observe(SubCategoryObserv::class);
+       Subcategory::observe(SubCategoryObserv::class);
     }
 
     public function images(){
@@ -55,7 +55,7 @@ class SubCategory extends Model
         return $this->hasOne(Description::class,'subcategory_id');
     }
 
-    public function review(){
+    public function reviews(){
         return $this->hasMany(Review::class,'subcategory_id');
     }
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User\Payment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactValid;
 use App\Models\ClientChekoutId;
-use App\Models\SubCategory;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 
 class PaymentControll extends Controller
@@ -13,7 +13,7 @@ class PaymentControll extends Controller
     public function checkout(Request $request,$subcategory_id)
     {
 
-       $subcategory=SubCategory::find($subcategory_id);
+       $subcategory=Subcategory::find($subcategory_id);
         $url = env('HYPERPAY_URL') . "v1/checkouts";
         $data = "entityId=" . env('HYPERPAY_ENTITY_ID') .
             "&amount=" . $subcategory->the_price .

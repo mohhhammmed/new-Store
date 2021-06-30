@@ -16,28 +16,7 @@
                 <!-- delete-account modal -->
                                           <!-- delete account popup modal start-->
                       <!-- Modal -->
-                      <div class="modal fade" id="deleteaccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header border-bottom-0">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body text-center">
-                              <img src="{{asset('admin/images/account/Account1.png')}}" class="img-fluid mb-2" alt="">
-                              <h6 class="py-2">Are you sure you want to delete your account?</h6>
-                              <p>Do you really want to delete these records? This process cannot be undone.</p>
-                              <textarea name="message" id="" cols="40" rows="4" class="w-100 rounded"></textarea>
-                            </div>
-                            <div class="modal-footer border-top-0 mb-3 mx-5 justify-content-lg-between justify-content-center">
-                              <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                              <button type="button" class="btn btn-danger">Delete</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      @include('admin.modal')
                       <!-- delete account popup modal end-->
                 <!-- delete-account modal -->
 
@@ -89,8 +68,8 @@
         <br><br>
           <div style='margin-left:20px' class="form-check form-switch">
 
-            <input class="form-check-input" name="category[0][action]"value='1'
-             type="checkbox" id="flexSwitchCheckDefault"@if($data_category->action==1) checked @endif >
+            <input class="form-check-input" name="category[0][status]"value='1'
+             type="checkbox" id="flexSwitchCheckDefault"@if($data_category->status==1) checked @endif >
 
             <label class="form-check-label" for="flexSwitchCheckDefault">Statue</label>
           </div>
@@ -103,7 +82,11 @@
               </div>
               <br>
               @enderror
+              @else 
+             <input class="form-control form-control-sm" type="hidden" name='average' value="{{isset($data_category->average)?$data_category->average->average:''}}" >
+             
               @endif
+           
              
 
           <button type="submit" class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">Update</button>
@@ -112,22 +95,22 @@
             </div>
 
 
-  @isset($data_category->translations)
+                  @isset($data_category->translations)
 
-                  <ul class="nav nav-tabs">
-  @foreach ($data_category->translations as $c=> $trans)
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#home{{$trans->id}}">{{$trans->translation_lang}}</a>
-        </li>
-  @endforeach
+                                  <ul class="nav nav-tabs">
+                  @foreach ($data_category->translations as $c=> $trans)
+                        <li class="nav-item">
+                          <a class="nav-link" data-toggle="tab" href="#home{{$trans->id}}">{{$trans->translation_lang}}</a>
+                        </li>
+                  @endforeach
 
-     </ul>
+                    </ul>
                   <div class="tab-content">
                       @foreach ($data_category->translations as $c=> $trans)
 
                           <div class="tab-pane container active" id="home{{$trans->id}}">
                               <div class="widget dashboard-container my-adslist">
-                                  @include('alarms.alarm')
+                                
                                   <h3 class="widget-header">Edit Main Category</h3>
 
                                   <form class="allData" action="{{route('edit_maincategory',$trans->id)}}"method='POST'enctype='multipart/form-data'>
@@ -154,8 +137,8 @@
                                       @enderror
                                       <div class="form-check form-switch">
 
-                                          <input class="form-check-input" name="category[0][action]"value='1'
-                                                 type="checkbox" id="flexSwitchCheckDefault"@if($trans->action==1) checked @endif >
+                                          <input class="form-check-input" name="category[0][status]"value='1'
+                                                 type="checkbox" id="flexSwitchCheckDefault"@if($trans->status==1) checked @endif >
 
                                           <label class="form-check-label" for="flexSwitchCheckDefault">Statue</label>
                                       </div>
@@ -179,4 +162,10 @@
 
     <!--================ Footer ===============-->
     @include('layouts.footer')
+@endsection
+
+@section('scripts')
+<script>
+  @include('accounts.delete_account');  
+</script>
 @endsection

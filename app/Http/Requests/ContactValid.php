@@ -27,7 +27,7 @@ class ContactValid extends FormRequest
            'email'=>'required|email|unique:orders',
             'name'=>'required|string',
             'address'=>'required|string',
-            'id'=>'required|numeric|exists:sub_categories,id',
+            'id'=>'required|numeric|exists:subcategories,id',
             'mobile'=>'required|numeric|unique:orders',
             'category'=>'required|exists:sub_categories,name',
 

@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-8 offset-md-2 text-center">
                 <!-- Title text -->
-                <h3>{{__("trans.You are welcome")}}</h3>
+                <h3>{{website_translation('Welcome')}}</h3>
             </div>
         </div>
     </div>
@@ -53,20 +53,20 @@
 						<ul class="nav nav-pills  justify-content-center" id="pills-tab" role="tablist">
 							<li class="nav-item">
 								<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home"
-								 aria-selected="true">{{__("trans.Product Details")}}</a>
+								 aria-selected="true">{{website_translation('Product Details')}}</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile"
-								 aria-selected="false">{{__("trans.Specifications")}}</a>
+								 aria-selected="false">{{website_translation('Specifications')}}</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact"
-								 aria-selected="false">{{__("trans.Reviews")}}</a>
+								 aria-selected="false">{{website_translation('Reviews')}}</a>
 							</li>
 						</ul>
 						<div class="tab-content" id="pills-tabContent">
 							<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-								<h3 class="tab-title">{{__("trans.Product Description")}}</h3>
+								<h3 class="tab-title">{{website_translation('Product Description')}}</h3>
 								<p>{{$category->name}}</p>
 
 								<iframe width="100%" height="400" src="https://www.youtube.com/embed/LUH7njvhydE?rel=0&amp;controls=0&amp;showinfo=0"
@@ -76,7 +76,7 @@
 
 							</div>
 							<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-								<h3 class="tab-title">{{__("trans.Product Specifications")}}</h3>
+								<h3 class="tab-title">{{website_translation('Product Specifications')}}</h3>
 								<table class="table table-bordered product-table">
 									<tbody>
 										<tr>
@@ -102,7 +102,7 @@
 								</table>
 							</div>
 							<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-								<h3 class="tab-title">{{__("trans.Product Review")}}</h3>
+								<h3 class="tab-title">{{website_translation('Product Review')}}</h3>
 								<div class="product-review">
 									<div class="media">
 										<!-- Avater -->
@@ -128,13 +128,13 @@
 											</div>
 											<div class="review-comment">
 												<p>
-                                                    {{__('trans.Your review matters to us')}}
+                                                    {{website_translation('Your review matters to us')}}
 												</p>
 											</div>
 										</div>
 									</div>
 									<div class="review-submission">
-										<h3 class="tab-title">{{__('trans.Submit your review')}}</h3>
+										<h3 class="tab-title">{{website_translation('Submit your review')}}</h3>
 										<!-- Rate -->
 										<div class="rate">
 											<div class="starrr"></div>
@@ -168,18 +168,18 @@
 			<div class="col-md-4">
 				<div class="sidebar">
 					<div class="widget price text-center">
-						<h4>{{locale_lang() != 'en' ? __('trans.Price'):'Price'}}</h4>
+						<h4>{{website_translation('Price')}}</h4>
 						<p>${{round($category->the_price /18)}}</p>
 					</div>
 					<!-- User Profile widget -->
 					<div class="widget user text-center">
-						<img class="rounded-circle img-fluid mb-5 px-5" src="images/user/user-thumb.jpg" alt="">
-						<h4><a href="">Jonathon Andrew</a></h4>
-						<p class="member-time">Member Since Jun 27, 2017</p>
+						<img class="rounded-circle img-fluid mb-5 px-5" src="{{get_image(App\Models\SubCategory::PathImage() . $category->image)}}" alt="">
+						<h4><a href="">{{$category->name}}</a></h4>
+						<p class="member-time">{{$category->created_at}}</p>
 						<a href="">See all ads</a>
 						<ul class="list-inline mt-20">
-							<li class="list-inline-item"><a href="{{route('make_order',$category->id)}}" class="btn btn-contact d-inline-block  btn-primary px-lg-5 my-1 px-md-6">Contact</a></li>
-                            <li class="list-inline-item"><a href="{{route('make_order_electronic',$category->id)}}" class="btn btn-contact d-inline-block  btn-primary px-lg-5 my-1 px-md-3">ُُElectronic Payment</a></li>
+							<li class="list-inline-item"><a href="{{route('make_order',$category->id)}}" class="btn btn-contact d-inline-block  btn-primary px-lg-5 my-1 px-md-6">{{website_translation('Contact')}}</a></li>
+                            <li class="list-inline-item"><a href="{{route('make_order_electronic',$category->id)}}" class="btn btn-contact d-inline-block  btn-primary px-lg-5 my-1 px-md-3">{{website_translation('Electronic Payment')}}</a></li>
 
 						</ul>
 					</div>
@@ -193,18 +193,18 @@
 					
 					<!-- Safety tips widget -->
 					<div class="widget disclaimer">
-						<h5 class="widget-header">Safety Tips</h5>
+						<h5 class="widget-header">{{website_translation('Safety Tips')}}</h5>
 						<ul>
-							<li>{{__('trans.Payment after receiving delivery to all provinces')}}</li>
+							<li>{{website_translation('Payment after receiving delivery to all provinces')}}</li>
 						</ul>
 					</div>
 					<!-- Coupon Widget -->
 					<div class="widget coupon text-center">
 						<!-- Coupon description -->
-						<p>{{__('trans.Have a great product to post ? Share it with your fellow users')}}.
+						<p>{{website_translation('Have a great product to post ? Share it with your fellow users')}}.
 						</p>
 						<!-- Submii button -->
-						<a href="{{route('make_over')}}" class="btn btn-transparent-white">{{__('trans.Submit Listing')}}</a>
+						<a href="{{route('make_over')}}" class="btn btn-transparent-white">{{website_translation('Submit Listing')}}</a>
 					</div>
 
 				</div>
@@ -240,7 +240,7 @@
                 cache: false,
 
                 success:function(data){
-                    if(data.statue==true){
+                    if(data.status==true){
                        alert(data.msg);
                     }
 					alert(data.msg);

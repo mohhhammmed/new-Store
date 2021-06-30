@@ -12,7 +12,7 @@ use App\Models\NotifyOfbuy;
 use App\Models\Order;
 use App\Traits\Helper;
 use Illuminate\Http\Request;
-use App\Models\SubCategory;
+use App\Models\Subcategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +23,7 @@ class ContactControll extends Controller
     public function make_order($subcategory_id)
     {
 
-        $subcategory = SubCategory::find($subcategory_id);
+        $subcategory = Subcategory::find($subcategory_id);
 
         if (isset($subcategory) && !empty($subcategory)) {
             return view('user.contact.make_order', compact('subcategory'));
@@ -89,7 +89,7 @@ class ContactControll extends Controller
             DB::beginTransaction();
             if(isset($request) && !empty($request)) {
 
-                $category=SubCategory::find($request->id);
+                $category=Subcategory::find($request->id);
 
                 if(isset($category) && $category != null) {
                     $request->merge(['image' => $category->image,'the_price'=>$category->the_price]);

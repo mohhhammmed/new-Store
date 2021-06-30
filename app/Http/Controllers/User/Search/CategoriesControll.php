@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\categoriesValid;
 use App\Models\Maincategory;
 use App\Models\Parentt;
-use App\Models\SubCategory;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 
 class CategoriesControll extends Controller
@@ -46,7 +46,7 @@ class CategoriesControll extends Controller
             if(isset($request) && !empty($request)) {
 
                 $maincategories = Maincategory::where('translation_lang', app()->getLocale())->pluck('category')->toArray();
-                $subcategories = SubCategory::where('translation_lang', app()->getLocale())->pluck('name')->toArray();
+                $subcategories = Subcategory::where('translation_lang', app()->getLocale())->pluck('name')->toArray();
                 $parents_subcategories = Parentt::where('translation_lang', app()->getLocale())->pluck('type')->toArray();
 
               if(isset($maincategories) || isset($subcategories) || isset($parents_subcategories)) {
@@ -67,7 +67,7 @@ class CategoriesControll extends Controller
                   if ($statue_2 == true) {
                       foreach ($subcategories as $subcat) {
                           if ($subcat == $request->category) {
-                              $yourCategories = SubCategory::where('name', $subcat)->get();
+                              $yourCategories = Subcategory::where('name', $subcat)->get();
                           }
                       }
                   }

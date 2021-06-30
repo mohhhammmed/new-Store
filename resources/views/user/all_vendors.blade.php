@@ -40,7 +40,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="section-title">
-					<h2>Stores</h2>
+					<h2>Vendors</h2>
 				</div>
 				<!-- First Letter -->
 				<div class="block">

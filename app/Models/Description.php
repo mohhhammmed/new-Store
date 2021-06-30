@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Subcategory;
 
 class Description extends Model
 {
@@ -12,6 +13,6 @@ class Description extends Model
     protected $fillable=['id','subcategory_id','description'];
 
     public function subcategory(){
-        return $this->belongsTo(SubCategory::class,'subcategory_id');
+        return $this->belongsTo(Subcategory::class,'subcategory_id');
     }
 }

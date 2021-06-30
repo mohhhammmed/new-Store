@@ -6,13 +6,15 @@ use App\Observers\MainCategoryObserv;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Vendor;
+use App\Models\AverageCategory;
+use App\Models\Subcategory;
 
 //use App\Ocservers\MainCategoryObserv;
 class Maincategory extends Model
 {
     use HasFactory;
     protected $table='maincategories';
-    protected $fillable=['translation_of','action','translation_lang','image','category'];
+    protected $fillable=['translation_of','status','translation_lang','image','category'];
 
     public static function boot(){
       parent::boot();
@@ -20,14 +22,14 @@ class Maincategory extends Model
     }
 
     public function scopeSelection(){
-         return $this->select('id','image','type_id','action','translation_lang','translation_of','category');
+         return $this->select('id','image','type_id','status','translation_lang','translation_of','category');
     }
     public function scopeActive($val){
-      return $val->where('action',1)->get();
+      return $val->where('status',1)->get(); 
     }
 
     public function getStatue(){
-      return $this->action==1 ? 'active':'not active';
+      return $this->status==1 ? 'active':'not active';
     }
     public function translations(){
       return $this->hasMany(self::class,'translation_of');
@@ -39,7 +41,7 @@ class Maincategory extends Model
       return $this->hasMany(Vendor::class,'maincategory_id');
     }
     public function subcategories(){
-        return $this->hasMany(SubCategory::class,'maincategory_id');
+        return $this->hasMany(Subcategory::class,'maincategory_id');
     }
 
     public function parents(){

@@ -43,7 +43,7 @@
                                         <td class="text-center">{{$order->mobile}}</td>
                                         <td class="product-thumb text-center">
                                             <img width="80px" height="auto"
-                                                 src="{{asset(\App\Models\SubCategory::PathImage().$order->image)}}"
+                                                 src="{{asset(\App\Models\Subcategory::PathImage().$order->image)}}"
                                                  alt="image description"></td>
                                         <td class="text-center">{{$order->address}}</td>
                                         <td class="text-center">{{$order->the_price}}</td>

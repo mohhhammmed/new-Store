@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
         'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
         'Redir'                   =>\App\Http\Middleware\Redirect::class,
-        'RedirMainCat'                   =>\App\Http\Middleware\RedirMaincategory::class
+        'RedirMainCat'            =>\App\Http\Middleware\RedirMaincategory::class,
+        'st_subcategories'        =>\App\Http\Middleware\StatusSubcategories::class,  
     ];
 }

@@ -15,71 +15,47 @@
            @include('profiles.profile')
 
 
+      <div id="main" row='6' style='margin:-610px 0px 0px 360px;width:850px'>
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
 
-          <!-- delete-account modal -->
-          						  <!-- delete account popup modal start-->
-                <!-- Modal -->
-                <div class="modal fade" id="deleteaccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-                  aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header border-bottom-0">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body text-center">
-                        <img src="{{asset('admin/images/account/Account1.png')}}" class="img-fluid mb-2" alt="">
-                        <h6 class="py-2">Are you sure you want to delete your account?</h6>
-                        <p>Do you really want to delete these records? This process cannot be undone.</p>
-                        <textarea name="message" id="" cols="40" rows="4" class="w-100 rounded"></textarea>
-                      </div>
-                      <div class="modal-footer border-top-0 mb-3 mx-5 justify-content-lg-between justify-content-center">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                      </div>
+        <div class="page-heading">
+      
+            <section class="section">
+                <div class="card">
+                    <div class="card-header">
+                       Our Sub Categories
                     </div>
-                  </div>
-                </div>
-                <!-- delete account popup modal end-->
-          <!-- delete-account modal -->
-
-        </div>
-      </div>
-
-
-      <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
-        <!-- Recently Favorited -->
-        <div class="widget dashboard-container my-adslist">
-
-          <h3  class="widget-header">My Ads {{' '}} <a style="margin-left: 10px" href='{{route('create_subcategory')}}'class="btn-sm btn btn-outline-info btn-small"><strong>Add Sub Category</strong> </a> </h3>
-
-
-          @include('alarms.alarm')
-          <table class="table table-responsive product-dashboard-table">
-            <thead>
-              <tr>
-                <th>Image</th>
-                <th>lang</th>
-                <th class="text-center">Category</th>
-                <th class="text-center">Statue</th>
-                <th class="text-center">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              @if(isset($subcategories) && $subcategories->count() > 0)
-						  @foreach ($subcategories as $subcategory)
-              <tr>
-
-                <td class="product-thumb">
+                    <div class="card-body">
+                        <table class="table table-striped" id="table1">
+                            <thead>
+                            <tr>
+                               
+                             <th>Image</th>
+                             <th class="text-center">lang</th>
+                             <th class="text-center">Category</th>
+                             <th class="text-center">Statue</th>
+                             <th class="text-center">Action</th>
+                               <!-- // <th class='text text-center'>Action</th> -->
+                               
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if(isset($subcategories) && !empty($subcategories))
+                                @foreach($subcategories as $subcategory)
+                                <tr>
+                <td >
                   <img width="80px" height="auto" src="{{asset('admin/images/subcategories/'.$subcategory->image)}}" alt="image description"></td>
 
-                <td class="translation_lang">
+                <td class="translation_lang text-center">
                   {{$subcategory->translation_lang}}
                 </td>
-                <td class="product-category"><span class="categories"> {{$subcategory->name}}</span></td>
-                <td class="product-category"><span class="categories"> {{$subcategory->getStatue()}}</span></td>
-                <td class="action" data-title="Action">
+                <td class="product-category text-center"><span class="categories"> {{$subcategory->name}}</span></td>
+                <td class="product-category text-center"><span class="categories"> {{$subcategory->getStatue()}}</span></td>
+                <td class="action text-center" data-title="Action">
                   <div class="">
                     <ul class="list-inline justify-content-center">
                       <li class="list-inline-item">
@@ -102,40 +78,23 @@
                   </div>
                 </td>
               </tr>
-              @endforeach
-              @endif
+                                @endforeach
+                           
+                            @endif
 
-            </tbody>
-          </table>
+                            </tbody>
+                        </table>
 
-        </div>
+                    </div>
+                </div>
 
-        <!-- pagination -->
 
-        <div class="pagination justify-content-center">
-					<nav aria-label="Page navigation example">
-						<ul class="pagination">
-							<li class="page-item">
-								<a class="page-link" href="" aria-label="Previous">
-									<span aria-hidden="true">&laquo;</span>
-									<span class="sr-only">Previous</span>
-								</a>
-							</li>
 
-                            {{$subcategories->links()}}
 
-							<li class="page-item">
-								<a class="page-link" href="" aria-label="Next">
-									<span aria-hidden="true">&raquo;</span>
-									<span class="sr-only">Next</span>
-								</a>
-							</li>
-						</ul>
-					</nav>
-				</div>
-        <!-- pagination -->
+            </section>
 
-      </div>
+      
+</div>
 
 
     </div>
@@ -178,7 +137,7 @@
                 },
 
                 success:function(data){
-                  if(data.statue==true){
+                  if(data.status==true){
                       alert(data.msg);
                   }
                     alert(data.msg);
@@ -188,9 +147,11 @@
                 }
 
             });
-
-
         });
+          
+          /////////////////////////////////
+   //////////////////Delete Account///////////////
+        @include('accounts.delete_account');  
     </script>
     @endsection
 

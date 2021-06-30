@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\SubCategory;
+use App\Models\Subcategory;
 use App\Models\User;
 //use App\Models\Maincategory;
 use App\Http\Controllers\Controller;
@@ -24,7 +24,7 @@ class HomeController extends Controller
          $q->select('category','translation_lang','type_id','id')->where('translation_lang',app()->getLocale());
         }])->select('id','type')->where('translation_lang',app()->getLocale())->get();
       //  $types=TypemainCat::all();
-        $subcategories=SubCategory::select('id','name','image','maincategory_id','the_price')->where('translation_lang',app()->getLocale())->get();
+        $subcategories=Subcategory::select('id','name','image','maincategory_id','the_price')->where('translation_lang',app()->getLocale())->get();
 
 
         return view('home.index',compact('maincategories','main_categories_byType','subcategories'));

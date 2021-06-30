@@ -35,7 +35,7 @@ return [
     'category by lang en'=>'المنتج باللغه الانجليزيه',
     'Edit profile'=>'تعديل الملف الشخصي',
     'Your review matters to us'=>'رأيك يهمنا',
-    'You are welcome'=>'انت مرحب بك',
+    'welcome'=>' مرحبا بك',
     'Product Details'=>'تفاصيل المنتج',
     'Specifications'=>'الخصائص ',
     'Reviews'=>'التقييم',
@@ -50,5 +50,8 @@ return [
       'Submit Listing'=>'بيع منتج',
       'Submit your review'=>'اخبرنا رأيك عن المنتج',
       'Search Now'=>'ابحث الان',
-      'Price'=>'السعر'
+      'Price'=>'السعر',
+      'Safety Tips'=>'للأمان',
+      'Contact'=>'التواصل معنا  ',
+      'Electronic Payment'=>'الدفع الالكتروني'
 ];

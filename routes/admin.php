@@ -8,13 +8,14 @@ use App\Http\Controllers\Admin\ParentSubCategory;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\requests\GetClientControll;
 use App\Http\Controllers\Admin\requests\OrdersAndOvers;
-use App\Http\Controllers\Admin\SubCategoriesControll;
+use App\Http\Controllers\Admin\SubcategoriesControll;
 use App\Http\Controllers\Admin\Vendors\VendorControll;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\LogoutControll;
 use App\Http\Controllers\Admin\Langs\LangControll;
 use App\Http\Controllers\Admin\CategoryControl;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Accounts\AccountControll;
 use App\Models\Admin;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -94,7 +95,7 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
           Route::get('form_edit_maincat/{maincategory_id}',[MainCategoriesControll::class,'form_edit'])->name('form_edit_maincategory');
           Route::POST('edit_maincat/{maincategory_id}',[MainCategoriesControll::class,'edit'])->name('edit_maincategory');
           Route::POST('delete_maincat',[MainCategoriesControll::class,'delete'])->name('delete_maincategory');
-        //  Route::get('change_statue_maincat/{maincategory_id}',[MainCategoriesControll::class,'change_statue'])->name('change_statue_maincategory');
+          Route::get('change_statue_maincat/{maincategory_id}',[MainCategoriesControll::class,'change_statue'])->name('change_statue_maincategory');
 
 
                                     ////////////////                 /////////////////
@@ -112,15 +113,15 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
                                ////////////////                 /////////////////
 /////////////////////////////////////////////// Sub Categories /////////////////////////////////////
 
-    Route::get('subcategories',[SubCategoriesControll::class,'subcategories'])->name('all_subcategories');
-    Route::POST('/store_subcategory',[SubCategoriesControll::class,'store'])->name('store_subcategory');
-    Route::get('/create_subcategory',[SubCategoriesControll::class,'create'])->name('create_subcategory')->middleware('RedirMainCat');
-    Route::get('/add_images_subcategories',[SubCategoriesControll::class,'add_images_subcategories'])->name('add_images_subcategory');
-    Route::POST('store_images',[SubCategoriesControll::class,'store_images'])->name('store_images_subcategory');
-    Route::get('form_edit_subcategories/{category_id}',[SubCategoriesControll::class,'form_edit'])->name('form_edit_subcategory');
-    Route::POST('edit_subcategory',[SubCategoriesControll::class,'edit'])->name('edit_subcategory');
-    Route::POST('delete_subcategory',[SubCategoriesControll::class,'delete'])->name('delete_subcategory');
-    Route::get('change_statue_subcat/{subcategory_id}',[SubCategoriesControll::class,'change_statue'])->name('change_statue_subcategory');
+    Route::get('subcategories',[SubcategoriesControll::class,'subcategories'])->name('all_subcategories')->middleware('st_subcategories');
+    Route::POST('/store_subcategory',[SubcategoriesControll::class,'store'])->name('store_subcategory');
+    Route::get('/create_subcategory',[SubcategoriesControll::class,'create'])->name('create_subcategory')->middleware('RedirMainCat');
+    Route::get('/add_images_subcategories',[SubcategoriesControll::class,'add_images_subcategories'])->name('add_images_subcategory')->middleware('st_subcategories');
+    Route::POST('store_images',[SubcategoriesControll::class,'store_images'])->name('store_images_subcategory');
+    Route::get('form_edit_subcategories/{category_id}',[SubcategoriesControll::class,'form_edit'])->name('form_edit_subcategory');
+    Route::POST('edit_subcategory',[SubcategoriesControll::class,'edit'])->name('edit_subcategory');
+    Route::POST('delete_subcategory',[SubcategoriesControll::class,'delete'])->name('delete_subcategory');
+    Route::get('change_statue_subcat/{subcategory_id}',[SubcategoriesControll::class,'change_statue'])->name('change_statue_subcategory');
 
                                ////////////////                 /////////////////
 /////////////////////////////////////////////// admin Of Vendors/////////////////////////////////////
@@ -170,9 +171,7 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
 
 
 
-Route::prefix('store')->group(function(){
-
-});
+Route::POST('store',[AccountControll::class,'delete'])->name('delete_account');
   route::get('jj',function(){
     return getpath();
   });

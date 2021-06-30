@@ -3,9 +3,10 @@ namespace App\Traits;
 use App\Models\Description;
 use App\Models\Lang;
 use App\Models\Maincategory;
-use App\Models\SubCategory;
+use App\Models\Subcategory;
 use Illuminate\Support\Facades\Auth;
 use Str;
+use DB;
 use Validator;
 Trait Helper{
 
@@ -16,6 +17,7 @@ Trait Helper{
            return $name;
        }
        public function editCategory($maincategory_id){
+      //  return $maincategory_id;
              $data_category=Maincategory::with('translations')->find($maincategory_id);
              $langs=Lang::get();
 
@@ -26,17 +28,24 @@ Trait Helper{
         //   return $request;
         try{
             if(isset($request) && !empty($request)) {
+               DB::beginTransaction();
                 $maincategory= Maincategory::find($request->id);
                 if(isset($maincategory) && $maincategory!= null){
-                  if(file_exists(Maincategory::PathImage().$maincategory->image && $maincategory->image!=null)){
-                      unlink(Maincategory::PathImage().$maincategory->image);
+                   
+                  if(file_exists(Maincategory::PathImage().$maincategory->image) && $maincategory->image != null &&locale_lang() == 'ar'){
+                   
+                    unlink(Maincategory::PathImage().$maincategory->image);
                   }
+                
                   $maincategory->delete();
+                  DB::commit();
                   return get_response(true,'Deleted Done');
                 }
                 return get_response(false,'Not Found');
             }
         }catch(\Exception $ex){
+            DB::rollback();
+            return $ex;
             return get_response(false,'Not Found');
         }
           
@@ -46,7 +55,7 @@ Trait Helper{
       public function editSubcategory($request){
            try{
                if(isset($request) && !empty($request)){
-                   $subcategory=SubCategory::find($request->id);
+                   $subcategory=Subcategory::find($request->id);
                    if(isset($subcategory) && $subcategory != null){
                        if(!$request->has('statue'))
                        {
@@ -57,11 +66,11 @@ Trait Helper{
                        if($request->has('image'))
                        {
 
-                           if(file_exists(SubCategory::PathImage().$subcategory->image) && $subcategory->image != null)
+                           if(file_exists(Subcategory::PathImage().$subcategory->image) && $subcategory->image != null)
                            {
-                               unlink(SubCategory::PathImage().$subcategory->image);
+                               unlink(Subcategory::PathImage().$subcategory->image);
                            }
-                           $image=$this->setPhoto($request->image,$request->name,SubCategory::PathImage());
+                           $image=$this->setPhoto($request->image,$request->name,Subcategory::PathImage());
                            $up_subcategory['image']=$image;
                        }
 

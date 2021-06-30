@@ -30,7 +30,7 @@ class CategoryValid extends FormRequest
             'category.*.category'=>'required|string|unique:maincategories,category,'.$this->id,
             'category.*.translation_lang'=>'required|string',
             'category.*.action'=>'numeric|min:1',
-            'average'=>'sometimes|nullable|numeric',
+            'average'=>'required_Without:id|numeric',
         ];
     }
 }

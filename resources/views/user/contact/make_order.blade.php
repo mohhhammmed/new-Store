@@ -116,7 +116,7 @@
                         cache: false,
 
                         success:function(data){
-                            if(data.statue==true){
+                            if(data.status==true){
                             alert(data.msg);
                             }
 

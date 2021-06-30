@@ -7,7 +7,7 @@ use App\Models\Maincategory;
 use App\Models\Parentt;
 use App\Models\Image;
 use App\Traits\Helper;
-use App\Models\SubCategory;
+use App\Models\Subcategory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ValidSubcategory;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
-class SubCategoriesControll extends Controller
+class SubcategoriesControll extends Controller
 {
     use Helper;
     public function create(){
@@ -35,7 +35,7 @@ class SubCategoriesControll extends Controller
 
         try{
            DB::beginTransaction();
-            $image= $this->setPhoto($request->image,$request->name,SubCategory::PathImage());
+            $image= $this->setPhoto($request->image,$request->name,Subcategory::PathImage());
             $data=$request->except('image','description','_token');
             $data['image']=$image;
             if(!$request->has('statue')){
@@ -44,7 +44,7 @@ class SubCategoriesControll extends Controller
             //return $data;
 
 
-           $id=SubCategory::insertGetId($data);
+           $id=Subcategory::insertGetId($data);
             Description::create([
                 'subcategory_id'=>$id,
                 'description'=>$request->description,
@@ -68,7 +68,7 @@ class SubCategoriesControll extends Controller
 
      public function subcategories(){
 
-          $subcategories=SubCategory::with('maincategory')->Selection()->where('translation_lang',app()->getLocale())->paginate(paginate_count);
+          $subcategories=Subcategory::with('maincategory')->Selection()->where('translation_lang',app()->getLocale())->paginate(paginate_count);
 
         return view('admin.subcategories.indexes',compact('subcategories'));
      }
@@ -76,7 +76,7 @@ class SubCategoriesControll extends Controller
       //  $subcategories=SubCategory::with('maincategory')->selection();
 
       try {
-        $col=SubCategory::find($subcategory_id);
+        $col=Subcategory::find($subcategory_id);
        // return $col->count();
         if(isset($col)&& $col->count() > 0){
           $statue=$col->statue==1 ? 0 : 1;
@@ -92,11 +92,11 @@ class SubCategoriesControll extends Controller
         try{
             if(isset($request->id) && $request->id!=null) {
 
-                $subcategory=SubCategory::find($request->id);
+                $subcategory=Subcategory::find($request->id);
                 if(isset($subcategory) && $subcategory!=null){
-                    if(file_exists(SubCategory::PathImage().$subcategory->image) && $subcategory->image != null)
+                    if(file_exists(Subcategory::PathImage().$subcategory->image) && $subcategory->image != null)
                     {
-                        unlink(SubCategory::PathImage().$subcategory->image);
+                        unlink(Subcategory::PathImage().$subcategory->image);
                     }
                     $subcategory->delete();
                     return response()->json([
@@ -139,7 +139,7 @@ class SubCategoriesControll extends Controller
         }
 
         public function add_images_subcategories(){
-            $subcategories=SubCategory::selection()->where('translation_lang',locale_lang())->get();
+            $subcategories=Subcategory::selection()->where('translation_lang',locale_lang())->get();
             return view('admin.subcategories.add_images',compact('subcategories'));
         }
 
@@ -150,17 +150,17 @@ class SubCategoriesControll extends Controller
                
                 if(isset($request) && !empty($request)){
                     $request->validate([
-                        'subcategory_id'=>'required|exists:sub_categories,id',
+                        'subcategory_id'=>'required|exists:subcategories,id',
                         'image'=>'required|mimes:jpg,png,jpeg'
                     ]);
                    
                     if($request->has('image')){
-                       $data=$request->except('image');
-                           $subcategory=SubCategory::find($request->subcategory_id);
-                           $image=$this->setPhoto($request->image,$subcategory->name,SubCategory::PathImage());
-                          $data['image']=$image;
-                           Image::create($data);
-                            return get_response(true,'created_done');
+                         $data=$request->except('image');
+                         $subcategory=Subcategory::find($request->subcategory_id);
+                         $image=$this->setPhoto($request->image,$subcategory->name,Subcategory::PathImage());
+                         $data['image']=$image;
+                         Image::create($data);
+                         return get_response(true,'created_done');
                     }
                 }
                 return get_response(false,'There is error');

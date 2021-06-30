@@ -170,7 +170,7 @@
                 cache: false,
                 {{--//'_token':'{{csrf_token()}}',--}}
                 success:function(data){
-                    if(data.statue==true){
+                    if(data.status==true){
                         alert(data.msg);
                     }
                     alert(data.msg);

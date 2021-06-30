@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Maincategory;
-use App\Models\SubCategory;
+use App\Models\Subcategory;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 

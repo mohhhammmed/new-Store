@@ -7,8 +7,22 @@ function locale_lang(){
 
  function get_response($statue,$msg){
     return response()->json([
-        'statue'=>$statue,
+        'status'=>$statue,
         'msg'=>$msg
 
     ]);
+
+
+}
+
+
+
+function website_translation($text){
+    return locale_lang() != 'en'?__('trans.'.$text):$text;
+}
+
+
+
+function get_image($image){
+    return asset($image);
 }
