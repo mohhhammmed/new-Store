@@ -11,41 +11,41 @@
                 <fieldset class="border border-gary p-4 mb-5">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h3>Post Your ad</h3>
+                            <h3>{{website_translation('Post Your ad')}}</h3>
                         </div>
                         <div class="col-lg-6">
-                            <h6 class="font-weight-bold pt-4 pb-1">Category Name</h6>
+                            <h6 class="font-weight-bold pt-4 pb-1">{{website_translation("Category Name")}}</h6>
                             <input type="text" name="category" class="border w-100 p-2 bg-white text-capitalize" placeholder="Category Name">
                             <small type="hidden" class="text text-danger" id="category"></small>
-                            <h6 class="font-weight-bold pt-4 pb-1">Ad Type:</h6>
+                            <h6 class="font-weight-bold pt-4 pb-1">{{website_translation("Ad Type")}}:</h6>
                             <div class="row px-3">
                                 <div class="col-lg-4 mr-lg-4 my-2 rounded bg-white">
                                     <input type="radio" name="condition" value="personal" id="personal">
-                                    <label for="personal" class="py-2">Personal</label>
+                                    <label for="personal" class="py-2">{{website_translation('Personal')}}</label>
                                 </div>
                                 <div class="col-lg-4 mr-lg-4 my-2 rounded bg-white ">
                                     <input type="radio" name="condition" value="business" id="business">
-                                    <label for="business" class="py-2">Business</label>
+                                    <label for="business" class="py-2">{{website_translation('Business')}}</label>
                                 </div>
                                 <small type="hidden" class="text text-danger" id="condition"></small>
                             </div>
-                            <h6 class="font-weight-bold pt-4 pb-1">Description:</h6>
+                            <h6 class="font-weight-bold pt-4 pb-1">{{website_translation('Description')}}:</h6>
                             <textarea name="description" id="" class="border p-3 w-100" rows="7" placeholder="Write details about your product"></textarea>
                             <small type="hidden" class="text text-danger" id="description"></small>
                         </div>
                         <div class="col-lg-6">
 
                             <div class="price">
-                                <h6 class="font-weight-bold pt-4 pb-1">Item Price ($ USD):</h6>
+                                <h6 class="font-weight-bold pt-4 pb-1">{{website_translation('Item Price')}} ($ USD):</h6>
                                 <div class="row px-3">
                                     <div class="col-lg-4 mr-lg-4 rounded bg-white my-2 ">
                                         <input type="text" name="the_price" class="border-0 py-2 w-100 price" placeholder="price"
                                                id="price">
-
+/
                                     </div>
                                     <div class="col-lg-4 mrx-4 rounded bg-white my-2 ">
                                         <input type="checkbox" name="negotiate" value="yes" id="Negotiable" checked>
-                                        <label for="Negotiable" class="py-2">Negotiable</label>
+                                        <label for="Negotiable" class="py-2">{{website_translation('Negotiable')}}</label>
 
                                     </div>
                                     <small type="hidden" class="text text-danger" id="the_price"></small>
@@ -56,10 +56,10 @@
 
                             <div class="choose-file text-center my-4 py-4 rounded">
                                 <label for="file-upload">
-                                    <span class="d-block font-weight-bold text-dark">Drop images anywhere to upload</span>
+                                    <span class="d-block font-weight-bold text-dark">{{website_translation('Drop images anywhere to upload')}}</span>
                                     <span class="d-block">or</span>
-                                    <span class="d-block btn bg-primary text-white my-3 select-files">Select Images</span>
-                                    <span class="d-block">Maximum upload image size: 500 KB</span>
+                                    <span class="d-block btn bg-primary text-white my-3 select-files">{{website_translation('Select Images')}}</span>
+                                    <span class="d-block">{{website_translation("Maximum upload image size")}}: 500 KB</span>
                                     <input type="file" class="form-control-file d-none" id="file-upload" name="image">
                                     <small type="hidden" class="text text-danger" id="image"></small>
                                 </label>
@@ -73,21 +73,21 @@
                 <fieldset class="border p-4 my-5 seller-information bg-gray">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h3>Seller Information</h3>
+                            <h3>{{website_translation('Your Information')}}</h3>
                         </div>
                         <div class="col-lg-6">
-                            <h6 class="font-weight-bold pt-4 pb-1">Contact Name:</h6>
+                            <h6 class="font-weight-bold pt-4 pb-1">{{website_translation('Contact Name')}}:</h6>
                             <input type="text" placeholder="Contact name"name="name" class="border w-100 p-2">
                             <small type="hidden" class="text text-danger" id="name"></small>
-                            <h6 class="font-weight-bold pt-4 pb-1">Contact Number:</h6>
+                            <h6 class="font-weight-bold pt-4 pb-1">{{website_translation('Contact Number')}}:</h6>
                             <input type="text" placeholder="Contact Number" name="mobile" class="border w-100 p-2">
                             <small type="hidden" class="text text-danger" id="mobile"></small>
                         </div>
                         <div class="col-lg-6">
-                            <h6 class="font-weight-bold pt-4 pb-1">Contact Mail:</h6>
+                            <h6 class="font-weight-bold pt-4 pb-1">{{website_translation("Contact Mail")}}:</h6>
                             <input type="email" placeholder="name@yourmail.com"name="email" class="border w-100 p-2">
                             <small type="hidden" class="text text-danger" id="email"></small>
-                            <h6 class="font-weight-bold pt-4 pb-1">Contact Adress:</h6>
+                            <h6 class="font-weight-bold pt-4 pb-1">{{website_translation('Contact Adress')}}:</h6>
                             <input type="text" placeholder="Your address"name="address" class="border w-100 p-2">
                             <small type="hidden" class="text text-danger" id="address"></small>
                         </div>
@@ -96,19 +96,20 @@
                 <!-- seller-information end-->
 
                 <!-- ad-feature start -->
-                <fieldset class="border bg-white p-4 my-5 ad-feature bg-gray">
+                {{-- <fieldset class="border bg-white p-4 my-5 ad-feature bg-gray">
                     <div class="row">
                         <div class="col-lg-12">
 
-                            <h3 class="pb-3">Make Your Ad Featured
-                                <span class="float-right"><a class="text-right font-weight-normal text-success" href="#">What
-                                    is featured ad ?</a></span>
+                            <h3 class="pb-3">{{website_translation("Make Your Ad Featured")}}
+                                <span class="float-right"><a class="text-right font-weight-normal text-success" href="#">
+                                    {{website_translation('Whatis featured ad')}} ?
+                                </a></span>
                             </h3>
 
                         </div>
 
                         <div class="col-lg-6 my-3">
-                            <span class="mb-3 d-block">Our payment methods:</span>
+                            <span class="mb-3 d-block">{{('Our payment methods')}}:</span>
                             <ul>
                                 <li>
                                     <input type="radio" id="bank-transfer"value="Direct Bank Transfer" name="paying_off">
@@ -126,17 +127,17 @@
                             </ul>
                         </div>
                     </div>
-                </fieldset>
+                </fieldset> --}}
                 <!-- ad-feature start -->
 
                 <!-- submit button -->
                 <div class="checkbox d-inline-flex">
                     <input type="checkbox" id="terms-&-condition" class="mt-1">
-                    <label for="terms-&-condition" class="ml-2">By click you must agree with our
-                        <span> <a class="text-success" href="terms-condition.html">Terms & Condition and Posting Rules.</a></span>
+                    <label for="terms-&-condition" class="ml-2">{{website_translation('By click you must agree with our')}}
+                        <span> <a class="text-success" href="terms-condition.html">{{website_translation('Terms & Condition and Posting Rules')}}.</a></span>
                     </label>
                 </div>
-                <button id="submitData" type="submit" class="btn btn-primary d-block mt-2">Post Your Ad</button>
+                <button id="submitData" type="submit" class="btn btn-primary d-block mt-2">{{website_translation('Post Your category')}}</button>
             </form>
         </div>
     </section>

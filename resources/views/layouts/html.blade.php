@@ -12,7 +12,7 @@
 
       {{-- bootstrap --}}
 
-      
+
             @if(isset($responseData))
         <script src="https://test.oppwa.com/v1/paymentWidgets.js?checkoutId={{$responseData['id']}}"></script>
            @endif
@@ -23,9 +23,9 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{asset('admin/css/datatable.css')}}">
     <link rel="stylesheet" href="{{asset('admin/css/bootstrap.css')}}">
-   
 
-    
+
+
     <link rel="stylesheet" href="{{asset('admin/plugins/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin/plugins/bootstrap/css/bootstrap-slider.css')}}">
     <!-- Font Awesome -->

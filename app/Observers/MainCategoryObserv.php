@@ -81,9 +81,9 @@ class MainCategoryObserv
         if(isset($translations) && $translations->count() > 0){
           //  if(isset($translations->subcategories) && $translations->subcategories->count() > 0){
                 foreach($translations as $trans) {
-                   
+
                        $trans->average()->delete();
-                    
+
                   if(isset($trans->subcategories) && $trans->subcategories->count() > 0){
                     foreach($trans->subcategories as $subcategory) {
                         $subcategory->delete();
@@ -98,7 +98,7 @@ class MainCategoryObserv
                     }
                 }
             }
-           
+
             $maincategory->translations()->delete();
         }
 
@@ -110,7 +110,7 @@ class MainCategoryObserv
                 if(file_exists(Vendor::PathImage() . $vendor->logo)){
                     unlink(Vendor::PathImage() . $vendor->logo);
                  }
-              
+
             }
             $maincategory->vendors()->delete();
         }

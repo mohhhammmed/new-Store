@@ -29,14 +29,14 @@
 					<h1 class="product-title">{{isset($category->name)?$category->name:''}}</h1>
 					<div class="product-meta">
 						<ul class="list-inline">
-							
+
 							<li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a href="">{{isset($category->maincategory)?$category->maincategory->type->type:''}}</a></li>
-							
+
 						</ul>
 					</div>
 
 					<!-- product slider -->
-					
+
 					@if(isset($category->images) && $category->images->count() > 0)
 					<div class="product-slider">
 					@foreach($category->images as $image)
@@ -46,7 +46,7 @@
 						@endforeach
 						</div>
 						@endif
-					
+
 					<!-- product slider -->
 
 					<div class="content mt-5 pt-5">
@@ -87,17 +87,23 @@
 											<td>Added</td>
 											<td>{{$category->created_at}}</td>
 										</tr>
-										<tr>
-											<td>State</td>
-											<td>New</td>
-										</tr>
-										
+                                        @if(isset($category->specification->specification) && count($category->getSpecifications()) > 0)
+
+											@foreach($category->getSpecifications() as $c=> $specific)
+                                                <tr>
+                                                    <td>{{$c}}</td>
+                                                    <td>{{$specific}}</td>
+                                                </tr>
+											@endforeach
+
+                                        @endif
+
 										<tr>
 											<td>Model</td>
 											<td>{{date('y',time())}}</td>
 										</tr>
-										
-										
+
+
 									</tbody>
 								</table>
 							</div>
@@ -106,7 +112,7 @@
 								<div class="product-review">
 									<div class="media">
 										<!-- Avater -->
-										<img src="{{asset(\App\Models\SubCategory::PathImage().$category->image)}}" alt="avater">
+										<img src="{{asset(\App\Models\Subcategory::PathImage().$category->image)}}" alt="avater">
 										<div class="media-body">
 											<!-- Ratings -->
 											<div class="ratings">
@@ -190,7 +196,7 @@
 						</div>
 					</div>
 					<!-- Rate Widget -->
-					
+
 					<!-- Safety tips widget -->
 					<div class="widget disclaimer">
 						<h5 class="widget-header">{{website_translation('Safety Tips')}}</h5>
@@ -253,6 +259,8 @@
 
             });
         });
+
+
     </script>
 
     @endsection

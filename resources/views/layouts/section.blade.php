@@ -24,7 +24,7 @@
 							<li class="nav-item active">
 								<a class="nav-link" href="{{route('home')}}">Home</a>
 							</li>
-                          @else 
+                          @else
                           <li class="nav-item active">
 								<a class="nav-link" href="{{route('dashboard')}}">Dashboard</a>
 							</li>
@@ -40,11 +40,11 @@
 
                                 <a class="dropdown-item" href="{{route('all_maincategories')}}">Main Categories</a>
                                 <a class="dropdown-item" href="{{route('create_maincategory')}}">Add Main Categories</a>
-                          
+
                              </div>
                             </li>
-                              
-                              
+
+
                                 <li class="nav-item dropdown dropdown-slide">
                                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">Sub Categories<span><i class="fa fa-angle-down"></i></span>
                                     </a>
@@ -54,10 +54,11 @@
                                         <a class="dropdown-item" href="{{route('all_subcategories')}}">Subcategories</a>
                                         <a class="dropdown-item" href="{{route('create_subcategory')}}">Add Subcategories</a>
                                         <a class="dropdown-item" href="{{route('add_images_subcategory')}}">Add Images For Subategory</a>
+                                        <a class="dropdown-item" href="{{route('add_specifications')}}">Add Specifications For Subategory</a>
                                     </div>
                                 </li>
-                              
-                              
+
+
                                 <li class="nav-item dropdown dropdown-slide">
                                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">Vendors<span><i class="fa fa-angle-down"></i></span>
                                     </a>
@@ -77,15 +78,15 @@
                                 <a class="nav-link" href="{{route('all_stores')}}">All Stores</a>
                             </li>
                             @endif
-                            @if(!isset($category->description))
-							<li class="nav-item dropdown dropdown-slide">
+
+							<li class="nav-item dropdown dropdown-slide lang-style" >
 								<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">Lang<span><i class="fa fa-angle-down"></i></span>
 								</a>
 
 								<!-- Dropdown list -->
 
 								<div class="dropdown-menu">
-                                  
+
                                     @foreach(App\Models\Lang::all() as $lang)
                                         @if($lang->getActive())
 
@@ -95,7 +96,7 @@
                                         @endif
                                     @endforeach
 
-                                     
+
 									@if(Auth::guard('admin')->user())
                                   <a class="dropdown-item" data-toggle="tooltip" title="settings" href="{{route('available_langs')}}">Langs</a>
 									<a class="dropdown-item" href="{{route('create_Lang')}}">Add Lang</a>
@@ -104,8 +105,8 @@
 
 								</div>
 							</li>
-                            @endif
-                            
+
+
 							@if(Auth::guard('web')->user())
 							<li class="nav-item active">
 								<a class="nav-link" href="{{route('form_edit_user_profile',Auth::guard('web')->id())}}">Edit Profile</a>
@@ -114,8 +115,8 @@
 
 						</ul>
 						@endif
-                      
-                      
+
+
                         <ul class="navbar-nav ml-auto mt-10">
 							<li class="nav-item">
 								@if(Auth::guard('web')->user())
@@ -129,8 +130,8 @@
                                     <a  style="border-radius:10px" class="nav-link login-button" href="{{route('orders')}}">Orders<span class="badge bg-primary rounded-pill" style="color:white;margin-left:5px">
                                             {{\App\Models\Notify::GetNotifyOrder() != null ?\App\Models\Notify::GetNotifyOrder()->counter:0}}</span>
                                     </a>
-							   
-                               
+
+
                                   @endif
                                   @auth()
                                   @else

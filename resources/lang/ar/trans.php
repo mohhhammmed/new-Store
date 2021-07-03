@@ -14,7 +14,7 @@ return [
     */
     'لابتوب'=>'laptop',
     'كاميرات'=>'camera',
-    'موبايلات'=>'mobile',
+    'موبايل'=>'mobile',
     'كافيهات'=>'coffee',
     'صاله رياضه'=>'grav',
     'Results For'=>'صفحة ال',
@@ -35,7 +35,7 @@ return [
     'category by lang en'=>'المنتج باللغه الانجليزيه',
     'Edit profile'=>'تعديل الملف الشخصي',
     'Your review matters to us'=>'رأيك يهمنا',
-    'welcome'=>' مرحبا بك',
+    'Welcome'=>' مرحبا بك',
     'Product Details'=>'تفاصيل المنتج',
     'Specifications'=>'الخصائص ',
     'Reviews'=>'التقييم',
@@ -53,5 +53,37 @@ return [
       'Price'=>'السعر',
       'Safety Tips'=>'للأمان',
       'Contact'=>'التواصل معنا  ',
-      'Electronic Payment'=>'الدفع الالكتروني'
+      'Electronic Payment'=>'الدفع الالكتروني',
+      'Edit Personal Information'=>"تعديل المعلومات الشخصيه",
+      'Save My Changes'=>'حفظ التعديلات',
+      'Current Password'=>'الباسورد الحالي',
+      'New Password'=>'الباسورد الجديد',
+      'Confirm New Password'=>'تاكيد الباسورد',
+      'Current Email'=>' الايميل الحالي',
+      'New Email'=>'الايميل الجديد',
+      'New Name'=>'الاسم الجديد',
+      'Post Your ad'=>'اضف المنتج الخاص بك',
+      'Category Name'=>'اسم المنتج',
+      'Ad Type'=>'نوع المنتج',
+      'Personal'=>'شخصي',
+      'Business'=>'تجاره',
+      'Description'=> 'الوصف',
+      'Item Price' =>'سعر المنتج' ,
+      'Negotiable'=>'قابل للتفاوض',
+      'Drop images anywhere to upload'=>'قم بإسقاط الصور في أي مكان لتحميلها',
+      'Select Images'=>'وضع الصوره',
+      'Maximum upload image size'=>'حجم الصوره',
+      'Contact Name'=>'اسمك',
+      'Contact Number'=>'رقمك',
+      'Contact Mail'=>'ايميلك',
+      'Contact Adress'=>'عنوانك',
+      'Your Information'=>'معلوماتك',
+      'By click you must agree with our'=>'اطلع علي',
+      'Terms & Condition and Posting Rules'=>'الشروط & القواعد',
+      'Post Your category'=>'ارسل منتجك',
+
+
+
+
+
 ];

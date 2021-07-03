@@ -40,7 +40,7 @@
 									<li class="list-inline-item">
 										<a href="" onclick="event.preventDefault();" class="text-info"><i class="fa fa-th-large"></i></a>
 									</li>
-									
+
 								</ul>
 							</div>
 						</div>
@@ -79,7 +79,7 @@
 
                                   </select>
                                   <h3><small type='hidden' id='parent_id_er'class='text text-danger'></small></h3>
-                                 
+
 
                                   @if(isset($subcategory_edit) &&$subcategory_edit !=null )
 
@@ -118,10 +118,8 @@
 								<input class="form-check-input" name="statue"value='1' type="checkbox" id="flexSwitchCheckDefault"@if(isset($subcategory_edit) && $subcategory_edit->getActive())checked @endif>
 
 								<label class="form-check-label" for="flexSwitchCheckDefault">Statue</label>
-							  </div> 
-
-
-                                    <button type="submit"id='submitData' class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">Add</button>
+							  </div>
+                                    <button type="submit"id='submitData' class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">{{isset($subcategory_edit)?'Update':'Add'}}</button>
 
                               </form>
 						</div>
@@ -176,7 +174,7 @@
                 });
             });
 
-            @include('accounts.delete_account');  
+            @include('accounts.delete_account');
         </script>
         @else
         <script>
@@ -215,7 +213,7 @@
 
           /////////////////////////////////
 /////////////////////Delete Account//////////////////
-            @include('accounts.delete_account');  
+            @include('accounts.delete_account');
         </script>
         @endisset
 

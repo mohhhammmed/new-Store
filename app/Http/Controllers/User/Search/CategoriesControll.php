@@ -45,40 +45,31 @@ class CategoriesControll extends Controller
         try{
             if(isset($request) && !empty($request)) {
 
-                $maincategories = Maincategory::where('translation_lang', app()->getLocale())->pluck('category')->toArray();
-                $subcategories = Subcategory::where('translation_lang', app()->getLocale())->pluck('name')->toArray();
-                $parents_subcategories = Parentt::where('translation_lang', app()->getLocale())->pluck('type')->toArray();
+                $maincategories = Maincategory::where('category','like','%'.$request->category.'%')->where('translation_lang', app()->getLocale())->select('category')->get();
+                $subcategories = Subcategory::where('name','like','%'.$request->category.'%')->where('translation_lang', app()->getLocale())->select('name')->get();
+                $parents_subcategories = Parentt::where('type','like','%'.$request->category.'%')->where('translation_lang', app()->getLocale())->select('type')->get();
 
               if(isset($maincategories) || isset($subcategories) || isset($parents_subcategories)) {
 
-                  $statue_1 = in_array($request->category, $maincategories);
-                  $statue_2 = in_array($request->category, $subcategories);
-                  $statue_3 = in_array($request->category, $parents_subcategories);
-
-                  if ($statue_1 == true) {
-                      foreach ($maincategories as $maincat) {
-                          if ($maincat == $request->category) {
-                              $yourCategories = Maincategory::where('category', $maincat)->first()->subcategories;
-                          }
-                      }
-                  }
+                if ($parents_subcategories->count() > 0) {
+                    foreach ($parents_subcategories as $parent) {
+                        $yourCategories = Parentt::where('type', $parent->type)->first()->subcategories;
+                    }
+                }
 
 
-                  if ($statue_2 == true) {
+                  if ($subcategories->count() > 0) {
                       foreach ($subcategories as $subcat) {
-                          if ($subcat == $request->category) {
-                              $yourCategories = Subcategory::where('name', $subcat)->get();
-                          }
+                          $yourCategories = Subcategory::where('name', $subcat->name)->get();
                       }
                   }
 
-                  if ($statue_3 == true) {
-                      foreach ($parents_subcategories as $parent) {
-                          if ($parent == $request->category) {
-                              $yourCategories = Parentt::where('type', $parent)->first()->subcategories;
-                          }
-                      }
-                  }
+                  if ($maincategories->count() > 0) {
+                    foreach ($maincategories as $maincat) {
+                      $yourCategories =Maincategory::where('category',$maincat->category)->first()->subcategories;
+                    }
+                }
+
                   if(isset($yourCategories) && count($yourCategories) > 0) {
                       return view('user.allCategories.all_categories', compact('yourCategories'));
                   }

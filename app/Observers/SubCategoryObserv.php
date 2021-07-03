@@ -50,6 +50,11 @@ class SubCategoryObserv
             $subCategory->images()->delete();
         }
 
+
+        if(isset($subCategory->specification) && $subCategory->specification != null){
+            $subCategory->specification()->delete();
+        }
+
         if(isset($subCategory->reviews) && $subCategory->reviews->count() > 0){
             $subCategory->reviews()->delete();
         }

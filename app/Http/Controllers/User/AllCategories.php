@@ -16,16 +16,14 @@ class AllCategories extends Controller
         if(isset($mainncategory) && $mainncategory != null){
 
             $typeCategories= $mainncategory->type;
-           // $typeMaintCegories=TypeAllCat::where('type',$type)->first();
-           $subcategories= $mainncategory->subcategories()->where('translation_lang',locale_lang())->paginate(paginate_count);
+            $subcategories= $mainncategory->subcategories()->paginate(paginate_count);
             $maincategories=$typeCategories->maincategories->where('translation_lang',locale_lang());
-            
             $branches=Branch::all();
             return view('user.allCategories.all_categories',compact('mainncategory','branches','subcategories','maincategories'));
-    
+
         }
         return redirect()->back()->with('error','Categories Not Exists');
-    
+
 
     }
 

@@ -5,6 +5,8 @@ namespace App\Models;
 
 use App\Models\Image;
 use App\Models\Review;
+use App\Models\Parentt;
+use App\Models\Specification;
 use App\Observers\SubCategoryObserv;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -31,7 +33,7 @@ class Subcategory extends Model
     }
 
     public function scopeSelection($q){
-        return $q->select('id','translation_of','statue','translation_lang','the_price','image','parent_id','name','maincategory_id');
+        return $q->select('id','translation_of','statue','translation_lang','the_price','image','parent_id','name','maincategory_id','created_at');
 
     }
     public function scopePathImage($q){
@@ -47,9 +49,10 @@ class Subcategory extends Model
     {
         return $this->statue == 1 ? 'active' : 'not active';
     }
-       public function parent(){
-        return $this->belongsTo(Parentt::class,'parent_id');
-       }
+
+    public function parent(){
+       return $this->belongsTo(Parentt::class,'parent_id');
+    }
 
     public function description(){
         return $this->hasOne(Description::class,'subcategory_id');
@@ -57,6 +60,45 @@ class Subcategory extends Model
 
     public function reviews(){
         return $this->hasMany(Review::class,'subcategory_id');
+    }
+
+    public function specification(){
+        return $this->hasOne(Specification::class,'subcategory_id');
+    }
+
+    public function hasImages(){
+        return count($this->images) > 0 ? 'Has Images' : 'Has Not Images';
+    }
+
+    public function getSpecifications(){
+        if(isset($this->specification) && $this->specification != null){
+            $specification= str_replace('&',':',$this->specification->specification);
+            $specification= explode(':',$specification);
+                foreach($specification as $counter=>$specific){
+                    if($counter % 2 ==0){
+                        $key_specifications[]= $specific;
+                    }else{
+                        $value_specifications[]=$specific;
+                    }
+                }
+
+            if(count($key_specifications) == count($value_specifications)){
+                for($d=0; $d < count($key_specifications); $d++){
+                    $specifications[$key_specifications[$d]]=$value_specifications[$d];
+                }
+                    return $specifications;
+            }
+            return [];
+           }
+
+    }
+
+    public function hasSpecifications(){
+        return $this->specification != null ? 'Has Specifications' : 'Has Not Specifications';
+    }
+
+    public function hasReviews(){
+        return count($this->reviews) > 0 ? 'Has Reviews' : 'Has Not Reviews';
     }
 
 }

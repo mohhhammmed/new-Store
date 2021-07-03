@@ -23,7 +23,7 @@
             </header>
 
         <div class="page-heading">
-      
+
             <section class="section">
                 <div class="card">
                     <div class="card-header">
@@ -33,14 +33,14 @@
                         <table class="table table-striped" id="table1">
                             <thead>
                             <tr>
-                               
+
                              <th>Image</th>
                              <th class="text-center">lang</th>
                              <th class="text-center">Category</th>
                              <th class="text-center">Statue</th>
                              <th class="text-center">Action</th>
                                <!-- // <th class='text text-center'>Action</th> -->
-                               
+
                             </tr>
                             </thead>
                             <tbody>
@@ -79,7 +79,7 @@
                 </td>
               </tr>
                                 @endforeach
-                           
+
                             @endif
 
                             </tbody>
@@ -93,7 +93,7 @@
 
             </section>
 
-      
+
 </div>
 
 
@@ -148,10 +148,10 @@
 
             });
         });
-          
+
           /////////////////////////////////
    //////////////////Delete Account///////////////
-        @include('accounts.delete_account');  
+        @include('accounts.delete_account');
     </script>
     @endsection
 

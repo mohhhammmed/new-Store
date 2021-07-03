@@ -25,7 +25,7 @@
       </div>
 
       <div id='app'>
-	  <div id="main" style='margin:-610px 0px 0px 360px'>
+	  <div id="main" style='margin:-610px -110px 0px 360px'>
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
                     <i class="bi bi-justify fs-3"></i>
@@ -33,7 +33,7 @@
             </header>
 
         <div class="page-heading">
-      
+
             <section class="section">
                 <div class="card">
                     <div class="card-header">
@@ -43,27 +43,50 @@
                         <table class="table table-striped" id="table1">
                             <thead>
                             <tr>
-                               
+
                                 <th >Type</th>
                                 <th class='text text-center'>Subcategories</th>
+                                <th class='text text-center'>Has Images</th>
+                                <th class='text text-center'>Has Specifications</th>
+                                <th class='text text-center'>Reviews</th>
                                <!-- // <th class='text text-center'>Action</th> -->
-                               
+
                             </tr>
                             </thead>
                             <tbody>
-                            @if(isset($type_categories) && !empty($type_categories))
-                                @foreach($type_categories as $type)
+                            @if(isset($subcategories) && !empty($subcategories))
+                                @foreach($subcategories as $subcategory)
                                     <tr row='6'>
-                                        <td>{{$type->type}}</td>
-                                       
+                                        <td>{{$subcategory->maincategory->type->type}}</td>
                                         <td class="text-center">
-                                        @foreach($type->maincategories  as $maincategory)
-                                        @foreach($maincategory->subcategories  as $c=> $subcategory)
-                                       <a href="{{route('form_edit_subcategory',$subcategory->id)}}"> {{$subcategory->name}}</a> -
-                                       @if($c % 3 == 0 && $c != 0 && $c !=3|| $c == 2)<br> @endif
-                                       @endforeach
-                                        @endforeach
+                                              <a href="{{route('form_edit_subcategory',$subcategory->id)}}"> {{$subcategory->name}}</a>
                                         </td>
+                                       <td class='text text-center'>
+                                           @if($subcategory->hasImages() == 'Has Images')
+                                              <a href="{{route('images',$subcategory->id)}}">{{$subcategory->hasImages()}}</a>
+                                           @else
+                                             {{$subcategory->hasImages()}}
+                                           @endif
+
+                                       </td>
+                                      <td class='text text-center'>
+                                            @if($subcategory->hasSpecifications() == 'Has Specifications')
+                                               <a href="{{route('specifications',$subcategory->id)}}">{{$subcategory->hasSpecifications()}}</a>
+                                            @else
+                                               {{$subcategory->hasSpecifications()}}
+                                            @endif
+
+                                       </td>
+                                       @if ($subcategory->reviews && $subcategory->hasReviews() == 'Has Reviews')
+                                        <td class="text twxt-center">
+                                           <a href="{{route('reviews',$subcategory->id)}}"> {{$subcategory->hasReviews()}}</a>
+                                        </td>
+                                        @else
+                                        <td class="text twxt-center">
+                                             {{$subcategory->hasReviews()}}
+                                         </td>
+                                       @endif
+
                                     </tr>
                                 @endforeach
                             @else
@@ -93,7 +116,7 @@
 
 @section('scripts')
 <script>
-  @include('accounts.delete_account');  
+  @include('accounts.delete_account');
 </script>
 
 @endsection

@@ -12,12 +12,6 @@ p, li, input, select, button {
   font-weight: 400;
 }
 
-li.option.selected.focus {
-    padding-right: 90px;
-    border-radius: 10px;
-    padding-left: 70px;
-}
-
 h1, h2, h3, h4, h5, h6 {
   font-family: "Muli", sans-serif;
   font-weight: 600;
@@ -234,6 +228,10 @@ figure {
 a {
   transition: all .3s ease-in 0s;
   color: #000;
+}
+
+a.delete.delData {
+    color: #d23131;
 }
 
 iframe {
@@ -1422,7 +1420,7 @@ ul.pagination .active a {
 .nice-select {
   float: none;
   display: inline-block;
-  border-radius: 10px;
+  border-radius: 0;
 }
 
 .nice-select .list {
@@ -1545,7 +1543,6 @@ ul.pagination .active a {
 
 .product-details .content {
   padding-top: 40px;
-  margin-top: -11110px;
 }
 
 .product-details .content h3 {
@@ -1559,9 +1556,8 @@ ul.pagination .active a {
 }
 
 .product-details .content .nav {
-  FONT-WEIGHT: 400;
   text-align: center;
-  margin-top: 140px;
+  margin-bottom: 5px;
 }
 
 .product-details .content .nav .nav-item {
@@ -1586,7 +1582,6 @@ ul.pagination .active a {
 .product-details .content .tab-content {
   background: #fff;
   padding: 30px;
-  margin-top: 10px;
 }
 
 .product-slider {
@@ -1604,7 +1599,6 @@ ul.pagination .active a {
 .product-slider .slick-dots {
   display: flex;
   bottom: -50px;
-  margin-bottom: -150px;
 }
 
 .product-slider .slick-dots li {
@@ -1624,7 +1618,7 @@ ul.pagination .active a {
 
 .product-slider .slick-dots li img {
   max-width: 100%;
-  height: 200px;
+  height: auto;
 }
 
 .product-table {

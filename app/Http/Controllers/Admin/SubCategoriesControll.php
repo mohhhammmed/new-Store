@@ -6,11 +6,13 @@ use App\Models\Description;
 use App\Models\Maincategory;
 use App\Models\Parentt;
 use App\Models\Image;
+use App\Models\Specification;
 use App\Traits\Helper;
 use App\Models\Subcategory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ValidSubcategory;
 use Illuminate\Http\Request;
+use Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -145,15 +147,15 @@ class SubcategoriesControll extends Controller
 
 
         public function store_images(Request $request){
-           
+
             try{
-               
+
                 if(isset($request) && !empty($request)){
                     $request->validate([
                         'subcategory_id'=>'required|exists:subcategories,id',
                         'image'=>'required|mimes:jpg,png,jpeg'
                     ]);
-                   
+
                     if($request->has('image')){
                          $data=$request->except('image');
                          $subcategory=Subcategory::find($request->subcategory_id);
@@ -168,6 +170,75 @@ class SubcategoriesControll extends Controller
                 return $ex;
                 return get_response(false,'There is error');
             }
-         
+
         }
+
+
+        public function add_specifications(){
+            $subcategories=Subcategory::Selection()->where('translation_lang',locale_lang())->get();
+            return view('admin.subcategories.add_specifications',compact('subcategories'));
+        }
+
+        public function store_specifications(Request $request){
+
+
+           try{
+
+
+
+                if(isset($request) && !empty($request)){
+
+                    $valid=Validator::make($request->all(),[
+                        'subcategory_id'=>'numeric|exists:subcategories,id',
+                        'specification'=>'required|max:200'
+                    ]);
+                    if($valid->fails()){
+                       $err= $valid->errors()->toArray();
+                       $errors= array_values($err);
+                        return get_response(false,$errors);
+                    }
+
+
+                    $check= stripos($request->specification,'&');
+
+                    if($check == null){
+                         $errors=['check your Specifications &'];
+                        return get_response(false,$errors);
+                    }
+
+
+                    Specification::create($request->all());
+                    return get_response(true,'Created Done');
+                }
+           }catch(\Exception $ex){
+               return $ex;
+            return get_response(false,'Error');
+           }
+
+        }
+        public function images($subcategory_id){
+          $subcategory_images=Subcategory::wherehas('images')->with('images')->find($subcategory_id);
+
+               if(isset($subcategory_images) && $subcategory_images != null){
+                 return view('admin.subcategories.images',compact('subcategory_images'));
+               }
+        }
+
+
+        public function specifications($subcategory_id){
+            $subcategory_specifications=Subcategory::wherehas('specification')->with('specification')->find($subcategory_id);
+                 if(isset($subcategory_specifications) && $subcategory_specifications != null){
+                   return view('admin.subcategories.specifications',compact('subcategory_specifications'));
+                 }
+          }
+
+
+          public function reviews($subcategory_id){
+              $sub_has_reviews=Subcategory::wherehas('reviews')->find($subcategory_id);
+              if(isset($sub_has_reviews))
+              {
+                return view('admin.subcategories.specifications',compact('sub_has_reviews'));
+              }
+
+          }
 }

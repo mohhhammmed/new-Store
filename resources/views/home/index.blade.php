@@ -69,7 +69,7 @@
                 <div class="col-md-12">
                     <div class="section-title">
                         <h2>{{website_translation('Trending Adds')}}</h2>
-                        
+
                     </div>
                 </div>
             </div>
@@ -99,13 +99,24 @@
 
                                                     </li>
                                                     <li class="list-inline-item">
-                                                        <a href="#"><i class="fa fa-calendar"></i>26th December</a>
+                                                        <a href="#"><i class="fa fa-calendar"></i>{{$subcategory->created_at}}</a>
                                                     </li>
                                                 </ul>
-                                                <p class="card-text">{{isset($subcategory->description->description)? $subcategory->description->description :''}}</p>
+                                                <p class="card-text">
+                                                    @if($subcategory->getSpecifications() && count($subcategory->getSpecifications()) > 0)
+                                                        {{-- {{count($subcategory->getSpecifications())=5}} --}}
+                                                     @foreach($subcategory->getSpecifications() as $counter=> $specific)
+                                                         {{$counter. ':' .$specific}}<br>
+                                                     @endforeach
+
+
+
+
+                                                    @endif
+                                                </p>
                                                 <div class="product-ratings">
                                                     <ul class="list-inline">
-                                                        <li>{{$subcategory->the_price}}</li>
+                                                        <li>Price :{{$subcategory->the_price}}</li>
                                                     </ul>
                                                 </div>
                                             </div>

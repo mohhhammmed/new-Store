@@ -28,8 +28,8 @@ class ValidVendors extends FormRequest
             'name'=>'required|string',
             'email'=>'required|email|unique:vendors,email,'.$this->id,
             'mobile'=>'required|numeric|unique:vendors,mobile,'.$this->id,
-            'maincategory_id'=>'required|numeric|min:1|exists:maincategories,id',
-           'address'=>'required|string|max:50',
+            'maincategory_id'=>'required|numeric|exists:maincategories,id',
+           'address'=>'required|string|max:150',
 
         ];
     }

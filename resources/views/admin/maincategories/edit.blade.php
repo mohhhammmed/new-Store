@@ -82,12 +82,12 @@
               </div>
               <br>
               @enderror
-              @else 
+              @else
              <input class="form-control form-control-sm" type="hidden" name='average' value="{{isset($data_category->average)?$data_category->average->average:''}}" >
-             
+
               @endif
-           
-             
+
+
 
           <button type="submit" class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">Update</button>
           </form>
@@ -110,7 +110,7 @@
 
                           <div class="tab-pane container active" id="home{{$trans->id}}">
                               <div class="widget dashboard-container my-adslist">
-                                
+
                                   <h3 class="widget-header">Edit Main Category</h3>
 
                                   <form class="allData" action="{{route('edit_maincategory',$trans->id)}}"method='POST'enctype='multipart/form-data'>
@@ -135,10 +135,13 @@
                                           {{$message}}
                                       </div>
                                       @enderror
-                                      <div class="form-check form-switch">
 
+                                      <input class="form-control form-control-sm" type="hidden"
+                                      name='average'value="{{isset($trans->average)?$trans->average->average:''}}">
+
+                                      <div class="form-check form-switch">
                                           <input class="form-check-input" name="category[0][status]"value='1'
-                                                 type="checkbox" id="flexSwitchCheckDefault"@if($trans->status==1) checked @endif >
+                                            type="checkbox" id="flexSwitchCheckDefault"@if($trans->status==1) checked @endif >
 
                                           <label class="form-check-label" for="flexSwitchCheckDefault">Statue</label>
                                       </div>
@@ -166,6 +169,6 @@
 
 @section('scripts')
 <script>
-  @include('accounts.delete_account');  
+  @include('accounts.delete_account');
 </script>
 @endsection

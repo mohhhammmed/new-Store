@@ -117,11 +117,16 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
     Route::POST('/store_subcategory',[SubcategoriesControll::class,'store'])->name('store_subcategory');
     Route::get('/create_subcategory',[SubcategoriesControll::class,'create'])->name('create_subcategory')->middleware('RedirMainCat');
     Route::get('/add_images_subcategories',[SubcategoriesControll::class,'add_images_subcategories'])->name('add_images_subcategory')->middleware('st_subcategories');
-    Route::POST('store_images',[SubcategoriesControll::class,'store_images'])->name('store_images_subcategory');
+    Route::POST('/store_images_subcategory',[SubcategoriesControll::class,'store_images'])->name('store_images_subcategory');
+    Route::get('images/{subcategory_id}',[SubcategoriesControll::class,'images'])->name('images');
+    Route::get('add_specifications',[SubcategoriesControll::class,'add_specifications'])->name('add_specifications');
+    Route::POST('store_specifications',[SubcategoriesControll::class,'store_specifications'])->name('store_specifications');
+    Route::get('specifications/{subcategory_id}',[SubcategoriesControll::class,'specifications'])->name('specifications');
     Route::get('form_edit_subcategories/{category_id}',[SubcategoriesControll::class,'form_edit'])->name('form_edit_subcategory');
     Route::POST('edit_subcategory',[SubcategoriesControll::class,'edit'])->name('edit_subcategory');
     Route::POST('delete_subcategory',[SubcategoriesControll::class,'delete'])->name('delete_subcategory');
     Route::get('change_statue_subcat/{subcategory_id}',[SubcategoriesControll::class,'change_statue'])->name('change_statue_subcategory');
+    Route::get('reviews/{subcategory_id}',[SubcategoriesControll::class,'reviews'])->name('reviews');
 
                                ////////////////                 /////////////////
 /////////////////////////////////////////////// admin Of Vendors/////////////////////////////////////
