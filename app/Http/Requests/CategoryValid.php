@@ -31,6 +31,7 @@ class CategoryValid extends FormRequest
             'category.*.translation_lang'=>'required|string',
             'category.*.action'=>'numeric|min:1',
             'average'=>'required_Without:id|numeric',
+            'branch_id'=>'numeric|exists:branches,id',
         ];
     }
 }

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Branch;
+use App\Models\Governorate;
 use App\Models\Maincategory;
 use App\Models\Parentt;
-use App\Models\TypeAllCat;
+use App\Models\Branch;
 use Illuminate\Http\Request;
 
 class AllCategories extends Controller
@@ -15,11 +15,11 @@ class AllCategories extends Controller
         $mainncategory=Maincategory::find($maincategory_id);
         if(isset($mainncategory) && $mainncategory != null){
 
-            $typeCategories= $mainncategory->type;
+            $branche= $mainncategory->branch;
             $subcategories= $mainncategory->subcategories()->paginate(paginate_count);
-            $maincategories=$typeCategories->maincategories->where('translation_lang',locale_lang());
-            $branches=Branch::all();
-            return view('user.allCategories.all_categories',compact('mainncategory','branches','subcategories','maincategories'));
+            $maincategories=$branche->maincategories->where('translation_lang',locale_lang());
+            $governorates=Governorate::where('translation_lang',locale_lang())->get();
+            return view('user.allCategories.all_categories',compact('mainncategory','governorates','subcategories','maincategories'));
 
         }
         return redirect()->back()->with('error','Categories Not Exists');

@@ -3,12 +3,11 @@
 
 @include('layouts.section')
 
-
 <div class="container">
     <div class="row">
         <div class="col-md-12">
             <div class="search-result bg-gray">
-                <h2> {{isset($mainncategory)?website_translation('Results For') .' '. website_translation($mainncategory->type->type):website_translation('Results For Search')}}</h2>
+                <h2> {{isset($mainncategory)?website_translation('Results For') .' '. website_translation($mainncategory->branch->branch):website_translation('Results For Search')}}</h2>
                 <p>123 Results on 12 December, 2017</p>
             </div>
         </div>
@@ -31,11 +30,11 @@
 
                 <div class="widget category-list">
 
-                    @if(isset($branches) && $branches->count() > 0)
+                    @if(isset($governorates) && $governorates->count() > 0)
                     <h4 class="widget-header">Nearby</h4>
                     <ul class="category-list">
-                        @foreach($branches as $branch)
-                            <li><a href="">{{$branch->governorate}}<span>93</span></a></li>
+                        @foreach($governorates as $governorate)
+                            <li><a>{{$governorate->name}}<span>{{$governorate->branches->where('branch',$mainncategory->branch != null?$mainncategory->branch->branch:'')->count()}}</span></a></li>
                         @endforeach
                     </ul>
                     @endif
@@ -112,7 +111,7 @@
                                 <h4 class="card-title"><a href="{{route('description_category',$subcat->id)}}">{{$subcat->name}}</a></h4>
                                 <ul class="list-inline product-meta">
                                     <li class="list-inline-item">
-                                        <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$subcat->maincategory->type->type}}</a>
+                                        <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$subcat->maincategory->branch->branch}}</a>
                                     </li>
                                     <li class="list-inline-item">
                                         <a href="#"><i class="fa fa-calendar"></i>{{$subcat->created_at}}</a>
@@ -146,7 +145,7 @@
                                     <h4 class="card-title"><a href="{{route('description_category',$subcat->id)}}">{{$subcat->name}}</a></h4>
                                     <ul class="list-inline product-meta">
                                         <li class="list-inline-item">
-                                            <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$subcat->maincategory->type->type}}</a>
+                                            <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$subcat->maincategory->branch->branch}}</a>
                                         </li>
                                         <li class="list-inline-item">
                                             <a href="#"><i class="fa fa-calendar"></i>26th December</a>
@@ -180,7 +179,7 @@
                                 <h4 class="card-title"><a href="{{route('description_category',$category->id)}}">{{$category->name}}</a></h4>
                                 <ul class="list-inline product-meta">
                                     <li class="list-inline-item">
-                                        <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$category->maincategory->type->type}}</a>
+                                        <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$category->maincategory->branch->branch}}</a>
                                     </li>
                                     <li class="list-inline-item">
                                         <a href="#"><i class="fa fa-calendar"></i>26th December</a>
@@ -212,7 +211,7 @@
                                 <h4 class="card-title"><a href="{{route('description_category',$category->id)}}">{{$category->name}}</a></h4>
                                 <ul class="list-inline product-meta">
                                     <li class="list-inline-item">
-                                        <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$category->maincategory->type->type}}</a>
+                                        <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$category->maincategory->branch->branch}}</a>
                                     </li>
                                     <li class="list-inline-item">
                                         <a href="#"><i class="fa fa-calendar"></i>26th December</a>
@@ -245,7 +244,7 @@
                             <h4 class="card-title"><a href="{{route('description_category',$subcategory->id)}}">{{$category->name}}</a></h4>
                             <ul class="list-inline product-meta">
                                 <li class="list-inline-item">
-                                    <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$subcategory->maincategory->type->type}}</a>
+                                    <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$subcategory->maincategory->branch->branch}}</a>
                                 </li>
                                 <li class="list-inline-item">
                                     <a href="#"><i class="fa fa-calendar"></i>26th December</a>

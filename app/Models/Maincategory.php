@@ -6,6 +6,7 @@ use App\Observers\MainCategoryObserv;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Vendor;
+use App\Models\Branch;
 use App\Models\AverageCategory;
 use App\Models\Subcategory;
 
@@ -22,10 +23,10 @@ class Maincategory extends Model
     }
 
     public function scopeSelection(){
-         return $this->select('id','image','type_id','status','translation_lang','translation_of','category');
+         return $this->select('id','image','branch_id','status','translation_lang','translation_of','category');
     }
     public function scopeActive($val){
-      return $val->where('status',1)->get(); 
+      return $val->where('status',1)->get();
     }
 
     public function getStatue(){
@@ -47,8 +48,8 @@ class Maincategory extends Model
     public function parents(){
         return $this->hasMany(Parentt::class,'maincategory_id');
     }
-    public function type(){
-        return $this->belongsTo(TypeAllCat::class,'type_id');
+    public function branch(){
+        return $this->belongsTo(Branch::class,'branch_id');
     }
     public function scopePathImage($q){
       return 'admin/images/maincategories/';

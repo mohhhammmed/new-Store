@@ -5,12 +5,14 @@ use App\Http\Controllers\Admin\ComplaintsOfCategories;
 use App\Http\Controllers\Admin\Dashboard;
 use App\Http\Controllers\Admin\MainCategories\MainCategoriesControll;
 use App\Http\Controllers\Admin\ParentSubCategory;
+use App\Http\Controllers\Admin\Branch\BranchControll;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\requests\GetClientControll;
 use App\Http\Controllers\Admin\requests\OrdersAndOvers;
 use App\Http\Controllers\Admin\SubcategoriesControll;
 use App\Http\Controllers\Admin\Vendors\VendorControll;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Admin\Branch\GovernorateControll;
 use App\Http\Controllers\Auth\LogoutControll;
 use App\Http\Controllers\Admin\Langs\LangControll;
 use App\Http\Controllers\Admin\CategoryControl;
@@ -82,10 +84,21 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
     Route::POST('edit_lang',[LangControll::class,'edit'])->name('edit_lang');
     Route::get('change_statue/{lang_id}',[LangControll::class,'change_statue'])->name('change_statue_lang');
 
+                                   ////////////////                 /////////////////
+/////////////////////////////////////////////// Branches Of Main Categories/////////////////////////////////////
+
+Route::get('branches',[BranchControll::class,'branches'])->name('all_branches');
+Route::POST('/store_branch',[BranchControll::class,'store'])->name('store_branch');
+Route::get('/create_branch',[BranchControll::class,'create'])->name('create_branch');
+Route::get('/form_branch_allocation',[BranchControll::class,'form_allocation'])->name('form_branch_allocation');
+Route::POST('/Branch_allocation',[BranchControll::class,'allocation'])->name('branch_allocation');
+Route::get('form_edit_branch/{maincategory_id}',[BranchControll::class,'form_edit'])->name('form_edit_branch');
+Route::POST('edit_branch/{branch_id}',[BranchControll::class,'edit'])->name('edit_branch');
+Route::POST('delete_branch',[BranchControll::class,'delete'])->name('delete_branch');
 
 
 
-                               ////////////////                 /////////////////
+                                ////////////////                         /////////////////
 /////////////////////////////////////////////// Main Categories Of admin/////////////////////////////////////
 
           Route::get('maincategoriess',[MainCategoriesControll::class,'maincategories'])->name('all_maincategories');
@@ -119,7 +132,7 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
     Route::get('/add_images_subcategories',[SubcategoriesControll::class,'add_images_subcategories'])->name('add_images_subcategory')->middleware('st_subcategories');
     Route::POST('/store_images_subcategory',[SubcategoriesControll::class,'store_images'])->name('store_images_subcategory');
     Route::get('images/{subcategory_id}',[SubcategoriesControll::class,'images'])->name('images');
-    Route::get('add_specifications',[SubcategoriesControll::class,'add_specifications'])->name('add_specifications');
+    Route::get('add_specifications',[SubcategoriesControll::class,'add_specifications'])->name('add_specifications')->middleware('st_subcategories');;
     Route::POST('store_specifications',[SubcategoriesControll::class,'store_specifications'])->name('store_specifications');
     Route::get('specifications/{subcategory_id}',[SubcategoriesControll::class,'specifications'])->name('specifications');
     Route::get('form_edit_subcategories/{category_id}',[SubcategoriesControll::class,'form_edit'])->name('form_edit_subcategory');
@@ -151,14 +164,16 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
 
     Route::get('/orders',[OrdersAndOvers::class,'orders'])->name('orders');
     Route::POST('/del_order',[OrdersAndOvers::class,'delete_order'])->name('delete_orders');
-//    Route::POST('/store_vendor',[VendorControll::class,'store'])->name('store_vendor');
-//    // Route::get('/vendors',[VendorControll::class,'Vendors'])->name('store_vendor');
-//    Route::get('form_edit_vendor/{vendor_id}',[VendorControll::class,'form_edit'])->name('form_edit_vendor');
-//    Route::POST('edit_vendor',[VendorControll::class,'edit'])->name('edit_vendor');
-//    Route::POST('change_statue',[VendorControll::class,'change_statue'])->name('change_statue_vendor');
 
 
-    Route::get('get_client',[GetClientControll::class,'get_client']);
+                            /////////////////////////////////////////////////
+///////////////////////////////////////////////////Branches//////////////////////////////////////////////////
+
+    Route::get('/add_governorate',[GovernorateControll::class,'add'])->name('add_governorate');
+    Route::POST('/store_governorate',[GovernorateControll::class,'store'])->name('store_governorate');
+
+
+   // Route::get('get_client',[GetClientControll::class,'get_client']);
 
 });
 });

@@ -30,11 +30,10 @@
 					<div class="product-meta">
 						<ul class="list-inline">
 
-							<li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a href="">{{isset($category->maincategory)?$category->maincategory->type->type:''}}</a></li>
+							<li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a href="">{{isset($category->maincategory->branch)?$category->maincategory->branch->branch:''}}</a></li>
 
 						</ul>
 					</div>
-
 					<!-- product slider -->
 
 					@if(isset($category->images) && $category->images->count() > 0)

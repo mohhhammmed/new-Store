@@ -11,7 +11,7 @@ use App\Models\Lang;
 use App\Models\Subcategory;
 use App\Models\Maincategory;
 use Illuminate\Support\Facades\Auth;
-use App\Models\TypeAllCat;
+use App\Models\Branch;
 
 class Dashboard extends Controller
 {

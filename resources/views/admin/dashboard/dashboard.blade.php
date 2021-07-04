@@ -57,7 +57,7 @@
                             @if(isset($subcategories) && !empty($subcategories))
                                 @foreach($subcategories as $subcategory)
                                     <tr row='6'>
-                                        <td>{{$subcategory->maincategory->type->type}}</td>
+                                        <td>{{$subcategory->maincategory->branch->branch}}</td>
                                         <td class="text-center">
                                               <a href="{{route('form_edit_subcategory',$subcategory->id)}}"> {{$subcategory->name}}</a>
                                         </td>

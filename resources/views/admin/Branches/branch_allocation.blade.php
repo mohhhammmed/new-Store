@@ -29,24 +29,34 @@
                     <!-- Recently Favorited -->
                     <div class="widget dashboard-container my-adslist">
                         @include('alarms.alarm')
-                        <h3 class="widget-header">Create Parent</h3>
+                        <h3 class="widget-header">Addition</h3>
                         <form id="allData" action="{{route('store_images_subcategory')}}"method='POST'enctype='multipart/form-data'>
                             @csrf
-                            @if(isset($subcategories) && $subcategories->count() > 0)
-                            <select name="subcategory_id">
+                            @if(isset($governorates) && $governorates->count() > 0)
+                            <label for="">Governorate</label>
+                            <select name="governorate_id">
+                                @foreach($governorates as $governorate)
+                                    <option value="{{$governorate->id}}">{{$governorate->name}}</option>
+                                @endforeach
+                            </select>
+                            @endif
+                            <br><br>
 
-                                @foreach($subcategories as $subcategorys)
-                                    <option value="{{$subcategorys->id}}">{{$subcategorys->name}}</option>
+                            @if(isset($branches) && $branches->count() > 0)
+                            <label for="">Branch</label>
+                            <select name="branch_id">
+                                @foreach($branches as $branch)
+                                    <option value="{{$branch->id}}">{{$branch->branch}}</option>
                                 @endforeach
 
                             </select>
                             @endif
                             <br><br>
 
-                            <label for="exampleFormControlInput1" class="form-label">Add Image</label>
-                            <input type="file" name='image' class="form-control">
-								<strong><h3><small type='hidden' id='image_er'class='text text-danger'></small></h3></strong>
-								<br>
+                            <label for="exampleFormControlInput1" >Address</label>
+                            <input type='text' name='address' class="form-control">
+                            <br><br>
+
                             <button id="submitData" type="submit" class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">Add</button>
                         </form>
 
@@ -70,7 +80,7 @@
             e.preventDefault();
             var data=new FormData($('#allData')[0]);
             $.ajax({
-                url:"{{route('store_images_subcategory')}}",
+                url:"{{route('branch_allocation')}}",
                 type:'POST',
                 data:data,
                 processData: false,

@@ -1418,6 +1418,7 @@ ul.pagination .active a {
 }
 
 .nice-select {
+  /* margin-left: 15px; */
   float: none;
   display: inline-block;
   border-radius: 0;

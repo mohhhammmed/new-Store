@@ -95,7 +95,7 @@
                                                 <h4 class="card-title"><a href="{{route('description_category',$subcategory->id)}}">{{$subcategory->name}}</a></h4>
                                                 <ul class="list-inline product-meta">
                                                     <li class="list-inline-item">
-                                                        <a href="{{isset($subcategory->maincategory->type->type)?'#'.$subcategory->maincategory->type->type:''}}"><i class="fa fa-folder-open-o"></i>{{isset($subcategory->maincategory->type->type)?website_translation($subcategory->maincategory->type->type): '' }}</a>
+                                                        <a href="{{isset($subcategory->maincategory->branch)?'#'.$subcategory->maincategory->branch->branch:''}}"><i class="fa fa-folder-open-o"></i>{{isset($subcategory->maincategory->branch)?website_translation($subcategory->maincategory->branch->branch): '' }}</a>
 
                                                     </li>
                                                     <li class="list-inline-item">
@@ -150,20 +150,20 @@
                     </div>
                     <div class="row">
                         <!-- Category list -->
-                        @if(isset($main_categories_byType))
-                        @foreach($main_categories_byType as $type)
+                        @if(isset($branches))
+                        @foreach($branches as $branch)
 
-                            <div id="{{$type->type}}" class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6 col-6">
+                            <div id="{{$branch->branch}}" class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6 col-6">
 
                                 <div class="category-block">
                                     <div class="header">
                                         <i class="fa fa-laptop icon-bg-1"></i>
 
-                                        <h4>{{$type->type}}</h4>
+                                        <h4>{{$branch->branch}}</h4>
                                     </div>
                                     <ul class="category-list" >
 
-                                        @foreach($type->maincategories as $main_category)
+                                        @foreach($branch->maincategories as $main_category)
 
                                         <li><a href="{{route('all_categories',$main_category->id)}}">{{$main_category->category}} <span>{{$main_category->subcategories->count()}}</span></a></li>
 

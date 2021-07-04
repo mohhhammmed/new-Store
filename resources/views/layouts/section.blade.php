@@ -6,9 +6,9 @@
 		<div class="row">
 			<div class="col-md-12">
 				<nav class="navbar navbar-expand-lg navbar-light navigation">
-					<a class="navbar-brand" href="index.html">
-						<img src="{{asset('admin/images/logo.png')}}" alt="">
-					</a>
+					<a class="navbar-brand" href="">
+                    <div id="logo"> MF</div>
+                    </a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
@@ -105,6 +105,25 @@
 
 								</div>
 							</li>
+                            @if(Auth::guard('admin')->user())
+                            <li class="nav-item dropdown dropdown-slide lang-style" >
+								<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">Branches<span><i class="fa fa-angle-down"></i></span>
+								</a>
+
+								<!-- Dropdown list -->
+
+								<div class="dropdown-menu">
+
+
+                                  <a class="dropdown-item" href="{{route('create_branch')}}">Add Branch</a>
+                                  <a class="dropdown-item" href="{{route('add_governorate')}}">Add Governorate</a>
+                                  <a class="dropdown-item" href="{{route('form_branch_allocation')}}">Branch allocation</a>
+
+
+
+								</div>
+							</li>
+                            @endif
 
 
 							@if(Auth::guard('web')->user())

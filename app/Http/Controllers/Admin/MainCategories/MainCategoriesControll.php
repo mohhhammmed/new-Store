@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MainCategoryType;
 use App\Models\Parentt;
 use App\Models\Subcategory;
-use App\Models\TypeAllCat;
+use App\Models\Branch;
 use Illuminate\Http\Request;
 //use App\Http\Requests\CategoryValid;
 use App\Traits\Helper;
@@ -32,9 +32,9 @@ class MainCategoriesControll extends Controller
     }
     public function create(){
 
-        $types_categories=TypeAllCat::select('type','id')->where('translation_lang',app()->getLocale())->get();
+        $branches=Branch::select('branch','id')->where('translation_lang',app()->getLocale())->get();
         $langs=Lang::data()->where('statue',1)->get();
-        return view('admin.maincategories.create_maincategory',compact('langs','types_categories'));
+        return view('admin.maincategories.create_maincategory',compact('langs','branches'));
     }
     public function form_edit($category_id){
 
@@ -105,7 +105,7 @@ class MainCategoriesControll extends Controller
                         $data_ar['status'] = 0;
                     }
                     $data_ar['image'] = $image;
-                    $data_ar['type_id'] = $r->type_id;
+                    $data_ar['branch_id'] = $r->branch_id;
 
                     $id = Maincategory::insertGetId($data_ar);
                     AverageCategory::create([
@@ -125,7 +125,7 @@ class MainCategoriesControll extends Controller
                         $data_cat['status'] = 0;
                     }
                     $data_cat['image'] = $image;
-                    $data_cat['type_id'] = $r->type_id;
+                    $data_cat['branch_id'] = $r->branch_id;
                     $data_cat['translation_of'] = $id;
                     $idd = Maincategory::insertGetId($data_cat);
                     AverageCategory::create([
