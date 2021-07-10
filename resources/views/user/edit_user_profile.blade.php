@@ -2,37 +2,13 @@
 @extends('layouts.html')
 
 @section('content')
-
-@endsection
 @include('layouts.section')
-<!--==================================
-=            User Profile            =
-===================================-->
-
 <section class="user-profile section">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0">
-				<div class="sidebar">
-					<!-- User Widget -->
-					<div class="widget user">
-						<!-- User Image -->
-						<div class="image d-flex justify-content-center">
-							<img src="{{asset('user/images/'.$user->image)}}" alt="" class="">
-						</div>
-						<!-- User Name -->
-						<h5 class="text-center">{{$user->name}}</h5>
-					</div>
-					<!-- Dashboard Links -->
-					<div class="widget dashboard-links">
-						<ul>
-							<li><a class="my-1 d-inline-block" href="">Savings Dashboard</a></li>
-							<li><a class="my-1 d-inline-block" href="">Saved Offer <span>(5)</span></a></li>
-							<li><a class="my-1 d-inline-block" href="">Favourite Stores <span>(3)</span></a></li>
-							<li><a class="my-1 d-inline-block" href="">Recommended</a></li>
-						</ul>
-					</div>
-				</div>
+                @include('profiles.profile')
+                @include('admin.modal')
 			</div>
 			<div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0">
 				<!-- Edit Profile Welcome Text -->
@@ -148,3 +124,9 @@
 =            Footer            =
 =============================-->
 @include('layouts.footer')
+
+@endsection
+
+@section('scripts')
+@include('accounts.delete_account')
+@endsection

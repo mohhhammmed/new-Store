@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ReviewControll;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\ResetPasswordControll;
 use App\Http\Controllers\User\AllCategories;
 use App\Http\Controllers\User\AllStoresControll;
 use App\Http\Controllers\User\ContactControll;
@@ -29,16 +30,18 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 */
                 /////////////////////////////////////////
 //////////////////////////////Create And Store User/////////////////////////////////////
-         Route::get('register',function() {
-               return view('user.register');
-         });
-         Route::POST('store_user',[AuthController::class,'store'])->name('store_user');
-////////////////////////////////////////////////////////////////////////////////////
 
+    Route::get('register',[AuthController::class,'register'])->name('register');
+    Route::POST('store_user',[AuthController::class,'store'])->name('store_user');
+/////////////////////////////Reset Bassword/////////////////////////////////////////
+    Route::get('reset_password',[ResetPasswordControll::class,'reset'])->name('reset_password');
+    Route::POST('make_sure',[ResetPasswordControll::class,'make_sure'])->name('make_sure');
+    Route::POST('change_password',[ResetPasswordControll::class,'change_password'])->name('change_password');
 ///////////////////////////////////////////////////////////////////////////////////
-Route::group(['prefix'=> LaravelLocalization::setLocale(),
+///////////////////////////////////////////////////////////////////////////////////
+    Route::group(['prefix'=> LaravelLocalization::setLocale(),
     'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]],function(){
-Route::group(['prefix'=>'user','middleware'=>'auth'],function(){
+    Route::group(['prefix'=>'user','middleware'=>'auth'],function(){
 
 
                                   //////////////////////////////////////////
@@ -90,19 +93,29 @@ Route::group(['prefix'=>'user','middleware'=>'auth'],function(){
 ///////////////////////////////////////Requests and Orders///////////////////////////////////////////
     Route::get('make_over',[ContactControll::class,'make_over'])->name('make_over');
     Route::POST('store_over',[ContactControll::class,'store_over'])->name('store_over');
-    Route::get('make_order/{subcategory_id}',[ContactControll::class,'make_order'])->name('make_order');
+    Route::get('make_order',[ContactControll::class,'make_order'])->name('make_order');
     Route::POST('store_order',[ContactControll::class,'store_order'])->name('store_order');
+    Route::POST('shopping_cart',[ContactControll::class,'shopping_cart'])->name('shopping_cart');
+    Route::POST('delete_cart_subcat',[ContactControll::class,'delete_cart_subcategory'])->name('delete_cart_subcategory');
 
-                            ////////////////////////////////
+                                ////////////////////////////////
 /////////////////////////////////////////Electronic payment////////////////////////////////////////////////////////
 
-    Route::get('make_order_electronic/{subcategory_id}',[PaymentControll::class,'make_order'])->name('make_order_electronic');
-    Route::POST('checkout_id/{subcategory_id}',[PaymentControll::class,'checkout'])->name('checkout_id');
+    Route::get('make_order_electronic',[PaymentControll::class,'make_order'])->name('make_order_electronic');
+    Route::POST('checkout_id',[PaymentControll::class,'checkout'])->name('checkout_id');
 
 
 });
 
 });
+
+
+                             ////////////////////////////////
+/////////////////////////////////////////Conditions////////////////////////////////////////////////////////
+
+Route::get('conditions',[ContactControll::class,'conditions'])->name('conditions');
+
+
 
                                ////////////////                 /////////////////
 /////////////////////////////////////////////// Social Of admin/////////////////////////////////////
@@ -126,10 +139,12 @@ Route::get('user/login/{provider}/callback',[LoginRedirectControll::class,'login
 
 
 Route::get('fj',function(){
-    $users=User::pluck('email')->toArray();
-    foreach($users as $user){
-        Mail::to($user)->send(new Reverse());
-    }
-    return 'success';
+    // $users=User::pluck('email')->toArray();
+    // foreach($users as $user){
+    //     Mail::to($user)->send(new Reverse());
+    // }
+    // return 'success';
+
+    return products_cart();
 
 });

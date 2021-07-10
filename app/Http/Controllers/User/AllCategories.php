@@ -7,6 +7,8 @@ use App\Models\Governorate;
 use App\Models\Maincategory;
 use App\Models\Parentt;
 use App\Models\Branch;
+use App\Models\ShoppingCart;
+use Auth;
 use Illuminate\Http\Request;
 
 class AllCategories extends Controller
@@ -16,10 +18,11 @@ class AllCategories extends Controller
         if(isset($mainncategory) && $mainncategory != null){
 
             $branche= $mainncategory->branch;
-            $subcategories= $mainncategory->subcategories()->paginate(paginate_count);
+            $subcategories= $mainncategory->subcategories()->Active()->paginate(paginate_count);
             $maincategories=$branche->maincategories->where('translation_lang',locale_lang());
             $governorates=Governorate::where('translation_lang',locale_lang())->get();
-            return view('user.allCategories.all_categories',compact('mainncategory','governorates','subcategories','maincategories'));
+            $subcategories_cart=ShoppingCart::where('user_id',Auth::id())->get();
+            return view('user.allCategories.all_categories',compact('subcategories_cart','mainncategory','governorates','subcategories','maincategories'));
 
         }
         return redirect()->back()->with('error','Categories Not Exists');

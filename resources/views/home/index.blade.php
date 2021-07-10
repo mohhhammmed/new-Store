@@ -95,7 +95,7 @@
                                                 <h4 class="card-title"><a href="{{route('description_category',$subcategory->id)}}">{{$subcategory->name}}</a></h4>
                                                 <ul class="list-inline product-meta">
                                                     <li class="list-inline-item">
-                                                        <a href="{{isset($subcategory->maincategory->branch)?'#'.$subcategory->maincategory->branch->branch:''}}"><i class="fa fa-folder-open-o"></i>{{isset($subcategory->maincategory->branch)?website_translation($subcategory->maincategory->branch->branch): '' }}</a>
+                                                        <a href="{{isset($subcategory->maincategory->branch)?'#'.$subcategory->maincategory->branch->branch:''}}"><i class="fa fa-folder-open-o"></i>{{isset($subcategory->maincategory->branch)?$subcategory->maincategory->branch->branch: '' }}</a>
 
                                                     </li>
                                                     <li class="list-inline-item">
@@ -103,16 +103,7 @@
                                                     </li>
                                                 </ul>
                                                 <p class="card-text">
-                                                    @if($subcategory->getSpecifications() && count($subcategory->getSpecifications()) > 0)
-                                                        {{-- {{count($subcategory->getSpecifications())=5}} --}}
-                                                     @foreach($subcategory->getSpecifications() as $counter=> $specific)
-                                                         {{$counter. ':' .$specific}}<br>
-                                                     @endforeach
-
-
-
-
-                                                    @endif
+                                                    @include('user.shopping.shopping_cart')
                                                 </p>
                                                 <div class="product-ratings">
                                                     <ul class="list-inline">
@@ -145,48 +136,46 @@
                 <div class="col-12">
                     <!-- Section title -->
                     <div class="section-title">
-                        <h2>All Categories</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, provident!</p>
+                        <h2>{{website_translation("All Categories")}}</h2>
                     </div>
                     <div class="row">
                         <!-- Category list -->
-                        @if(isset($branches))
-                        @foreach($branches as $branch)
-
+                       @if(isset($branches))
+                         @foreach($branches as $branch)
                             <div id="{{$branch->branch}}" class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6 col-6">
-
                                 <div class="category-block">
                                     <div class="header">
                                         <i class="fa fa-laptop icon-bg-1"></i>
-
                                         <h4>{{$branch->branch}}</h4>
                                     </div>
                                     <ul class="category-list" >
-
                                         @foreach($branch->maincategories as $main_category)
-
-                                        <li><a href="{{route('all_categories',$main_category->id)}}">{{$main_category->category}} <span>{{$main_category->subcategories->count()}}</span></a></li>
-
+                                        <li><a href="{{route('all_categories',$main_category->id)}}">{{$main_category->category}} <span>{{$main_category->subcategories()->Active()->count()}}</span></a></li>
                                         @endforeach
                                     </ul>
-
                                 </div>
-
                             </div>
-
-                            @endforeach
-                        @endif
-
-
+                         @endforeach
+                       @endif
                     </div>
                 </div>
             </div>
         </div>
         <!-- Container End -->
     </section>
+
     <!--============================
     =            Footer            =
     =============================-->
 
-   @include('layouts.footer')
+ @include('layouts.footer')
+@endsection
+
+
+@section('scripts')
+        <script>
+       ////////////////////////////////////////////
+////////////////////Add product To Cart////////////////////
+ @include('user.shopping.ajax_shopping');
+        </script>
     @endsection

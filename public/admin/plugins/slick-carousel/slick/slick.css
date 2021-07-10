@@ -90,6 +90,13 @@
 {
     display: block;
 }
+
+img#the_big {
+    /* border-radius: 120px; */
+    height: 680px;
+    margin-top: 33px;
+    /* margin-bottom: 100px; */
+}
 .slick-slide.slick-loading img
 {
     display: none;

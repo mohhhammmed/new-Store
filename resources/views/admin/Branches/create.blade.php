@@ -24,25 +24,19 @@
                     <!-- Recently Favorited -->
                     <div class="widget dashboard-container my-adslist">
                         @include('alarms.alarm')
-                        <h3 class="widget-header">Add Branch</h3>
+                        <h3 class="widget-header">{{website_translation("Add Branch")}}</h3>
                         <form id="allData" action=""method='POST'enctype='multipart/form-data'>
                             @csrf
-                            {{-- @if(isset($governorates) && $governorates->count() > 0)
-                            <select name="governorate_id">
-
-                                @foreach($governorates as $governorate)
-                                    <option value="{{$governorate->id}}">{{$governorate->name}}</option>
-                                @endforeach
-
-                            </select>
-                            @endif
-                            <br><br> --}}
-
-                            <label for="exampleFormControlInput1" class="form-label">Branch</label>
-                            <input type="text" name='branch' class="form-control">
+                            @if(isset($langs) && $langs->count() > 0)
+                              @foreach($langs as $counter=>$lang)
+                                <label for="exampleFormControlInput1" class="form-label">{{website_translation("Branch by").' '.website_translation($lang->abbr)}}</label>
+                                <input type="text" name='branches[{{$counter}}][branch]' class="form-control">
+                                <br>
 								<strong><h3><small type='hidden' id='branch_er'class='text text-danger'></small></h3></strong>
 								<br>
-                                <input type="hidden" name='translation_lang'value="{{locale_lang()}}">
+                                <input type="hidden" name='branches[{{$counter}}][translation_lang]'value="{{$lang->abbr}}">
+                            @endforeach
+                            @endif
                             <button id="submitData" type="submit" class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">Add</button>
                         </form>
 

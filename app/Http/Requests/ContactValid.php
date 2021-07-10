@@ -24,13 +24,10 @@ class ContactValid extends FormRequest
     public function rules()
     {
         return [
-           'email'=>'required|email|unique:orders',
+            'email'=>'required|email|unique:orders',
             'name'=>'required|string',
             'address'=>'required|string',
-            'id'=>'required|numeric|exists:subcategories,id',
             'mobile'=>'required|numeric|unique:orders',
-            'category'=>'required|exists:sub_categories,name',
-
         ];
     }
 }

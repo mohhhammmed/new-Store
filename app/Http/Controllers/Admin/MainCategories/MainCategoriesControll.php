@@ -34,7 +34,11 @@ class MainCategoriesControll extends Controller
 
         $branches=Branch::select('branch','id')->where('translation_lang',app()->getLocale())->get();
         $langs=Lang::data()->where('statue',1)->get();
-        return view('admin.maincategories.create_maincategory',compact('langs','branches'));
+        if(isset($branches) && $branches->count() > 0){
+            return view('admin.maincategories.create_maincategory',compact('langs','branches'));
+        }
+        return redirect(route('create_branch'));
+
     }
     public function form_edit($category_id){
 
@@ -118,8 +122,7 @@ class MainCategoriesControll extends Controller
                 $data_other = $data->filter(function ($val) {
                     return $val['translation_lang'] !== 'ar';
                 });
-                // return $data_other[0];
-                //  if(isset($data_other[0])){
+
                 foreach ($data_other as $data_cat) {
                     if (!isset($data_cat['status'])) {
                         $data_cat['status'] = 0;
@@ -160,7 +163,7 @@ class MainCategoriesControll extends Controller
 
                 $maincat->update(['status'=>$statue]);
 
-                return redirect(route('all_maincategories'))->with('success','The '. $maincat->category.' category '.'is '.$maincat->getStatue());
+                return redirect(route('all_maincategories'))->with('success','The '. $maincat->category.' category '.'is '.$maincat->getStatus());
             }catch(\exception $ex){
                 return $ex;
                 return redirect(route('all_maincategories'))->with('error','There is proplem');

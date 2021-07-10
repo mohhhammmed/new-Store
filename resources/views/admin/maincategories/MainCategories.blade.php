@@ -30,10 +30,7 @@
       <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
         <!-- Recently Favorited -->
         <div class="widget dashboard-container my-adslist">
-
-          <h3  class="widget-header">My Ads {{' '}} <a style="margin-left: 10px" href='{{route('create_maincategory')}}'class="btn-sm btn btn-outline-info btn-small"><strong>Add Main Category</strong> </a> </h3>
-
-
+          <h3  class="widget-header">My Ads {{' '}} <a style="margin:-25px 0px 0px 415px;height:50px" href='{{route('create_maincategory')}}'class="btn-sm btn btn-outline-info btn-small"><strong style="margin-left: -70px">Add Main Category</strong> </a> </h3>
           @include('alarms.alarm')
           <table class="table table-responsive product-dashboard-table">
             <thead>
@@ -48,7 +45,7 @@
             <tbody>
               @if (isset($maincategories))
 						  @foreach ($maincategories as $maincategory)
-              <tr>
+              <tr id="hide{{$maincategory->id}}">
 
                 <td class="product-thumb">
                   <img width="80px" height="auto" src="{{asset('admin/images/maincategories/'.$maincategory->image)}}" alt="image description"></td>
@@ -57,12 +54,12 @@
                   {{$maincategory->translation_lang}}
                 </td>
                 <td class="product-category"><span class="categories"> {{$maincategory->category}}</span></td>
-                <td class="product-category"><span class="categories"> {{$maincategory->getStatue()}}</span></td>
+                <td class="product-category"><span class="categories"> {{$maincategory->getStatus()}}</span></td>
                 <td class="action" data-title="Action">
                   <div class="">
                     <ul class="list-inline justify-content-center">
                       <li class="list-inline-item">
-                        <a data-toggle="tooltip" data-placement="top" title="{{$maincategory->action==1? 'Disactivate':'Activate'}}" class="view" href="{{route('change_statue_maincategory',$maincategory->id)}}">
+                        <a data-toggle="tooltip" data-placement="top" title="{{$maincategory->status==1?'disatcivate':'activate'}}" class="view" href="{{route('change_statue_maincategory',$maincategory->id)}}">
                           <i class="fa fa-edit"></i>
                         </a>
                       </li>
@@ -131,9 +128,10 @@
 </style>
 @section('scripts')
     <script>
+
         $(document).on('click','.delData',function(e){
+          var id=$(this).attr('get_id');
             e.preventDefault();
-            var id=$(this).attr('get_id');
             $.ajax({
                 type:'POST',
               url:"{{route('delete_maincategory')}}",
@@ -143,7 +141,9 @@
                    },
 
                 success:function(data){
-                if(data.statue==true) {
+                if(data.status==true) {
+                  var  tr_data=document.querySelector('tr#hide'+id);
+                  tr_data.style.display='none';
                     alert(data.msg);
                 }
                     alert(data.msg);
@@ -155,7 +155,7 @@
             });
         });
 
-        @include('accounts.delete_account');       
+        @include('accounts.delete_account');
     </script>
-     
+
     @endsection

@@ -1,4 +1,6 @@
 <?php
+use App\Http\Controllers\User\ContactControll;
+
 
 function locale_lang(){
     return app()->getLocale();
@@ -26,3 +28,10 @@ function website_translation($text){
 function get_image($image){
     return asset($image);
 }
+
+
+
+
+
+
+

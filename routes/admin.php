@@ -24,6 +24,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 $paginate_count=define('paginate_count',10);
 
 
+
  Route::prefix( LaravelLocalization::setLocale())->group(function(){
      Route::middleware(['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'])->group(function () {
 
@@ -87,7 +88,7 @@ Route::group(['middleware'=>'auth:admin','prefix'=>'admin'],function(){
                                    ////////////////                 /////////////////
 /////////////////////////////////////////////// Branches Of Main Categories/////////////////////////////////////
 
-Route::get('branches',[BranchControll::class,'branches'])->name('all_branches');
+Route::get('all_branches',[BranchControll::class,'branches'])->name('all_branches');
 Route::POST('/store_branch',[BranchControll::class,'store'])->name('store_branch');
 Route::get('/create_branch',[BranchControll::class,'create'])->name('create_branch');
 Route::get('/form_branch_allocation',[BranchControll::class,'form_allocation'])->name('form_branch_allocation');
@@ -126,7 +127,7 @@ Route::POST('delete_branch',[BranchControll::class,'delete'])->name('delete_bran
                                ////////////////                 /////////////////
 /////////////////////////////////////////////// Sub Categories /////////////////////////////////////
 
-    Route::get('subcategories',[SubcategoriesControll::class,'subcategories'])->name('all_subcategories')->middleware('st_subcategories');
+    Route::get('all_subcategories',[SubcategoriesControll::class,'subcategories'])->name('all_subcategories')->middleware('st_subcategories');
     Route::POST('/store_subcategory',[SubcategoriesControll::class,'store'])->name('store_subcategory');
     Route::get('/create_subcategory',[SubcategoriesControll::class,'create'])->name('create_subcategory')->middleware('RedirMainCat');
     Route::get('/add_images_subcategories',[SubcategoriesControll::class,'add_images_subcategories'])->name('add_images_subcategory')->middleware('st_subcategories');
@@ -173,36 +174,12 @@ Route::POST('delete_branch',[BranchControll::class,'delete'])->name('delete_bran
     Route::POST('/store_governorate',[GovernorateControll::class,'store'])->name('store_governorate');
 
 
-   // Route::get('get_client',[GetClientControll::class,'get_client']);
-
 });
 });
-//
-//Route::get('trashed',function(){
-//    $ss= \App\Models\Over::withTrashed()->get();
-//    foreach($ss as $s) {
-//        if ($s->trashed()) {
-//           echo $s;
-//        }
-//    }
-//    return 'sdfkjsdhf';
-//});
 
-
-
-
+                ///////////////////////////////////////////////////
+///////////////////////////Delete Account User And Admin////////////////////////////
 Route::POST('store',[AccountControll::class,'delete'])->name('delete_account');
-  route::get('jj',function(){
-    return getpath();
-  });
-
-
-
-
-  Route::get('j',function(){
-
-      return  Admin::pluck('email')->toArray();
-  });
 
 
 

@@ -32,14 +32,14 @@
         <!-- User Name -->
         <h5 class="text-center">{{$user->name}}</h5>
         <p>Joined {{Auth::guard('web')->user()->created_at}}</p>
-        <a href="{{route('edit_user_profile',$user->id)}}" class="btn btn-main-sm">Edit</a>
+
     </div>
     <!-- Dashboard Links -->
     <div class="widget user-dashboard-menu">
         <ul>
 
             <li>
-                <a href=""><i class="fa fa-cog"></i> Logout</a>
+                <a href="{{route('logout')}}"><i class="fa fa-cog"></i> Logout</a>
             </li>
             <li>
                 <a href="#" data-toggle="modal" data-target="#deleteaccount"><i class="fa fa-power-off"></i>Delete Account</a>

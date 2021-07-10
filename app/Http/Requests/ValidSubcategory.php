@@ -31,7 +31,8 @@ class ValidSubcategory extends FormRequest
             'image'=>'required|mimes:jpg,png,jpeg',
             'name'=>'required|string',
             'translation_lang'=>'required|string|max:6',
-            'parent_id'=>'numeric|exists:parents,id'
+            'parent_id'=>'required|numeric',
+            'subcategory_num'=>'required|numeric',
         ];
     }
 }

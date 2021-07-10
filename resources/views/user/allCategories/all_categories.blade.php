@@ -17,12 +17,14 @@
             <div class="category-sidebar">
                 <div class="widget category-list">
                       @if(isset($maincategories) && $maincategories->count() > 0)
-                        <h4 class="widget-header">All Category</h4>
+                      <h4 class="widget-header">{{website_translation("Categories of")}} {{isset($mainncategory)?$mainncategory->branch->branch:''}}</h4>
                         <ul class="category-list">
                             @foreach ($maincategories as $maincategory)
-                                @foreach ($maincategory->parents as $parent)
-                                    <li><a href="{{route('categories_from_parent',$parent->id)}}">{{$parent->type}}<span>{{$parent->subcategories->count()}}</span></a></li>
-                                @endforeach
+                                @if(isset($maincategory->parents) && $maincategory->parents->count() > 0)
+                                    @foreach ($maincategory->parents as $parent)
+                                        <li><a href="{{route('categories_from_parent',$parent->id)}}">{{$parent->type}}<span>{{$parent->subcategories->count()}}</span></a></li>
+                                    @endforeach
+                                @endif
                             @endforeach
                         </ul>
                      @endif
@@ -31,7 +33,7 @@
                 <div class="widget category-list">
 
                     @if(isset($governorates) && $governorates->count() > 0)
-                    <h4 class="widget-header">Nearby</h4>
+                    <h4 class="widget-header">{{website_translation('Our Branches')}}</h4>
                     <ul class="category-list">
                         @foreach($governorates as $governorate)
                             <li><a>{{$governorate->name}}<span>{{$governorate->branches->where('branch',$mainncategory->branch != null?$mainncategory->branch->branch:'')->count()}}</span></a></li>
@@ -45,7 +47,7 @@
 
 <input type="hidden"value="{{$mainncategory->id}}" name="id">
 <div class="widget price-range w-100">
-<h4 class="widget-header">Price Range</h4>
+<h4 class="widget-header">{{website_translation("Price Range")}}</h4>
 <div class="block">
                     <input class="range-track w-100"name="the_price" type="text" data-slider-min="0" data-slider-max="500000" data-slider-step="5"
                     data-slider-value="[5000,500000]">
@@ -68,13 +70,8 @@
         <div class="col-md-6">
 
             @include('alarms.alarm')
-            <strong>Short</strong>
-            <select>
-                <option>Most Recent</option>
-                <a href="#10000"><option value="1">Most Popular</option></a>
-                <option value="2">Lowest Price</option>
-                <option value="4">Highest Price</option>
-            </select>
+            <strong>Categories</strong>
+
         </div>
         <div class="col-md-6">
             <div class="view">
@@ -96,31 +93,32 @@
 
 
                 <!-- product card -->
-                  @if(isset($subcategories) && $subcategories->count() > 0)
-            @foreach ($subcategories as $subcat)
+            @if(isset($subcategories) && $subcategories->count() > 0)
+            @foreach ($subcategories as $subcategory)
                 <div class="col-sm-12 col-lg-4 col-md-6">
                     <div class="product-item bg-light">
                         <div class="card">
                             <div class="thumb-content">
                                 <!-- <div class="price">$200</div> -->
-                                <a href="{{route('description_category',$subcat->id)}}">
-                                    <img class="card-img-top img-fluid" src="{{asset("admin/images/subcategories/".$subcat->image)}}" alt="Card image cap">
+                                <a href="{{route('description_category',$subcategory->id)}}">
+                                    <img class="card-img-top img-fluid" src="{{asset("admin/images/subcategories/".$subcategory->image)}}" alt="Card image cap">
                                 </a>
                             </div>
                             <div class="card-body">
-                                <h4 class="card-title"><a href="{{route('description_category',$subcat->id)}}">{{$subcat->name}}</a></h4>
+                                <h4 class="card-title"><a href="{{route('description_category',$subcategory->id)}}">{{$subcategory->name}}</a></h4>
                                 <ul class="list-inline product-meta">
                                     <li class="list-inline-item">
-                                        <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$subcat->maincategory->branch->branch}}</a>
+                                        <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$subcategory->maincategory->branch->branch}}</a>
                                     </li>
                                     <li class="list-inline-item">
-                                        <a href="#"><i class="fa fa-calendar"></i>{{$subcat->created_at}}</a>
+                                        <a href="#"><i class="fa fa-calendar"></i>{{$subcategory->created_at}}</a>
                                     </li>
                                 </ul>
-                                <p class="card-text">{{isset($subcat->specification->specification)?$subcat->specification->specification:''}}</p>
+
+                              @include('user.shopping.shopping_cart')
                                 <div class="product-ratings">
                                     <ul class="list-inline">
-                                      <li id="{{$subcat->the_price}}"><span>{{locale_lang() != 'en'?__('trans.Price'):'Price'}} : </span>{{$subcat->the_price}}</li>
+                                      <li id="{{$subcategory->the_price}}"><span>{{locale_lang() != 'en'?__('trans.Price'):'Price'}} : </span>{{$subcategory->the_price}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -230,7 +228,7 @@
             @endforeach
         @endif
 
-        @if(isset($subcategory) && $subcategory != null)
+        {{-- @if(isset($subcategory) && $subcategory != null)
             <div class="col-sm-12 col-lg-4 col-md-6">
                 <div class="product-item bg-light">
                     <div class="card">
@@ -241,7 +239,7 @@
                             </a>
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title"><a href="{{route('description_category',$subcategory->id)}}">{{$category->name}}</a></h4>
+                            <h4 class="card-title"><a href="{{route('description_category',$subcategory->id)}}">{{$subcategory->name}}</a></h4>
                             <ul class="list-inline product-meta">
                                 <li class="list-inline-item">
                                     <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$subcategory->maincategory->branch->branch}}</a>
@@ -261,7 +259,7 @@
                 </div>
             </div>
 
-        @endif
+        @endif --}}
         </div>
 </div>
 
@@ -269,9 +267,6 @@
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item">
-
-
-
                         </li>
                         {{isset($subcategories)?$subcategories->links():''}}
 
@@ -294,23 +289,23 @@
 @endsection
 
 @section('scripts')
-@if(isset($yourCategories) && count($yourCategories) > 0 || isset($mainncategory))
 
 <script>
-  let dis_lang=document.querySelector('.lang-style');
-  dis_lang.style='display:none';
-
+      ////////////////////////////////////////////
+////////////////////Add product To Cart////////////////////
+ @include('user.shopping.ajax_shopping');
 </script>
-
-
-@endif
 @endsection
 
 
 <!-- JAVASCRIPTS -->
+
+
 <style>
     .w-5{
         display: none;
     }
-
+    #hide_lang{
+        display:none;
+    }
 </style>

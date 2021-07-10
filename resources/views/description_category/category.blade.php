@@ -26,25 +26,25 @@
 			<!-- Left sidebar -->
 			<div class="col-md-8">
 				<div class="product-details">
-					<h1 class="product-title">{{isset($category->name)?$category->name:''}}</h1>
+					<h1 class="product-title">{{isset($subcategory->name)?$subcategory->name:''}}</h1>
 					<div class="product-meta">
 						<ul class="list-inline">
-
-							<li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a href="">{{isset($category->maincategory->branch)?$category->maincategory->branch->branch:''}}</a></li>
-
+							<li class="list-inline-item"><i class="fa fa-folder-open-o"></i> subcategory<a href="">{{isset($subcategory->maincategory->branch)?$subcategory->maincategory->branch->branch:''}}</a></li>
 						</ul>
 					</div>
 					<!-- product slider -->
 
-					@if(isset($category->images) && $category->images->count() > 0)
+				@if(isset($subcategory->images) && $subcategory->images->count() >= 4)
 					<div class="product-slider">
-					@foreach($category->images as $image)
-						<div class="product-slider-item my-4" data-image="{{asset('admin/images/subcategories/'.$image->image)}}">
-							<img class="img-fluid w-100" src="{{asset('admin/images/subcategories/'.$image->image)}}" alt="product-img">
-						</div>
-						@endforeach
-						</div>
-						@endif
+                        @foreach($subcategory->images as $counter => $image)
+                            @if ($counter < 4)
+                                <div class="product-slider-item my-4" data-image="{{asset('admin/images/subcategories/'.$image->image)}}">
+                                    <img id='the_big' class="img-fluid w-100" src="{{asset('admin/images/subcategories/'.$image->image)}}" alt="product-img">
+                                </div>
+                            @endif
+                        @endforeach
+					</div>
+				@endif
 
 					<!-- product slider -->
 
@@ -61,17 +61,18 @@
 							<li class="nav-item">
 								<a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact"
 								 aria-selected="false">{{website_translation('Reviews')}}</a>
-							</li>
+
+                                </li>
 						</ul>
 						<div class="tab-content" id="pills-tabContent">
 							<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 								<h3 class="tab-title">{{website_translation('Product Description')}}</h3>
-								<p>{{$category->name}}</p>
+								<p>{{$subcategory->name}}</p>
 
 								<iframe width="100%" height="400" src="https://www.youtube.com/embed/LUH7njvhydE?rel=0&amp;controls=0&amp;showinfo=0"
 								 frameborder="0" allowfullscreen></iframe>
 								<p></p>
-								<p>{{isset($category->description)?$category->description->description:''}}</p>
+								<p>{{isset($subcategory->description)?$subcategory->description->description:''}}</p>
 
 							</div>
 							<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
@@ -80,24 +81,23 @@
 									<tbody>
 										<tr>
 											<td>Seller Price</td>
-											<td>${{round($category->the_price /18)}}</td>
+											<td>${{round($subcategory->the_price /18)}}</td>
 										</tr>
 										<tr>
 											<td>Added</td>
-											<td>{{$category->created_at}}</td>
+											<td>{{$subcategory->created_at}}</td>
 										</tr>
-                                        @if(isset($category->specification->specification) && count($category->getSpecifications()) > 0)
+                                        @if(isset($subcategory->specification->specification) && count($subcategory->getSpecifications()) > 0)
 
-											@foreach($category->getSpecifications() as $c=> $specific)
+											@foreach($subcategory->getSpecifications() as $c=> $specific)
                                                 <tr>
                                                     <td>{{$c}}</td>
                                                     <td>{{$specific}}</td>
                                                 </tr>
 											@endforeach
-
                                         @endif
 
-										<tr>
+                                        <tr>
 											<td>Model</td>
 											<td>{{date('y',time())}}</td>
 										</tr>
@@ -111,7 +111,7 @@
 								<div class="product-review">
 									<div class="media">
 										<!-- Avater -->
-										<img src="{{asset(\App\Models\Subcategory::PathImage().$category->image)}}" alt="avater">
+										<img src="{{asset(\App\Models\Subcategory::PathImage().$subcategory->image)}}" alt="avater">
 										<div class="media-body">
 											<!-- Ratings -->
 											<div class="ratings">
@@ -126,7 +126,7 @@
 												</ul>
 											</div>
 											<div class="name">
-												<h5>{{isset($category->name)?$category->name:''}}</h5>
+												<h5>{{isset($subcategory->name)?$subcategory->name:''}}</h5>
 											</div>
 											<div class="date">
 												<p>Mar 20, 2018</p>
@@ -156,7 +156,7 @@
 													<textarea name="opinion" id="review" rows="10" class="form-control" placeholder="Message"></textarea>
 												</div>
 												<div class="col-12">
-													<input type='hidden' name="subcategory_id" id="id" value='{{$category->id}}' class="form-control">
+													<input type='hidden' name="subcategory_id" id="id" value='{{$subcategory->id}}' class="form-control">
 												</div>
 												<div class="col-12">
 													<button id="submitData" type="submit" class="btn btn-main">Sumbit</button>
@@ -174,18 +174,15 @@
 				<div class="sidebar">
 					<div class="widget price text-center">
 						<h4>{{website_translation('Price')}}</h4>
-						<p>${{round($category->the_price /18)}}</p>
+						<p>${{round($subcategory->the_price /18)}}</p>
 					</div>
 					<!-- User Profile widget -->
 					<div class="widget user text-center">
-						<img class="rounded-circle img-fluid mb-5 px-5" src="{{get_image(App\Models\SubCategory::PathImage() . $category->image)}}" alt="">
-						<h4><a href="">{{$category->name}}</a></h4>
-						<p class="member-time">{{$category->created_at}}</p>
-						<a href="">See all ads</a>
+						<img class="rounded-circle img-fluid mb-5 px-5" src="{{get_image(App\Models\SubCategory::PathImage() . $subcategory->image)}}" alt="">
+						<h4><a href="">{{$subcategory->name}}</a></h4>
+						<p class="member-time">{{$subcategory->created_at}}</p>
 						<ul class="list-inline mt-20">
-							<li class="list-inline-item"><a href="{{route('make_order',$category->id)}}" class="btn btn-contact d-inline-block  btn-primary px-lg-5 my-1 px-md-6">{{website_translation('Contact')}}</a></li>
-                            <li class="list-inline-item"><a href="{{route('make_order_electronic',$category->id)}}" class="btn btn-contact d-inline-block  btn-primary px-lg-5 my-1 px-md-3">{{website_translation('Electronic Payment')}}</a></li>
-
+                            @include('user.shopping.shopping_cart');
 						</ul>
 					</div>
 					<!-- Map Widget -->
@@ -251,15 +248,13 @@
 					alert(data.msg);
                 },
                 error:function(reject){
-
-
                 }
-
-
             });
         });
 
-
+    ////////////////////////////////////////////
+////////////////////Add product To Cart////////////////////
+@include('user.shopping.ajax_shopping');
     </script>
 
     @endsection

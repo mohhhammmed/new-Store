@@ -7,15 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Classimax</title>
+    <title>@yield('title','MF')</title>
 
 
       {{-- bootstrap --}}
 
 
-            @if(isset($responseData))
-        <script src="https://test.oppwa.com/v1/paymentWidgets.js?checkoutId={{$responseData['id']}}"></script>
-           @endif
+
     <!-- FAVICON -->
     <link href="{{asset('admin/images/favicon.png')}}" rel="shortcut icon">
     <!-- PLUGINS CSS STYLE -->
@@ -55,6 +53,7 @@
 
 
 
+
 <!-- JAVASCRIPTS -->
 <script src="{{asset('admin/plugins/jQuery/jquery.min.js')}}"></script>
 <script src="{{asset('admin/plugins/bootstrap/js/popper.min.js')}}"></script>
@@ -84,12 +83,14 @@
 
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
 </script>
+
 <script
     src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
     crossorigin="anonymous"></script>
 
- @yield('scripts')
+@yield('scripts')
+
 </body>
 
 </html>

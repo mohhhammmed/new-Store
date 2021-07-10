@@ -24,8 +24,9 @@ class ValidBranch extends FormRequest
     public function rules()
     {
         return [
-            'translation_lang'=>'required|string|max:10',
-            'branch'=>'required|string'
+            'branches.*.translation_lang'=>'required|string|max:10',
+            'branches.*.branch'=>'required|string'
+
         ];
     }
 }

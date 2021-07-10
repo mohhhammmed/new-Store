@@ -19,4 +19,8 @@ class Lang extends Model
     public function getActive(){
         return $this->statue == 1;
     }
+
+    public function getLActive(){
+        return where('statue', 1);
+    }
 }

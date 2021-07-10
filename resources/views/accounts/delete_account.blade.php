@@ -21,4 +21,3 @@ $(document).on('click','#delete_account',function(e){
 
             });
         });
-   

@@ -152,20 +152,25 @@
                               </div>
                           </div>
                       @endforeach
-
-
-
                   </div>
-  @endisset
+             @endisset
           </div>
-          </div>
-          </div>
-
-    </section>
+       </div>
+    </div>
+ </section>
 
     <!--================ Footer ===============-->
     @include('layouts.footer')
 @endsection
+
+
+
+<style>
+    #hide_lang{
+        display: none;
+    }
+</style>
+
 
 @section('scripts')
 <script>

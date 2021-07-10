@@ -40,12 +40,12 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="section-title">
-					<h2>Vendors</h2>
+					<h2>{{website_translation('Vendors')}}</h2>
 				</div>
 				<!-- First Letter -->
 				<div class="block">
 					<!-- Store First Letter -->
-					<h5 class="store-letter">All Vendors</h5>
+					<h5 class="store-letter">{{website_translation('All Vendors')}}</h5>
 					<hr>
 					<!-- Store Lists -->
                     <div class="row">

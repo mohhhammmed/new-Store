@@ -48,7 +48,7 @@
             <option value="rtl"@if ($data_lang->direction=='rtl')  selected @endif>Rtl</option>
             <option value="ltr"@if ($data_lang->direction=='ltr')  selected @endif>Ltr</option>
             @else
-            
+
             <option disapled>Choose Direction</option>
             <option value="rtl">Rtl</option>
             <option value="ltr">Ltr</option>
@@ -78,11 +78,11 @@
 
           <input style='margin-left:5px' class="form-check-input"name='statue' value='0' type="radio" value="" id="flexCheckChecked" checked>
           <label  style='margin-left:27px' class="form-check-label" for="flexCheckChecked">Not Active</label>
-           
+
             @endisset
 
           </div>
-       
+
 
           <button type="submit" id='submitData' class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">Add</button>
           </form>
@@ -126,7 +126,7 @@
                 });
             });
 
-            @include('accounts.delete_account');  
+            @include('accounts.delete_account');
         </script>
     @else
         <script>
@@ -155,7 +155,7 @@
                 });
             });
 
-            @include('accounts.delete_account');  
+            @include('accounts.delete_account');
         </script>
     @endif
 

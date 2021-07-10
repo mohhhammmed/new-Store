@@ -18,6 +18,11 @@ h1, h2, h3, h4, h5, h6 {
   color: #333;
 }
 
+h6#total_price {
+    margin-left: 10px;
+    font-family: initial;
+}
+
 p {
   color: #666;
 }
@@ -228,10 +233,6 @@ figure {
 a {
   transition: all .3s ease-in 0s;
   color: #000;
-}
-
-a.delete.delData {
-    color: #d23131;
 }
 
 iframe {
@@ -1418,7 +1419,6 @@ ul.pagination .active a {
 }
 
 .nice-select {
-  /* margin-left: 15px; */
   float: none;
   display: inline-block;
   border-radius: 0;
@@ -1599,7 +1599,7 @@ ul.pagination .active a {
 
 .product-slider .slick-dots {
   display: flex;
-  bottom: -50px;
+  bottom: -115px;
 }
 
 .product-slider .slick-dots li {

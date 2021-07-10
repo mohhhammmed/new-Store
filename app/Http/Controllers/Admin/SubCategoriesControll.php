@@ -6,6 +6,7 @@ use App\Models\Description;
 use App\Models\Maincategory;
 use App\Models\Parentt;
 use App\Models\Image;
+use App\Models\ShoppingCart;
 use App\Models\Specification;
 use App\Traits\Helper;
 use App\Models\Subcategory;
@@ -25,17 +26,17 @@ class SubcategoriesControll extends Controller
 
         $parentSubCat=Parentt::select('id','type')->where('translation_lang',app()->getLocale())->get();
         $lang_maincategory=Maincategory::where('translation_lang',app()->getLocale())->first();
-        $maincategories=Maincategory::Selection()->wherehas('parents')->where('translation_lang',app()->getLocale())->get();
+        $maincategories=Maincategory::Selection()->where('translation_lang',app()->getLocale())->get();
 
-             if(isset($maincategories) && count($maincategories) > 0) {
+            //  if(isset($maincategories) && count($maincategories) > 0) {
                  return view('admin.subcategories.create', compact('parentSubCat', 'branches', 'maincategories', 'lang_maincategory'));
-             }
-             return redirect(route('create_parent'));
+             //}
+            // return redirect(route('create_parent'));
     }
     public function store(ValidSubcategory $request){
-       // return $request;
 
         try{
+
            DB::beginTransaction();
             $image= $this->setPhoto($request->image,$request->name,Subcategory::PathImage());
             $data=$request->except('image','description','_token');
@@ -43,8 +44,6 @@ class SubcategoriesControll extends Controller
             if(!$request->has('statue')){
                 $data['statue']=0;
             }
-            //return $data;
-
 
            $id=Subcategory::insertGetId($data);
             Description::create([
@@ -53,44 +52,35 @@ class SubcategoriesControll extends Controller
 
             ]);
             DB::commit();
-            return response()->json([
-              'statue'=>true,
-              'msg'=>'Created Done',
-             ]);
+            return get_response(true,'Created Done');
 
         }catch(\Exception $ex){
             DB::rollBack();
            return $ex;
-            return response()->json([
-              'statue'=>false,
-              'msg'=>'There is error'
-            ]);
+           return get_response(false,'Error');
         }
      }
 
      public function subcategories(){
-
           $subcategories=Subcategory::with('maincategory')->Selection()->where('translation_lang',app()->getLocale())->paginate(paginate_count);
-
-        return view('admin.subcategories.indexes',compact('subcategories'));
+          return view('admin.subcategories.indexes',compact('subcategories'));
      }
-     public function change_statue($subcategory_id){
-      //  $subcategories=SubCategory::with('maincategory')->selection();
 
+
+     public function change_statue($subcategory_id){
       try {
-        $col=Subcategory::find($subcategory_id);
-       // return $col->count();
-        if(isset($col)&& $col->count() > 0){
-          $statue=$col->statue==1 ? 0 : 1;
-          $col->update(['statue'=>$statue]);
-      return redirect(route('subcategories'))->with('success','Statue is Updated');
-    }
-    }catch(\Exception $ex){
-        return redirect(route('subcategories'))->with('error','ther is error');
-    }
+            $col=Subcategory::find($subcategory_id);
+            if(isset($col)&& $col->count() > 0){
+            $statue=$col->statue==1 ? 0 : 1;
+            $col->update(['statue'=>$statue]);
+            return redirect(route('all_subcategories'))->with('success',$col->name.' is '.$col->getStatue());
+            }
+      }catch(\Exception $ex){
+            return redirect(route('all_subcategories'))->with('error','There is problem');
+      }
    }
 
-   public function delete(Request $request){
+    public function delete(Request $request){
         try{
             if(isset($request->id) && $request->id!=null) {
 
@@ -100,31 +90,34 @@ class SubcategoriesControll extends Controller
                     {
                         unlink(Subcategory::PathImage().$subcategory->image);
                     }
+                    if(isset($subcategory->users) && $subcategory->users->count() > 0){
+                        $this->delete_cart_category($subcategory->id);
+                    }
+
                     $subcategory->delete();
-                    return response()->json([
-                        'statue'=>true,
-                        'msg'=>'Deleted Done Reload Page',
-                    ]);
+                    return get_response(true,'Deleted Done');
                 }
-                return response()->json([
-                    'statue'=>false,
-                    'msg'=>'column not fount',
-                ]);
+                return get_response(false,'Not Found');
             }
-            return response()->json([
-                'statue'=>false,
-                'msg'=>'There is Problem',
-            ]);
+            return get_response(false,'Data is empty');
 
         }catch(\Exception $ex){
+
          // return $ex;
-            return response()->json([
-                'statue'=>false,
-                'msg'=>'There is Error',
-            ]);
+          return get_response(false,'Error');
         }
 
    }
+
+       public function delete_cart_category($subcategory_id){
+        $user_subcategories=ShoppingCart::where('subcategory_id',$subcategory_id)->get();
+        if(isset($user_subcategories) && $user_subcategories->count() > 0){
+            foreach($user_subcategories as $subcategory){
+                $subcategory->delete();
+            }
+
+        }
+       }
         public function form_edit($subcategory_id){
 
             $subcategory_edit=Subcategory::find($subcategory_id);
@@ -217,10 +210,10 @@ class SubcategoriesControll extends Controller
 
         }
         public function images($subcategory_id){
-          $subcategory_images=Subcategory::wherehas('images')->with('images')->find($subcategory_id);
+              $subcategory_images=Subcategory::wherehas('images')->with('images')->find($subcategory_id);
 
                if(isset($subcategory_images) && $subcategory_images != null){
-                 return view('admin.subcategories.images',compact('subcategory_images'));
+                 return view('admin.subcategories.features',compact('subcategory_images'));
                }
         }
 
@@ -228,7 +221,7 @@ class SubcategoriesControll extends Controller
         public function specifications($subcategory_id){
             $subcategory_specifications=Subcategory::wherehas('specification')->with('specification')->find($subcategory_id);
                  if(isset($subcategory_specifications) && $subcategory_specifications != null){
-                   return view('admin.subcategories.specifications',compact('subcategory_specifications'));
+                   return view('admin.subcategories.features',compact('subcategory_specifications'));
                  }
           }
 
@@ -237,7 +230,7 @@ class SubcategoriesControll extends Controller
               $sub_has_reviews=Subcategory::wherehas('reviews')->find($subcategory_id);
               if(isset($sub_has_reviews))
               {
-                return view('admin.subcategories.specifications',compact('sub_has_reviews'));
+                return view('admin.subcategories.features',compact('sub_has_reviews'));
               }
 
           }

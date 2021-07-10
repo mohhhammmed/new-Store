@@ -35,7 +35,7 @@
         <div class="page-heading">
 
             <section class="section">
-                <div class="card">
+                <div id='dash' class="card">
                     <div class="card-header">
                        Our Categories
                     </div>

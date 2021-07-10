@@ -6,9 +6,9 @@
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-8 align-item-center">
                 <div class="border border">
-                    @include('messages.err_or_succ')
+                    @include('alarms.alarm')
                     <h3 class="bg-gray p-4">Register Now</h3>
-                    <form action="{{route('storeUser')}}"method='POST'enctype='multipart/form-data'>
+                    <form action="{{route('store_user')}}"method='POST'enctype='multipart/form-data'>
                         @csrf
                         <fieldset class="p-4">
                             <input type="name"name='name' placeholder="Name*" class="border p-3 w-100 my-2">
@@ -32,13 +32,17 @@
                                <input type="file"name='image'placeholder="Image" class="form-control-file mt-2 pt-1" id="input-file">
                              </div>
                              @error('image')
-                             <div class="text text-success">{{$message}}</div>
-                              @enderror
+                               <div class="text text-success">{{$message}}</div>
+                             @enderror
+                             <div class="loggedin-forgot d-inline-flex my-3">
+                                <input type="checkbox" id="registering" class="mt-1">
+                                <label for="registering" class="px-2">By registering, you accept our <a class="text-primary font-weight-bold" href="{{route('conditions')}}">Terms & Conditions</a></label>
+                             </div>
+                            <button type="submit" class="d-block py-3 px-4 bg-primary text-white border-0 rounded font-weight-bold">Register</button>
                             <div class="loggedin-forgot d-inline-flex my-3">
-                                    <input type="checkbox" id="registering" class="mt-1">
-                                    <label for="registering" class="px-2">By registering, you accept our <a class="text-primary font-weight-bold" href="terms-condition.html">Terms & Conditions</a></label>
-                            </div>
-                            <button type="submit" class="d-block py-3 px-4 bg-primary text-white border-0 rounded font-weight-bold">Register Now</button>
+
+                                <label for="registering" class="px-2"> <a class="text-primary font-weight-bold" href="{{route('login')}}">Sign IN</a></label>
+                             </div>
                         </fieldset>
                     </form>
                 </div>
@@ -47,5 +51,5 @@
     </div>
 </section>
 <!--============================ !>
-    @include('layouts.footer')
+
 @endsection

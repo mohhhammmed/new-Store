@@ -13,11 +13,11 @@
             </header>
 
         <div class="page-heading">
-      
+
             <section class="section">
                 <div class="card">
                     <div class="card-header">
-                       <span style='margin-left:600px;'>Our Orders</span> 
+                       <span style='margin-left:600px;'>Our Orders</span>
                     </div>
                     <div class="card-body">
                         <table class="table table-striped" id="table1">
@@ -50,7 +50,6 @@
                                         <td class="action text-center" data-title="Action">
                                             <div class="">
                                                 <ul class="list-inline justify-content-center">
-                                                   
                                                     <li class="list-inline-item">
                                                         <a data-toggle="tooltip" data-placement="top" title="trash" get_id="{{$order->id}}" class="delete delData" href="{{route('delete_orders',$order->id)}}">
                                                             <i class="fa fa-trash"></i>
@@ -72,7 +71,7 @@
 
             </section>
 
-      
+
 
    </div>
    </div>
@@ -81,7 +80,7 @@
     =============================-->
 
     @include('layouts.footer')
-   
+
                 @endsection
 
 

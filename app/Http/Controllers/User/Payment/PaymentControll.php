@@ -10,13 +10,15 @@ use Illuminate\Http\Request;
 
 class PaymentControll extends Controller
 {
-    public function checkout(Request $request,$subcategory_id)
+
+
+    public function checkout(Request $request)
     {
 
-       $subcategory=Subcategory::find($subcategory_id);
+      // $subcategory=Subcategory::find($subcategory_id);
         $url = env('HYPERPAY_URL') . "v1/checkouts";
         $data = "entityId=" . env('HYPERPAY_ENTITY_ID') .
-            "&amount=" . $subcategory->the_price .
+            "&amount=" . $request->total_price .
             "&currency=EUR" .
             "&paymentType=DB";
 
@@ -33,36 +35,33 @@ class PaymentControll extends Controller
             return curl_error($ch);
         }
         curl_close($ch);
+
         $responseData= json_decode($responseData,true);
-       // $res = json_decode($responseData, true);
+        $view_payment=view('user.paying_off.form_payment')->with(['responseData' => $responseData])
+        ->renderSections();
 
-       return view('user.paying_off.payment')->with(['responseData' => $responseData , 'id' => $subcategory->id]);
-
-//        ->renderSections();
-//        return response()->json([
-//            'status' => true,
-//            'content' => $view['content']
-//        ]);
+        return response()->json([
+           'status' => true,
+           'content' => $view_payment['elect_payment'],
+        ]);
     }
 
-    public function make_order($subcategory_id){
-        $subcategory=Subcategory::find($subcategory_id);
+    public function make_order(){
+       // return request();
+       // $subcategory=Subcategory::find($subcategory_id);
         if (request('id') && request('resourcePath')) {
 
              $statuePayment = $this->paymentStatue( request('resourcePath'));
-
-            if(isset($statuePayment['id'])){
+             if(isset($statuePayment['id'])){
 
                 ClientChekoutId::create([
                     'checkout_id'=>$statuePayment['id'],
                 ]);
-                return redirect(route('make_order_electronic',$subcategory->id))->with('success','تمت العمليه بنجاح');
+                return redirect(route('make_order'))->with('success','تمت العمليه بنجاح');
 
-            }
-            return redirect(route('make_order_electronic',$subcategory->id))->with('error','فشلت عمليه الدفع');
+             }
+            return redirect(route('make_order'))->with('error','فشلت عمليه الدفع');
         }
-
-        return view('user.paying_off.payment',compact('subcategory'));
 
 }
 

@@ -69,31 +69,32 @@
 								<h3><small type='hidden' id='maincategory_id_er'class='text text-danger'></small></h3>
 									<br>
 
-									<label for="exampleFormControlInput1" class="form-label">Main Category Type</label>
+
+								  <label for="exampleFormControlInput1" class="form-label">Parent</label>
                                   <select  name='parent_id'>
-                                      @if(isset($parentSubCat) && $parentSubCat->count() > 0)
+                                    <option value="0">Not Thing</option>
+                                    @if(isset($parentSubCat) && $parentSubCat->count() > 0)
                                           @foreach ($parentSubCat as $parent)
                                               <option value="{{$parent->id}}" @if(isset($subcategory_edit) && $subcategory_edit->parent_id == $parent->id) selected @endif>{{$parent->type}}</option>
                                           @endforeach
-                                      @endif
-
+                                    @endif
                                   </select>
                                   <h3><small type='hidden' id='parent_id_er'class='text text-danger'></small></h3>
 
 
                                   @if(isset($subcategory_edit) &&$subcategory_edit !=null )
-
                                     <img width="200px" height="150px" src="{{asset(\App\Models\SubCategory::PathImage().$subcategory_edit->image)}}">
                                   @endif
                                      <br>
+
 								<label for="exampleFormControlInput1" class="form-label">Image SubCategory</label>
 								<input type="file" name='image' class="form-control">
 								<strong><h3><small type='hidden' id='image_er'class='text text-danger'></small></h3></strong>
 								<br>
 
 
-								<input class="form-control  form-control-lg" value="{{isset($subcategory_edit)?$subcategory_edit->name:''}}" name='name' type="text" placeholder="Name" aria-label=".form-control-lg example">
-								<h3><small type='hidden' id='name_er'class='text text-danger'></small></h3><br>
+                                  <input class="form-control  form-control-lg" value="{{isset($subcategory_edit)?$subcategory_edit->name:''}}" name='name' type="text" placeholder="Name" aria-label=".form-control-lg example">
+                                  <h3><small type='hidden' id='name_er'class='text text-danger'></small></h3><br>
 
 
                                   <input class="form-control form-control-lg" value="{{isset($subcategory_edit)?$subcategory_edit->the_price:''}}" name='the_price' type="text" placeholder="The Price" aria-label=".form-control-lg example">
@@ -104,21 +105,24 @@
                                   @endisset
 
                                   <textarea name="description"  placeholder="Description *" class="border w-100 p-3 mt-3 mt-lg-4">@if(isset($subcategory_edit)){{$subcategory_edit->description->description}}@endif</textarea>
-
                                   <h3><small type='hidden' id='description_er'class='text text-danger'></small></h3>
-
-
                                   <br>
+
+                                  <laple><strong style="font-size: 15px">Subcategory Num</strong></laple>
+                                  <select name="subcategory_num">
+                                     @for ($i = 1; $i < 20; $i++)
+                                         <option>{{$i}}</option>
+                                     @endfor
+                                  </select>
+
 									<input class="form-control form-control-sm"value="{{isset($lang_maincategory->translation_lang)? $lang_maincategory->translation_lang :$subcategory_edit->translation_lang}}" type="hidden"name='translation_lang' placeholder="The Lang" aria-label=".form-control-sm example">
 								<h3><small type='hidden' id='translation_lang_er'class='text text-danger' ></small></h3>
 
 
-							      <div class="form-check form-swi tch">
-
-								<input class="form-check-input" name="statue"value='1' type="checkbox" id="flexSwitchCheckDefault"@if(isset($subcategory_edit) && $subcategory_edit->getActive())checked @endif>
-
-								<label class="form-check-label" for="flexSwitchCheckDefault">Statue</label>
-							  </div>
+                                <div class="form-check form-swi tch">
+                                    <input class="form-check-input" name="statue"value='1' type="checkbox" id="flexSwitchCheckDefault"@if(isset($subcategory_edit) && $subcategory_edit->getActive())checked @endif>
+                                    <label class="form-check-label" for="flexSwitchCheckDefault">Statue</label>
+                                </div>
                                     <button type="submit"id='submitData' class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">{{isset($subcategory_edit)?'Update':'Add'}}</button>
 
                               </form>

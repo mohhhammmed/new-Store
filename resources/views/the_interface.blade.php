@@ -27,9 +27,11 @@
 		}
 
 		.banner{
-			height:100vh;
+			height:121vh;
 		  padding: 200px 0;
 		  position: relative;
+          margin-top: -100px;
+          padding-bottom: 120px;
 		}
 
 		.overlay:before {
@@ -93,42 +95,29 @@
 </head>
 <body>
 <!-- NavBar -->
-<nav class="navbar main-nav fixed-top navbar-expand-lg">
+{{-- <nav class="navbar main-nav fixed-top navbar-expand-lg">
   <div class="container">
       <a class="navbar-brand" href="#" >Classimax Documentation</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto menu">
-      	<li class="nav-item">
-          <a class="nav-link" target="_blank" href="{{route('login')}}">Login</a>
-        </li>
 
-		<li class="nav-item">
-{{--			<a class="nav-link" target="_blank" href="{{route('login.redirect.facebook','facebook')}}">Login Redirect With Facebook </a>--}}
-{{--			<a class="nav-link" target="_blank" href="{{route('login.redirect.facebook','google')}}">Login Redirect With google </a>--}}
-			<a class="nav-link" target="_blank" href="{{route('login_redirect','github')}}">Login with github </a>
-		  </li>
-
-        <li class="nav-item">
-          <a class="nav-link" target="_blank" href="{{url('register')}}">Register</a>
-        </li>
-	   </ul>
-      </div>
   </div>
-</nav>
+</nav> --}}
 
 <!-- Banner -->
 <section class="banner bg-1 overlay">
 	<div class="container">
 		<div class="row">
 			<div class="col-12 text-center">
-				<h1>Classimax Documentation</h1>
-				<h3>Last Update: 4/8/2019</h3>
-				<p>We are constantly doing updates for you. Please check the online documentation.</p>
-				<a href="https://docs.themefisher.com/classimax/" class="btn btn-main-rounded">View Online Documentation</a>
-			</div>
+				<h1>Mf Documentation</h1>
+
+				<p>We are constantly doing updates for you.</p>
+				<a style="width:239px" href="{{route('register')}}" class="btn btn-main-rounded">Sine Up</a><br><br>
+                <a style="width:239px" href="{{route('login')}}" class="btn btn-main-rounded">Sine in</a><br><br>
+                <a href="{{route('login_redirect','github')}}" class="btn btn-main-rounded">Login With Github</a>
+
+            </div>
 		</div>
 	</div>
 </section>

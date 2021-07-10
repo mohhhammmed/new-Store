@@ -25,11 +25,13 @@
         <div class="page-heading">
 
             <section class="section">
-                <div class="card">
+                <div id='card' class="card">
                     <div class="card-header">
                        Our Sub Categories
                     </div>
+                    @include('alarms.alarm')
                     <div class="card-body">
+                        <a style="position:absolute" href="{{route('create_subcategory')}}"class="btn-sm btn btn-outline-info btn-small"><span class="words">Create</span></a>
                         <table class="table table-striped" id="table1">
                             <thead>
                             <tr>
@@ -46,7 +48,7 @@
                             <tbody>
                             @if(isset($subcategories) && !empty($subcategories))
                                 @foreach($subcategories as $subcategory)
-                                <tr>
+                                <tr id="hide{{$subcategory->id}}">
                 <td >
                   <img width="80px" height="auto" src="{{asset('admin/images/subcategories/'.$subcategory->image)}}" alt="image description"></td>
 
@@ -61,12 +63,12 @@
                       <li class="list-inline-item">
                         <a data-toggle="tooltip" data-placement="top" title="{{$subcategory->statue==1?'Disactivate':'Activate'}}" class="view"
                              href="{{route('change_statue_subcategory',$subcategory->id)}}">
-                          <i class="fa fa-edit"></i>
+                          <i class="fa fa-pencil"></i>
                         </a>
                       </li>
                       <li class="list-inline-item">
                         <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit" href="{{route('form_edit_subcategory',$subcategory->id)}}">
-                          <i class="fa fa-pencil"></i>
+                          <i class="fa fa-edit"></i>
                         </a>
                       </li>
                       <li class="list-inline-item">
@@ -78,20 +80,15 @@
                   </div>
                 </td>
               </tr>
-                                @endforeach
+           @endforeach
+        @endif
 
-                            @endif
+    </tbody>
+ </table>
 
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-
-
-
-
-            </section>
+ </div>
+</div>
+</section>
 
 
 </div>
@@ -138,9 +135,11 @@
 
                 success:function(data){
                   if(data.status==true){
+                    var  tr_data=document.querySelector('tr#hide'+id);
+                      tr_data.style.display='none';
                       alert(data.msg);
                   }
-                    alert(data.msg);
+
                 },
                 error:function(reject){
 

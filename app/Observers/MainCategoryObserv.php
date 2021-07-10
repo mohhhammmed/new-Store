@@ -49,16 +49,25 @@ class MainCategoryObserv
                    $subcategory->description()->delete();
 
        ////////////////////////Images Of Categories////////////////////////
-                   foreach($subcategory->images as $image){
-                       if(file_exists(Subcategory::PathImage() . $image->image)){
-                            unlink(Subcategory::PathImage() . $image->image);
-                         }
-                       $image->delete();
+                    if(isset($subcategory->images) && $subcategory->images->count() > 0){
+                        foreach($subcategory->images as $image){
+                            if(file_exists(Subcategory::PathImage() . $image->image)){
+                                    unlink(Subcategory::PathImage() . $image->image);
+                                }
+                            $image->delete();
+                        }
+                    }
+
+                    if(file_exists(Subcategory::PathImage() . $subcategory->image)){
+                        unlink(Subcategory::PathImage() . $subcategory->image);
                    }
 
-                   if(file_exists(Subcategory::PathImage() . $subcategory->image)){
-                         unlink(Subcategory::PathImage() . $subcategory->image);
-                     }
+       /////////////////////////////specifications of Subcategories////////////////////
+                    if(isset($subcategory->specification) && $subcategory->specification->count() > 0){
+                        $subcategory->specification()->delete();
+                    }
+
+
                }
                $subcategories->delete();
            }
@@ -79,14 +88,21 @@ class MainCategoryObserv
 ////////////////Delete Translations && Transla/tion's Subcategories && Translation's vendors////////////
         $translations=$maincategory->translations;
         if(isset($translations) && $translations->count() > 0){
-          //  if(isset($translations->subcategories) && $translations->subcategories->count() > 0){
+
                 foreach($translations as $trans) {
 
                        $trans->average()->delete();
 
                   if(isset($trans->subcategories) && $trans->subcategories->count() > 0){
-                    foreach($trans->subcategories as $subcategory) {
-                        $subcategory->delete();
+                        foreach($trans->subcategories as $subcategory) {
+                            $subcategory->delete();
+                        }
+                  }
+
+                    if(isset($trans->parents) && $trans->parents->count() > 0){
+                        foreach($trans->parents as $parent) {
+                            $parent->delete();
+                        }
                     }
 
 
@@ -96,7 +112,7 @@ class MainCategoryObserv
                          }
                         $vendor->delete();
                     }
-                }
+
             }
 
             $maincategory->translations()->delete();

@@ -15,7 +15,7 @@ class Subcategory extends Model
 {
     use HasFactory;
     protected $table='subcategories';
-    protected $fillable=['translation_of','statue','translation_lang','image','the_price','parent_id','name','maincategory_id'];
+    protected $fillable=['translation_of','statue','translation_lang','image','the_price','parent_id','name','maincategory_id','subcategory_num'];
 
 
 
@@ -43,6 +43,10 @@ class Subcategory extends Model
 
     public function getActive(){
         return $this->statue==1;
+    }
+
+    public function scopeActive($q){
+        return $q->where('statue',1);
     }
 
     public function getStatue()
@@ -99,6 +103,11 @@ class Subcategory extends Model
 
     public function hasReviews(){
         return count($this->reviews) > 0 ? 'Has Reviews' : 'Has Not Reviews';
+    }
+
+
+    public function users(){
+        return $this->belongsToMany(User::class);
     }
 
 }

@@ -43,8 +43,6 @@
                             <fieldset class="p-4">
                                 <div class="form-group">
                                     @include('alarms.alarm')
-
-
                                     <small type="hidden" id="address" class="text text-danger" ></small>
 
                                     <img style="border-radius: 50px" src="{{asset(\App\Models\SubCategory::PathImage().$subcategory->image)}}"width="500px" height="600px">
@@ -63,9 +61,7 @@
                             </fieldset>
                         </form>
                     @else
-                        {{--                       @include('user.paying_off.payment')--}}
-                        <form action="{{route('make_order_electronic',$id)}}" class="paymentWidgets" data-brands="VISA MASTER AMEX">
-                        </form>
+
                     @endif
 
                 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Models\ShoppingCart;
 use App\Models\Subcategory;
 
 class SubCategoryObserv
@@ -58,6 +59,8 @@ class SubCategoryObserv
         if(isset($subCategory->reviews) && $subCategory->reviews->count() > 0){
             $subCategory->reviews()->delete();
         }
+
+
     }
 
     /**

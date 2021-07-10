@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Vendor;
 use App\Models\Branch;
+use App\Models\Parentt;
 use App\Models\AverageCategory;
 use App\Models\Subcategory;
 
@@ -25,11 +26,11 @@ class Maincategory extends Model
     public function scopeSelection(){
          return $this->select('id','image','branch_id','status','translation_lang','translation_of','category');
     }
-    public function scopeActive($val){
-      return $val->where('status',1)->get();
+    public function scopeGetActive($val){
+      return $val->where('status',1);
     }
 
-    public function getStatue(){
+    public function getStatus(){
       return $this->status==1 ? 'active':'not active';
     }
     public function translations(){

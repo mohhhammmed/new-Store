@@ -17,7 +17,6 @@ Trait Helper{
            return $name;
        }
        public function editCategory($maincategory_id){
-      //  return $maincategory_id;
              $data_category=Maincategory::with('translations')->find($maincategory_id);
              $langs=Lang::get();
 
@@ -31,12 +30,12 @@ Trait Helper{
                DB::beginTransaction();
                 $maincategory= Maincategory::find($request->id);
                 if(isset($maincategory) && $maincategory!= null){
-                   
+
                   if(file_exists(Maincategory::PathImage().$maincategory->image) && $maincategory->image != null &&locale_lang() == 'ar'){
-                   
+
                     unlink(Maincategory::PathImage().$maincategory->image);
                   }
-                
+
                   $maincategory->delete();
                   DB::commit();
                   return get_response(true,'Deleted Done');
@@ -48,8 +47,8 @@ Trait Helper{
             return $ex;
             return get_response(false,'Not Found');
         }
-          
-          
+
+
       }
 
       public function editSubcategory($request){

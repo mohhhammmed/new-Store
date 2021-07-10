@@ -7,6 +7,8 @@ use App\Http\Requests\categoriesValid;
 use App\Models\Maincategory;
 use App\Models\Parentt;
 use App\Models\Subcategory;
+use App\Models\ShoppingCart;
+use Auth;
 use Illuminate\Http\Request;
 
 class CategoriesControll extends Controller
@@ -31,7 +33,8 @@ class CategoriesControll extends Controller
                     }
 
                     if (isset($your_categories) && count($your_categories) > 0) {
-                        return view('user.allCategories.all_categories', compact('your_categories', 'maincategory'));
+                        $subcategories_cart=ShoppingCart::where('user_id',Auth::id())->get();
+                        return view('user.allCategories.all_categories', compact('subcategories_cart','your_categories', 'maincategory'));
                     }
                     return redirect()->route('all_categories', $request->id)->with('error', 'there is not categories');
                 }
@@ -71,7 +74,8 @@ class CategoriesControll extends Controller
                 }
 
                   if(isset($yourCategories) && count($yourCategories) > 0) {
-                      return view('user.allCategories.all_categories', compact('yourCategories'));
+                    $subcategories_cart=ShoppingCart::where('user_id',Auth::id())->get();
+                      return view('user.allCategories.all_categories', compact('subcategories_cart','yourCategories'));
                   }
               }
                 return redirect()->back()->with('error','Categories Not Exists');

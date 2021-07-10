@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 use App\Models\User;
+use App\Models\Admin;
+//use Toastr;
 use App\Traits\Helper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -11,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
   use Helper;
+
   public function register(){
       return view('auth.register');
   }
@@ -28,21 +31,25 @@ class AuthController extends Controller
     }
 
     public function authenticate(Request $request){
+          $request->validate([
+              'email'=>'required|email',
+              'password'=>'required|string',
+          ]);
 
-        $data_admin=$request->except('_token');
-        // return $data_admin['password'];
-        if(!empty($data_admin)){
-            if(Auth::guard('admin')->attempt(['email'=>$data_admin['email'],'password'=>$data_admin['password']])){
+        if(isset($request) && !empty($request)){
+            $remember=$request->has('remember_me')? true : false;
+            if(Auth::guard('admin')->attempt(['email'=>$request->email,'password'=>$request->password],$remember)){
+
                 return redirect(route('dashboard'));
-            }elseif(Auth::attempt(['email'=>$data_admin['email'],'password'=>$data_admin['password']])){
+
+            }elseif(Auth::attempt(['email'=>$request->email,'password'=>$request->password],$remember)){
+
                 return redirect(route('home'));
             }
-            return back()->with('errors','email or password is false');
+
+            return back()->with('error','user or pass is incorrect');
         }
 
     }
 
-    // public function login(Over $request){
-    //     return $request;
-    // }
 }
