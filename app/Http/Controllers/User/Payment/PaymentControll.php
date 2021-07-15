@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactValid;
 use App\Models\ClientChekoutId;
 use App\Models\Subcategory;
+use App\Models\ShoppingCart;
+use Auth;
 use Illuminate\Http\Request;
 
 class PaymentControll extends Controller
@@ -47,23 +49,20 @@ class PaymentControll extends Controller
     }
 
     public function make_order(){
-       // return request();
-       // $subcategory=Subcategory::find($subcategory_id);
-        if (request('id') && request('resourcePath')) {
 
+        if (request('id') && request('resourcePath')){
              $statuePayment = $this->paymentStatue( request('resourcePath'));
              if(isset($statuePayment['id'])){
-
                 ClientChekoutId::create([
                     'checkout_id'=>$statuePayment['id'],
                 ]);
-                return redirect(route('make_order'))->with('success','تمت العمليه بنجاح');
-
+                $this->delete_shopping_subcategory();
+                return redirect(route('home'))->with('success','تمت العمليه بنجاح');
              }
             return redirect(route('make_order'))->with('error','فشلت عمليه الدفع');
         }
 
-}
+    }
 
     public function paymentStatue($resourcepath){
 
@@ -83,10 +82,16 @@ class PaymentControll extends Controller
         }
         curl_close($ch);
         return json_decode($responseData,true);
-
-
     }
 
+
+    public function delete_shopping_subcategory(){
+         $subcategories_user=Auth::user()->subcategories;
+        foreach($subcategories_user as $subcategory){
+            $subcategory->update(['subcategory_num'=>$subcategory->subcategory_num-=1]);
+            ShoppingCart::where('user_id',Auth::id())->where('subcategory_id',$subcategory->id)->first()->delete();
+        }
+    }
 
 
 }

@@ -10,5 +10,5 @@ class ShoppingCart extends Model
     use HasFactory;
 
     protected $table='subcategory_user';
-    protected $fillable=['id','subcategory_id','user_id'];
+    protected $fillable=['id','subcategory_id','user_id','count'];
 }

@@ -25,9 +25,9 @@
                             <tr>
                                 <th>Name</th>
                                 <th class='text text-center'>Email</th>
-                                <th class='text text-center'>Product</th>
+                                <th class='text text-center'>Products</th>
+                                <th class='text text-center'>the_number</th>
                                 <th class='text text-center'>Phone</th>
-                                <th class='text text-center'>Image</th>
                                 <th class='text text-center'>Title</th>
                                 <th class='text text-center'>Price</th>
                                 <th class='text text-center'>Status</th>
@@ -36,15 +36,15 @@
                             <tbody>
                             @if(isset($orders) && !empty($orders))
                                 @foreach($orders as $order)
-                                    <tr>
+                                    <tr class="hide{{$order->id}}">
                                         <td>{{$order->name}}</td>
                                         <td class="text-center">{{$order->email}}</td>
-                                        <td class="text-center">{{$order->category}}</td>
+                                        <td class="text-center">
+                                            @foreach (explode(',',$order->category) as $subcategory)
+                                            <a href="{{route('form_edit_subcategory',$subcategory)}}">{{App\Models\Subcategory::find($subcategory)->name . '//'}}</a>
+                                            @endforeach</td>
+                                        <td class="text-center">{{ $order->the_number}}</td>
                                         <td class="text-center">{{$order->mobile}}</td>
-                                        <td class="product-thumb text-center">
-                                            <img width="80px" height="auto"
-                                                 src="{{asset(\App\Models\Subcategory::PathImage().$order->image)}}"
-                                                 alt="image description"></td>
                                         <td class="text-center">{{$order->address}}</td>
                                         <td class="text-center">{{$order->the_price}}</td>
                                         <td class="action text-center" data-title="Action">
@@ -62,30 +62,18 @@
                                 @endforeach
                             @else
                             @endif
-
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-
-            </section>
-
-
-
-   </div>
-   </div>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+    </section>
+</div>
+</div>
     <!--============================
     =            Footer            =
     =============================-->
-
     @include('layouts.footer')
-
-                @endsection
-
-
-
-
+@endsection
 
  @section('scripts')
 
@@ -103,7 +91,10 @@
 
                 success:function(data){
                     if(data.statue==true) {
-                        alert(data.msg);
+                     var data_tr= document.querySelector('tr.hide'+id);
+                         data_tr.style.display='none';
+
+                         alert(data.msg);
                     }
                     alert(data.msg);
                 },

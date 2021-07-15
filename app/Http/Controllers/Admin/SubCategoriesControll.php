@@ -62,7 +62,7 @@ class SubcategoriesControll extends Controller
      }
 
      public function subcategories(){
-          $subcategories=Subcategory::with('maincategory')->Selection()->where('translation_lang',app()->getLocale())->paginate(paginate_count);
+          $subcategories=Subcategory::with('maincategory')->Selection()->where('translation_lang',app()->getLocale())->get();
           return view('admin.subcategories.indexes',compact('subcategories'));
      }
 
@@ -93,7 +93,6 @@ class SubcategoriesControll extends Controller
                     if(isset($subcategory->users) && $subcategory->users->count() > 0){
                         $this->delete_cart_category($subcategory->id);
                     }
-
                     $subcategory->delete();
                     return get_response(true,'Deleted Done');
                 }
@@ -173,17 +172,11 @@ class SubcategoriesControll extends Controller
         }
 
         public function store_specifications(Request $request){
-
-
            try{
-
-
-
                 if(isset($request) && !empty($request)){
-
                     $valid=Validator::make($request->all(),[
                         'subcategory_id'=>'numeric|exists:subcategories,id',
-                        'specification'=>'required|max:200'
+                        'specification'=>'required|max:1000'
                     ]);
                     if($valid->fails()){
                        $err= $valid->errors()->toArray();

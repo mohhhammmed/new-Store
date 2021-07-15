@@ -26,8 +26,7 @@ class HomeController extends Controller
          $q->select('category','translation_lang','branch_id','id')->GetActive()->where('translation_lang',app()->getLocale());
         }])->select('id','branch')->where('translation_lang',app()->getLocale())->get();
         $subcategories=Subcategory::Selection()->Active()->where('translation_lang',app()->getLocale())->get();
-        $subcategories_cart=ShoppingCart::where('user_id',Auth::id())->get();
-
+        $subcategories_cart=ShoppingCart::where('user_id',Auth::id())->pluck('count')->toArray();
         return view('home.index',compact('maincategories','branches','subcategories','subcategories_cart'));
     }
 

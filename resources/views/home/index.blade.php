@@ -81,7 +81,7 @@
                         @if(isset($subcategories))
                             @foreach($subcategories as $count => $subcategory)
                                 @if($count >=0 && $count <= 10)
-                                <div class="col-sm-12 col-lg-4">
+                                <div  class="col-sm-12 col-lg-4 count_subcats">
                                     <!-- product card -->
                                     <div class="product-item bg-light">
                                         <div class="card">
@@ -102,8 +102,8 @@
                                                         <a href="#"><i class="fa fa-calendar"></i>{{$subcategory->created_at}}</a>
                                                     </li>
                                                 </ul>
-                                                <p class="card-text">
-                                                    @include('user.shopping.shopping_cart')
+                                                <p class="card-text" >
+                                                      @include('user.shopping.shopping_cart')
                                                 </p>
                                                 <div class="product-ratings">
                                                     <ul class="list-inline">
@@ -174,6 +174,12 @@
 
 @section('scripts')
         <script>
+//    var link_subcategories=document.querySelector('a.shoppingCart');
+
+//      var shopping_subcategories_num = $(link_subcategories).attr('subcat_num');
+//      var subcategories_num=  $(link_subcategories).attr('count_subcats');
+//     console.log(shopping_subcategories_num);
+//     console.log(subcategories_num);
        ////////////////////////////////////////////
 ////////////////////Add product To Cart////////////////////
  @include('user.shopping.ajax_shopping');

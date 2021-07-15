@@ -1,5 +1,6 @@
 
 @extends('layouts.html')
+@section('title','Description')
 @section('content')
 
 @include('layouts.section')
@@ -33,13 +34,12 @@
 						</ul>
 					</div>
 					<!-- product slider -->
-
 				@if(isset($subcategory->images) && $subcategory->images->count() >= 4)
 					<div class="product-slider">
                         @foreach($subcategory->images as $counter => $image)
                             @if ($counter < 4)
-                                <div class="product-slider-item my-4" data-image="{{asset('admin/images/subcategories/'.$image->image)}}">
-                                    <img id='the_big' class="img-fluid w-100" src="{{asset('admin/images/subcategories/'.$image->image)}}" alt="product-img">
+                                <div  class="product-slider-item my-4" data-image="{{asset('admin/images/subcategories/'.$image->image)}}">
+                                    <img   id='the_big' class="img-fluid w-100" src="{{asset('admin/images/subcategories/'.$image->image)}}" alt="product-img">
                                 </div>
                             @endif
                         @endforeach
@@ -48,7 +48,7 @@
 
 					<!-- product slider -->
 
-					<div class="content mt-5 pt-5">
+                    <div class="content mt-5 pt-5">
 						<ul class="nav nav-pills  justify-content-center" id="pills-tab" role="tablist">
 							<li class="nav-item">
 								<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home"
@@ -61,19 +61,13 @@
 							<li class="nav-item">
 								<a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact"
 								 aria-selected="false">{{website_translation('Reviews')}}</a>
-
-                                </li>
+                            </li>
 						</ul>
 						<div class="tab-content" id="pills-tabContent">
 							<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 								<h3 class="tab-title">{{website_translation('Product Description')}}</h3>
 								<p>{{$subcategory->name}}</p>
-
-								<iframe width="100%" height="400" src="https://www.youtube.com/embed/LUH7njvhydE?rel=0&amp;controls=0&amp;showinfo=0"
-								 frameborder="0" allowfullscreen></iframe>
-								<p></p>
 								<p>{{isset($subcategory->description)?$subcategory->description->description:''}}</p>
-
 							</div>
 							<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 								<h3 class="tab-title">{{website_translation('Product Specifications')}}</h3>
@@ -88,7 +82,6 @@
 											<td>{{$subcategory->created_at}}</td>
 										</tr>
                                         @if(isset($subcategory->specification->specification) && count($subcategory->getSpecifications()) > 0)
-
 											@foreach($subcategory->getSpecifications() as $c=> $specific)
                                                 <tr>
                                                     <td>{{$c}}</td>
@@ -96,13 +89,10 @@
                                                 </tr>
 											@endforeach
                                         @endif
-
                                         <tr>
 											<td>Model</td>
 											<td>{{date('y',time())}}</td>
 										</tr>
-
-
 									</tbody>
 								</table>
 							</div>
@@ -116,13 +106,11 @@
 											<!-- Ratings -->
 											<div class="ratings">
 												<ul class="list-inline">
-
-                                                        @for( $c=0; $c<5; $c++)
+                                                    @for( $c=0; $c<5; $c++)
                                                         <li class="list-inline-item">
                                                             <i class="fa fa-star"></i>
                                                         </li>
-                                                            @endfor
-
+                                                    @endfor
 												</ul>
 											</div>
 											<div class="name">
@@ -185,15 +173,8 @@
                             @include('user.shopping.shopping_cart');
 						</ul>
 					</div>
-					<!-- Map Widget -->
-					<div class="widget map">
-						<div class="map">
-							<div id="map_canvas" data-latitude="51.507351" data-longitude="-0.127758"></div>
-						</div>
-					</div>
-					<!-- Rate Widget -->
 
-					<!-- Safety tips widget -->
+                    <!-- Safety tips widget -->
 					<div class="widget disclaimer">
 						<h5 class="widget-header">{{website_translation('Safety Tips')}}</h5>
 						<ul>

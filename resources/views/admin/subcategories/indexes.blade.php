@@ -49,55 +49,47 @@
                             @if(isset($subcategories) && !empty($subcategories))
                                 @foreach($subcategories as $subcategory)
                                 <tr id="hide{{$subcategory->id}}">
-                <td >
-                  <img width="80px" height="auto" src="{{asset('admin/images/subcategories/'.$subcategory->image)}}" alt="image description"></td>
+                                    <td >
+                                    <img width="80px" height="auto" src="{{asset('admin/images/subcategories/'.$subcategory->image)}}" alt="image description"></td>
 
-                <td class="translation_lang text-center">
-                  {{$subcategory->translation_lang}}
-                </td>
-                <td class="product-category text-center"><span class="categories"> {{$subcategory->name}}</span></td>
-                <td class="product-category text-center"><span class="categories"> {{$subcategory->getStatue()}}</span></td>
-                <td class="action text-center" data-title="Action">
-                  <div class="">
-                    <ul class="list-inline justify-content-center">
-                      <li class="list-inline-item">
-                        <a data-toggle="tooltip" data-placement="top" title="{{$subcategory->statue==1?'Disactivate':'Activate'}}" class="view"
-                             href="{{route('change_statue_subcategory',$subcategory->id)}}">
-                          <i class="fa fa-pencil"></i>
-                        </a>
-                      </li>
-                      <li class="list-inline-item">
-                        <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit" href="{{route('form_edit_subcategory',$subcategory->id)}}">
-                          <i class="fa fa-edit"></i>
-                        </a>
-                      </li>
-                      <li class="list-inline-item">
-                        <a class="delete delData" get_id="{{$subcategory->id}}"data-toggle="tooltip" data-placement="top" title="Delete" href="{{route('delete_subcategory',$subcategory->id)}}">
-                          <i class="fa fa-trash"></i>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-           @endforeach
-        @endif
-
-    </tbody>
- </table>
-
- </div>
-</div>
-</section>
-
-
-</div>
-
-
-    </div>
-    <!-- Row End -->
-  </div>
-  <!-- Container End -->
+                                    <td class="translation_lang text-center">
+                                    {{$subcategory->translation_lang}}
+                                    </td>
+                                    <td class="product-category text-center"><span class="categories"> {{$subcategory->name}}</span></td>
+                                    <td class="product-category text-center"><span class="categories"> {{$subcategory->getStatue()}}</span></td>
+                                    <td class="action text-center" data-title="Action">
+                                    <div class="">
+                                        <ul class="list-inline justify-content-center">
+                                        <li class="list-inline-item">
+                                            <a data-toggle="tooltip" data-placement="top" title="{{$subcategory->statue==1?'Disactivate':'Activate'}}" class="view"
+                                                href="{{route('change_statue_subcategory',$subcategory->id)}}">
+                                            <i class="fa fa-pencil"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit" href="{{route('form_edit_subcategory',$subcategory->id)}}">
+                                            <i class="fa fa-edit"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a class="delete delData" get_id="{{$subcategory->id}}"data-toggle="tooltip" data-placement="top" title="Delete" href="{{route('delete_subcategory',$subcategory->id)}}">
+                                            <i class="fa fa-trash"></i>
+                                            </a>
+                                        </li>
+                                        </ul>
+                                    </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            @endif
+                          </tbody>
+                        </table>
+                       </div>
+                    </div>
+               </section>
+              </div>
+           </div>
+        </div>
 </section>
 
 <!--============================

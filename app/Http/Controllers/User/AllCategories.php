@@ -21,7 +21,7 @@ class AllCategories extends Controller
             $subcategories= $mainncategory->subcategories()->Active()->paginate(paginate_count);
             $maincategories=$branche->maincategories->where('translation_lang',locale_lang());
             $governorates=Governorate::where('translation_lang',locale_lang())->get();
-            $subcategories_cart=ShoppingCart::where('user_id',Auth::id())->get();
+            $subcategories_cart=ShoppingCart::where('user_id',Auth::id())->pluck('count')->toArray();
             return view('user.allCategories.all_categories',compact('subcategories_cart','mainncategory','governorates','subcategories','maincategories'));
 
         }

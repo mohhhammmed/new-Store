@@ -22,7 +22,9 @@
                             @foreach ($maincategories as $maincategory)
                                 @if(isset($maincategory->parents) && $maincategory->parents->count() > 0)
                                     @foreach ($maincategory->parents as $parent)
-                                        <li><a href="{{route('categories_from_parent',$parent->id)}}">{{$parent->type}}<span>{{$parent->subcategories->count()}}</span></a></li>
+                                       @if ($parent->subcategories->count() > 0)
+                                       <li><a href="{{route('categories_from_parent',$parent->id)}}">{{$parent->type}}<span>{{$parent->subcategories->count()}}</span></a></li>
+                                       @endif
                                     @endforeach
                                 @endif
                             @endforeach
@@ -114,7 +116,6 @@
                                         <a href="#"><i class="fa fa-calendar"></i>{{$subcategory->created_at}}</a>
                                     </li>
                                 </ul>
-
                               @include('user.shopping.shopping_cart')
                                 <div class="product-ratings">
                                     <ul class="list-inline">
@@ -128,7 +129,7 @@
             @endforeach
                @else
             @if(isset($your_categories) && count($your_categories) > 0)
-                      @foreach($your_categories as $subcat)
+                      @foreach($your_categories as $subcategory)
 
                     <div class="col-sm-12 col-lg-4 col-md-6">
                         <div class="product-item bg-light">
@@ -136,23 +137,23 @@
                                 <div class="thumb-content">
                                     <!-- <div class="price">$200</div> -->
                                     <a href="single.html">
-                                        <img class="card-img-top img-fluid" src="{{asset("admin/images/subcategories/".$subcat->image)}}" alt="Card image cap">
+                                        <img class="card-img-top img-fluid" src="{{asset("admin/images/subcategories/".$subcategory->image)}}" alt="Card image cap">
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title"><a href="{{route('description_category',$subcat->id)}}">{{$subcat->name}}</a></h4>
+                                    <h4 class="card-title"><a href="{{route('description_category',$subcategory->id)}}">{{$subcategory->name}}</a></h4>
                                     <ul class="list-inline product-meta">
                                         <li class="list-inline-item">
-                                            <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$subcat->maincategory->branch->branch}}</a>
+                                            <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$subcategory->maincategory->branch->branch}}</a>
                                         </li>
                                         <li class="list-inline-item">
                                             <a href="#"><i class="fa fa-calendar"></i>26th December</a>
                                         </li>
                                     </ul>
-                                    <p class="card-text">{{isset($subcat->description->description)?$subcat->description->description:''}}</p>
+                                    @include('user.shopping.shopping_cart')
                                     <div class="product-ratings">
                                         <ul class="list-inline">
-                                           <li>{{$subcat->the_price}}</li>
+                                           <li>{{$subcategory->the_price}}</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -162,71 +163,74 @@
             @endforeach
             @endif
         @endif
-               @if(isset($yourCategories) && count($yourCategories) > 0)
-                   @foreach($yourCategories as $category)
-                <div class="col-sm-12 col-lg-4 col-md-6">
-                    <div class="product-item bg-light">
-                        <div class="card">
-                            <div class="thumb-content">
-                                <!-- <div class="price">$200</div> -->
-                                <a href="{{route('description_category',$category->id)}}">
-                                    <img class="card-img-top img-fluid" src="{{asset("admin/images/subcategories/".$category->image)}}" alt="Card image cap">
-                                </a>
+              @if(isset($yourCategories) && count($yourCategories) > 0)
+                   @foreach($yourCategories as $subcategory)
+                        @if (!empty($subcategory))
+                            <div class="col-sm-12 col-lg-4 col-md-6">
+                                <div class="product-item bg-light">
+                                    <div class="card">
+                                        <div class="thumb-content">
+                                            <!-- <div class="price">$200</div> -->
+                                            <a href="{{route('description_category',$subcategory->id)}}">
+                                                <img class="card-img-top img-fluid" src="{{asset("admin/images/subcategories/".$subcategory->image)}}" alt="Card image cap">
+                                            </a>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title"><a href="{{route('description_category',$subcategory->id)}}">{{$subcategory->name}}</a></h4>
+                                            <ul class="list-inline product-meta">
+                                                <li class="list-inline-item">
+                                                    <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$subcategory->maincategory->branch->branch}}</a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a href="#"><i class="fa fa-calendar"></i>26th December</a>
+                                                </li>
+                                            </ul>
+                                            @include('user.shopping.shopping_cart')
+                                            <div class="product-ratings">
+                                                <ul class="list-inline">
+                                                    <li>{{$subcategory->the_price}}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <h4 class="card-title"><a href="{{route('description_category',$category->id)}}">{{$category->name}}</a></h4>
-                                <ul class="list-inline product-meta">
-                                    <li class="list-inline-item">
-                                        <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$category->maincategory->branch->branch}}</a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#"><i class="fa fa-calendar"></i>26th December</a>
-                                    </li>
-                                </ul>
-                                <p class="card-text">{{isset($category->descripe->description)?$category->descripe->description:''}}</p>
-                                <div class="product-ratings">
-                                    <ul class="list-inline">
-                                        <li>{{$category->the_price}}</li>
-                                    </ul>
+                        @endif
+                   @endforeach
+              @elseif(isset($categories) && $categories->count() > 0)
+
+                   @foreach($categories as $subcategory)
+                        <div class="col-sm-12 col-lg-4 col-md-6">
+                            <div class="product-item bg-light">
+                                <div class="card">
+                                    <div class="thumb-content">
+                                        <!-- <div class="price">$200</div> -->
+                                        <a href="{{route('description_category',$subcategory->id)}}">
+                                            <img class="card-img-top img-fluid" src="{{asset("admin/images/subcategories/".$subcategory->image)}}" alt="Card image cap">
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <h4 class="card-title"><a href="{{route('description_category',$subcategory->id)}}">{{$subcategory->name}}</a></h4>
+                                        <ul class="list-inline product-meta">
+                                            <li class="list-inline-item">
+                                                <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$subcategory->maincategory->branch->branch}}</a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a href="#"><i class="fa fa-calendar"></i>26th December</a>
+                                            </li>
+                                        </ul>
+                                    @include('user.shopping.shopping_cart')
+                                        <div class="product-ratings">
+                                            <ul class="list-inline">
+                                                <li>{{$subcategory->the_price}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            @endforeach
-                   @elseif(isset($categories) && $categories->count() > 0)
-                   @foreach($categories as $category)
-                <div class="col-sm-12 col-lg-4 col-md-6">
-                    <div class="product-item bg-light">
-                        <div class="card">
-                            <div class="thumb-content">
-                                <!-- <div class="price">$200</div> -->
-                                <a href="{{route('description_category',$category->id)}}">
-                                    <img class="card-img-top img-fluid" src="{{asset("admin/images/subcategories/".$category->image)}}" alt="Card image cap">
-                                </a>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title"><a href="{{route('description_category',$category->id)}}">{{$category->name}}</a></h4>
-                                <ul class="list-inline product-meta">
-                                    <li class="list-inline-item">
-                                        <a href="single.html"><i class="fa fa-folder-open-o"></i>{{$category->maincategory->branch->branch}}</a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#"><i class="fa fa-calendar"></i>26th December</a>
-                                    </li>
-                                </ul>
-                                <p class="card-text">{{isset($category->description->description)?$category->description->description:''}}</p>
-                                <div class="product-ratings">
-                                    <ul class="list-inline">
-                                        <li>{{$category->the_price}}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        @endif
+                   @endforeach
+              @endif
 
         {{-- @if(isset($subcategory) && $subcategory != null)
             <div class="col-sm-12 col-lg-4 col-md-6">
@@ -296,10 +300,6 @@
  @include('user.shopping.ajax_shopping');
 </script>
 @endsection
-
-
-<!-- JAVASCRIPTS -->
-
 
 <style>
     .w-5{

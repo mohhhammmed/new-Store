@@ -17,6 +17,19 @@ function locale_lang(){
 
 }
 
+ function shopping_cart($subcategories_cart,$subcategory){
+     foreach($subcategories_cart as $subcart){
+         if($subcart->where('subcategory_id',$subcategory->id)->count >= $subcategory->subcategory_num ){
+                {{'Not Available';}}
+         }
+     }
+}
+
+
+function subcategories_cart_sum($subcategories_user){
+    $subcats=$subcategories_user->toArray();
+    return array_sum($subcats);
+}
 
 
 function website_translation($text){

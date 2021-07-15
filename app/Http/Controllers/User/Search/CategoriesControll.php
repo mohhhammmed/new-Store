@@ -33,7 +33,7 @@ class CategoriesControll extends Controller
                     }
 
                     if (isset($your_categories) && count($your_categories) > 0) {
-                        $subcategories_cart=ShoppingCart::where('user_id',Auth::id())->get();
+                        $subcategories_cart=ShoppingCart::where('user_id',Auth::id())->pluck('count')->toArray();
                         return view('user.allCategories.all_categories', compact('subcategories_cart','your_categories', 'maincategory'));
                     }
                     return redirect()->route('all_categories', $request->id)->with('error', 'there is not categories');
@@ -47,41 +47,39 @@ class CategoriesControll extends Controller
 
         try{
             if(isset($request) && !empty($request)) {
+                $maincategories=Maincategory::search($request->category)->get();
+                $parents_subcategories=Parentt::search($request->category)->get();
+                $yourCategories=Subcategory::search($request->category)->get();
 
-                $maincategories = Maincategory::where('category','like','%'.$request->category.'%')->where('translation_lang', app()->getLocale())->select('category')->get();
-                $subcategories = Subcategory::where('name','like','%'.$request->category.'%')->where('translation_lang', app()->getLocale())->select('name')->get();
-                $parents_subcategories = Parentt::where('type','like','%'.$request->category.'%')->where('translation_lang', app()->getLocale())->select('type')->get();
+              if(isset($maincategories) || isset($parents_subcategories) || isset($yourCategories)) {
 
-              if(isset($maincategories) || isset($subcategories) || isset($parents_subcategories)) {
-
-                if ($parents_subcategories->count() > 0) {
-                    foreach ($parents_subcategories as $parent) {
-                        $yourCategories = Parentt::where('type', $parent->type)->first()->subcategories;
+                    if ($maincategories->count() > 0) {
+                        foreach ($maincategories as $maincat) {
+                           // echo $maincat->subcategories;
+                            if(isset($maincat->subcategories) && $maincat->subcategories->count() > 0){
+                                $yourCategories=$maincat->subcategories;
+                            }
+                        }
                     }
-                }
 
-
-                  if ($subcategories->count() > 0) {
-                      foreach ($subcategories as $subcat) {
-                          $yourCategories = Subcategory::where('name', $subcat->name)->get();
-                      }
-                  }
-
-                  if ($maincategories->count() > 0) {
-                    foreach ($maincategories as $maincat) {
-                      $yourCategories =Maincategory::where('category',$maincat->category)->first()->subcategories;
+                    if ($parents_subcategories->count() > 0) {
+                        foreach ($parents_subcategories as $parent) {
+                            if(isset($parent->subcategories) && $parent->subcategories->count() > 0){
+                                $yourCategories= $parent->subcategories;
+                            }
+                        }
                     }
-                }
 
-                  if(isset($yourCategories) && count($yourCategories) > 0) {
-                    $subcategories_cart=ShoppingCart::where('user_id',Auth::id())->get();
-                      return view('user.allCategories.all_categories', compact('subcategories_cart','yourCategories'));
-                  }
+                    if(isset($yourCategories) && count($yourCategories) > 0) {
+
+                        $subcategories_cart=ShoppingCart::where('user_id',Auth::id())->pluck('count')->toArray();
+                        return view('user.allCategories.all_categories', compact('subcategories_cart','yourCategories'));
+                    }
               }
-                return redirect()->back()->with('error','Categories Not Exists');
+                    return redirect()->back()->with('error','Categories Not Exists');
             }
         }catch(\Exception $ex){
-           return $ex;
+            return $ex;
             return redirect(route('home'))->with('error','there is error');
         }
 

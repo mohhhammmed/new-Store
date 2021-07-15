@@ -111,7 +111,10 @@
                                   <laple><strong style="font-size: 15px">Subcategory Num</strong></laple>
                                   <select name="subcategory_num">
                                      @for ($i = 1; $i < 20; $i++)
-                                         <option>{{$i}}</option>
+                                         <option @if(isset($subcategory_edit) && $subcategory_edit->subcategory_num==$i)
+                                               selected
+                                                 @endif>{{$i}}
+                                         </option>
                                      @endfor
                                   </select>
 

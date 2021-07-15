@@ -1,5 +1,5 @@
 
-  $(document).on('click','.shoppingCart',function(e){
+ $(document).on('click','.shoppingCart',function(e){
     e.preventDefault();
     var subcategory_id=$(this).attr('get_id');
 
@@ -12,14 +12,16 @@
               },
 
               success:function(data){
-                if(data.status==true){
-                    var added=document.querySelector('div#addToCart'+subcategory_id),
-                        counter=document.querySelector('span#cartStyle');
-                    counter.textContent++;
-                    added.textContent='Category is added';
-                    added.style='color:#9e030b; font-size:15px; background-color:rgb(238 242 243) !important;font-weight: bolder';
+                var added=document.querySelector('div#addToCart'+subcategory_id),
+                counter=document.querySelector('span#cartStyle');
+                added.style='rgb(52 191 27); font-size:15px; background-color:rgb(238 242 243) !important;font-weight: bolder';
 
+                if(data.status==true){
+                    counter.textContent++;
+                    added.textContent=data.msg;
                 }
+                   added.textContent=data.msg;
               }
          });
    });
+{{-- </script> --}}

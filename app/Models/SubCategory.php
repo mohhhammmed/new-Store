@@ -10,13 +10,15 @@ use App\Models\Specification;
 use App\Observers\SubCategoryObserv;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Subcategory extends Model
 {
+    use Searchable;
     use HasFactory;
-    protected $table='subcategories';
-    protected $fillable=['translation_of','statue','translation_lang','image','the_price','parent_id','name','maincategory_id','subcategory_num'];
 
+    protected $table='subcategories';
+    protected $fillable=['statue','translation_lang','image','the_price','parent_id','name','maincategory_id','subcategory_num'];
 
 
     public static function boot(){
@@ -33,12 +35,10 @@ class Subcategory extends Model
     }
 
     public function scopeSelection($q){
-        return $q->select('id','translation_of','statue','translation_lang','the_price','image','parent_id','name','maincategory_id','created_at');
-
+        return $q->select('id','statue','translation_lang','the_price','image','parent_id','name','maincategory_id','subcategory_num','created_at');
     }
     public function scopePathImage($q){
         return 'admin/images/subcategories/';
-
     }
 
     public function getActive(){
@@ -55,7 +55,7 @@ class Subcategory extends Model
     }
 
     public function parent(){
-       return $this->belongsTo(Parentt::class,'parent_id');
+        return $this->belongsTo(Parentt::class,'parent_id');
     }
 
     public function description(){
@@ -85,7 +85,6 @@ class Subcategory extends Model
                         $value_specifications[]=$specific;
                     }
                 }
-
             if(count($key_specifications) == count($value_specifications)){
                 for($d=0; $d < count($key_specifications); $d++){
                     $specifications[$key_specifications[$d]]=$value_specifications[$d];

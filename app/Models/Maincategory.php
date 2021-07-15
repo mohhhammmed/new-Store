@@ -10,11 +10,13 @@ use App\Models\Branch;
 use App\Models\Parentt;
 use App\Models\AverageCategory;
 use App\Models\Subcategory;
-
+use Laravel\Scout\Searchable;
 //use App\Ocservers\MainCategoryObserv;
 class Maincategory extends Model
 {
     use HasFactory;
+    use Searchable;
+
     protected $table='maincategories';
     protected $fillable=['translation_of','status','translation_lang','image','category'];
 

@@ -26,14 +26,14 @@ class ContactControll extends Controller
     {
         $user= Auth::user();
         $user_subcategories=$user->subcategories;
+        $shopping_cart=ShoppingCart::where('user_id',$user->id)->get();
           $total_price=0;
         if (isset($user_subcategories) && $user_subcategories->count() > 0) {
 
             foreach($user_subcategories as $subcategory){
                $total_price+=$subcategory->the_price;
             }
-
-            return view('user.contact.make_order', compact('total_price','user_subcategories'));
+            return view('user.contact.make_order', compact('total_price','user_subcategories','shopping_cart'));
         }
         return redirect(route('home'))->with('error','Categories Not Found');
 
@@ -60,17 +60,16 @@ class ContactControll extends Controller
 
                 if (isset($notify) && !empty($notify)) {
                     $notify->update([
-                        'counter' => $notify->counter + 1,
+                       'counter' => $notify->counter + 1,
                     ]);
                 } else {
+
                     Notify::create([
-                        'counter' => 1,
-                        'belongs_to_table' => 'overs'
+                      'counter' => 1,
+                      'belongs_to_table' => 'overs'
                     ]);
                 }
-
                 DB::commit();
-
                 return response()->json([
                     'statue' => true,
                     'msg' => 'Your Over Is Sent'
@@ -101,15 +100,19 @@ class ContactControll extends Controller
                 $total_price=0;
                 if(isset($subcategories_user) && $subcategories_user->count() > 0) {
                     foreach($subcategories_user as $subcategory){
-                        $subcategories_names[]=$subcategory->name;
+                        $subcategories_number[$subcategory->name]=ShoppingCart::where('subcategory_id',$subcategory->id)->where('user_id',Auth::id())->first()->count;
+                        $subcategories_id[]=$subcategory->id;
                         $subcategories_images[]=$subcategory->image;
                         $total_price += $subcategory->the_price;
                     }
-
-                    $category=implode(',',$subcategories_names);
+                    foreach($subcategories_number as $c=>$num){
+                        $the_number[]= $c.' => '.$num;
+                    }
+                    $the_number=implode(' ,, ',$the_number);
+                    $category=implode(',',$subcategories_id);
                     $image=implode(',',$subcategories_images);
 
-                    $request->merge(['image' => $image,'category'=>$category,'the_price'=>$total_price]);
+                    $request->merge(['the_number' => $the_number,'category'=>$category,'the_price'=>$total_price]);
                     Order::create($request->all());
                     $notify=Notify::where('belongs_to_table','orders')->first();
                     if(isset($notify) && !empty($notify)){
@@ -122,6 +125,8 @@ class ContactControll extends Controller
 
                         ]);
                     }
+                    $this->delete_shopping_subcategory($subcategories_user);
+
                     DB::commit();
                     return response()->json([
                         'status' => true,
@@ -132,7 +137,7 @@ class ContactControll extends Controller
 
             return response()->json([
                 'statue' => false,
-                'msg' => 'Error',
+                'msg' => 'Subcategories Not found',
             ]);
         }catch(\Exception $ex){
             DB::rollBack();
@@ -152,15 +157,49 @@ class ContactControll extends Controller
 
     public function shopping_cart(Request $request){
         try{
+
             if(isset($request) && !empty($request)){
-                $subcategories_id=Subcategory::pluck('id')->toArray();
-                 if(in_array($request->subcategory_id,$subcategories_id)){
-                     $request->merge(['user_id'=>Auth::id()]);
-                    ShoppingCart::create($request->all());
-                    return get_response(true,'success');
-                 }
-                 return get_response(false,'Not Found');
+                $subcategory=Subcategory::find($request->subcategory_id);
+                $subcategory_user=ShoppingCart::where('subcategory_id',$request->subcategory_id)->where('user_id',Auth::id())->first();
+
+                if($subcategory->subcategory_num != 0){
+                    if(isset($subcategory_user) && $subcategory_user != null ){
+                        if($subcategory_user->count < $subcategory->subcategory_num){
+                            $subcategory_user->update([
+                                'count'=>$subcategory_user->count+=1,
+                            ]);
+                            return get_response(true,'num of category'.$subcategory_user->count);
+                        }
+                            return get_response(false,'Category Not Available');
+                    }else{
+                        $request->merge(['user_id'=>Auth::id(),'count'=>1]);
+                        ShoppingCart::create($request->all());
+                        return get_response(true,'Category is added');
+                    }
+                }
+                       return get_response(false,'Category Not Available');
              }
+        }catch(\Exception $ex){
+            //return $ex;
+            return get_response(false,'Error');
+        }
+
+    }
+
+    public function delete_cart_subcategory(Request $request){
+        try{
+            $subcategory_user= ShoppingCart::where('subcategory_id',$request->id)->where('user_id',Auth::id())->first();
+            if(isset($subcategory_user) && $subcategory_user->count() >0 ){
+                if($subcategory_user->count == 1){
+                    $subcategory_user->delete();
+                    return get_response(true,'Deleted Done');
+                }
+                   $subcategory_user->update([
+                  'count'=>$subcategory_user->count-=1
+                ]);
+                   return get_response(true,'Deleted');
+            }
+                   return get_response(false,'Not Found');
         }catch(\Exception $ex){
             return $ex;
             return get_response(false,'Error');
@@ -168,14 +207,11 @@ class ContactControll extends Controller
 
     }
 
-    public function delete_cart_subcategory(Request $request){
-        $subcategory_user= ShoppingCart::where('subcategory_id',$request->id)->first();
-        if(isset($subcategory_user) && $subcategory_user->count() >0){
-            $subcategory_user->delete();
-            return get_response(true,'Deleted Done');
+    public function delete_shopping_subcategory($subcategories){
+        foreach($subcategories as $subcategory){
+            $subcategory->update(['subcategory_num'=>$subcategory->subcategory_num-=1]);
+            ShoppingCart::where('user_id',Auth::id())->where('subcategory_id',$subcategory->id)->first()->delete();
         }
-        return get_response(false,'Not Found');
     }
-
 
 }

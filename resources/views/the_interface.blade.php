@@ -91,21 +91,10 @@
 		.navbar-brand:hover {
 			color:#fff;
 		}
+
 	</style>
 </head>
 <body>
-<!-- NavBar -->
-{{-- <nav class="navbar main-nav fixed-top navbar-expand-lg">
-  <div class="container">
-      <a class="navbar-brand" href="#" >Classimax Documentation</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-      </button>
-
-  </div>
-</nav> --}}
-
-<!-- Banner -->
 <section class="banner bg-1 overlay">
 	<div class="container">
 		<div class="row">
@@ -115,7 +104,8 @@
 				<p>We are constantly doing updates for you.</p>
 				<a style="width:239px" href="{{route('register')}}" class="btn btn-main-rounded">Sine Up</a><br><br>
                 <a style="width:239px" href="{{route('login')}}" class="btn btn-main-rounded">Sine in</a><br><br>
-                <a href="{{route('login_redirect','github')}}" class="btn btn-main-rounded">Login With Github</a>
+                <a href="{{route('login_redirect','github')}}" class="btn btn-main-rounded">Login Github
+                 <img src="{{asset('admin\images\github-logo.png')}}" alt=""></a>
 
             </div>
 		</div>

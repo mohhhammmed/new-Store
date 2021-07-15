@@ -36,6 +36,7 @@
                             <th>name</th>
                             <th class="text-center">image</th>
                             <th class="text-center">price</th>
+                            <th class="text-center">The Number</th>
                             <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -47,9 +48,14 @@
 
                                 <td class="text-center"><img src="{{asset(\App\Models\SubCategory::PathImage().$subcategory->image)}}"width="100px" height="60px">
                                 </td>
-
                                 <td class="text-center">{{$subcategory->the_price}}</td>
-
+                                @if(isset($shopping_cart))
+                                    @foreach ($shopping_cart as $subcat)
+                                        @if ($subcat->subcategory_id == $subcategory->id )
+                                        <td class="text-center user_subcat_count{{$subcategory->id}}">{{$subcat->count}}</td>
+                                        @endif
+                                    @endforeach
+                                @endif
                                 <td class="action text-center" data-title="Action">
                                     <div class="">
                                         <ul class="list-inline justify-content-center">
@@ -204,12 +210,16 @@
                         },
                         success:function(data){
                             if(data.status==true){
-                             var data_tr=document.querySelector('tr#hide'+id);
-                             console.log(data_tr);
-                             data_tr.style.display='none';
-                              alert(data.msg);
+                             var data_tr=document.querySelector('tr#hide'+id),
+                                 counter=document.querySelector('td.user_subcat_count'+id);
+                                 alert(data.msg);
+
+                               if(data.msg=='Deleted Done'){
+                                  data_tr.style.display='none';
+                               }
+                                  counter.textContent--;
                             }
-                              alert(data.msg);
+                                   alert(data.msg);
                         },
                         error:function(reject){
 

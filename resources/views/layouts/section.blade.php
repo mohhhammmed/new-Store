@@ -14,8 +14,8 @@
                         @if(Auth::guard('web')->user())
                        <a  href="{{route('make_order')}}">
                         <span id='cartStyle' class="badge bg-primary rounded-pill">
-                       {{isset($subcategories_cart) && $subcategories_cart->count() > 0
-                                      ?$subcategories_cart->count():''}}
+                       {{isset($subcategories_cart) && count($subcategories_cart) > 0
+                                      ?array_sum($subcategories_cart):null}}
                          </span> <img class="cart"  src="{{asset('user/icons/shopping-cart.png')}}">
                          @endif
                         </a>
